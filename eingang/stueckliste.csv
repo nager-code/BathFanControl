@@ -1,0 +1,29 @@
+Referenz;Wert;Footprint (KiCad);Hinweis
+X1;L / N / L-Licht / L-Luefter;TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-4-5.08_1x04_P5.08mm_Horizontal;Klemme 4-polig 5,08 mm
+F1;T1A 250V;Fuse:Fuse_Littelfuse_395Series;Sicherung traege, TR5 radial
+RV1;S07K275;Varistor:RV_Disc_D7mm_W3.4mm_P5mm;Varistor 275 VAC
+PS1;IRM-02-3.3;Converter_ACDC:Converter_ACDC_MeanWell_IRM-02-xx_THT;Mean Well, 230 V -> 3,3 V / 600 mA
+U1;ESP32-C3-MINI-1;RF_Module:ESP32-C3-MINI-1;"WLAN-Modul; Pinnummern gegen Datenblatt pruefen"
+U2;LTV-814S;Package_DIP:SMDIP-4_W9.53mm;AC-Optokoppler, Unterseite
+U3;AQH3223A;Package_DIP:SMDIP-8_W9.53mm;"Photo-Triac 1,2 A (schaltet nicht im Nulldurchgang); Pad 7 entfaellt; Pinbelegung gegen Datenblatt pruefen; Unterseite"
+U4;SHT40-AD1B;Sensor_Humidity:Sensirion_DFN-4_1.5x1.5mm_P0.8mm_SHT4x_NoCentralPad;Feuchte/Temperatur, I2C
+J1;Prog 3V3 GND TX RX IO9 EN;Connector_PinHeader_1.27mm:PinHeader_1x06_P1.27mm_Vertical;Programmierpads Raster 1,27 mm, unbestueckt
+R1;100k;Resistor_SMD:R_1206_3216Metric;Lichteingang, 200 V Typ
+R2;100k;Resistor_SMD:R_1206_3216Metric;Lichteingang, 200 V Typ
+R3;150R;Resistor_SMD:R_0603_1608Metric;LED-Vorwiderstand Triac, ca. 14 mA
+R4;220k;Resistor_SMD:R_0603_1608Metric;Pull-up Lichtsignal
+R5;100R;Resistor_SMD:R_1206_3216Metric;Snubber, impulsfest
+R6;10k;Resistor_SMD:R_0603_1608Metric;EN Pull-up
+R7;10k;Resistor_SMD:R_0603_1608Metric;IO9 Pull-up (Boot)
+R8;10k;Resistor_SMD:R_0603_1608Metric;IO8 Pull-up (Strapping)
+R9;10k;Resistor_SMD:R_0603_1608Metric;IO2 Pull-up (Strapping)
+R10;10k;Resistor_SMD:R_0603_1608Metric;SDA Pull-up
+R11;10k;Resistor_SMD:R_0603_1608Metric;SCL Pull-up
+R12;3k3 DNP;Resistor_SMD:R_0603_1608Metric;Option gegen Glimmlampen-/LED-Leckstrom, nur bei Bedarf bestuecken
+C1;100u 10V;Capacitor_THT:CP_Radial_D5.0mm_P2.00mm;Puffer WLAN-Spitzen
+C2;10n X2 275VAC;Capacitor_THT:C_Rect_L13.0mm_W5.0mm_P10.00mm_FKS3_FKP3_MKS4;Snubber
+C3;470n;Capacitor_SMD:C_0603_1608Metric;Filter Lichtsignal (ca. 100 ms)
+C4;10u;Capacitor_SMD:C_0805_2012Metric;nahe U1
+C5;100n;Capacitor_SMD:C_0603_1608Metric;nahe U1
+C6;1u;Capacitor_SMD:C_0603_1608Metric;EN Verzoegerung
+C7;100n;Capacitor_SMD:C_0603_1608Metric;nahe U4

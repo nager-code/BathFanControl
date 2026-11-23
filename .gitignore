@@ -1,0 +1,10 @@
+# Arbeitsdateien der Skripte und heruntergeladene Werkzeuge
+work/
+tools/
+__pycache__/
+# KiCad
+*.kicad_prl
+*.lck
+fp-info-cache
+*-backups/
+*.bak

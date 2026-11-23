@@ -1,0 +1,27 @@
+(version 1)
+# Abstaende der 230-V-Seite. Spaetere Regeln haben Vorrang vor frueheren.
+
+(rule "Netz zu Kleinspannung"
+	(condition "A.NetClass == 'Netz' && B.NetClass != 'Netz' && B.NetName != ''")
+	(constraint clearance (min 6mm)))
+
+(rule "Netz untereinander"
+	(condition "A.NetClass == 'Netz' && B.NetClass == 'Netz' && A.Net != B.Net")
+	(constraint clearance (min 2.5mm)))
+
+# Ausnahmen, die durch Bauteilgehaeuse vorgegeben sind
+(rule "Teilerkette R1 R2"
+	(condition "(A.NetName == '/L_LICHT' && B.NetName == '/LICHT_A') || (A.NetName == '/LICHT_A' && B.NetName == '/L_LICHT') || (A.NetName == '/LICHT_A' && B.NetName == '/LICHT_B') || (A.NetName == '/LICHT_B' && B.NetName == '/LICHT_A')")
+	(constraint clearance (min 1.5mm)))
+
+(rule "Optokoppler-Eingang U2"
+	(condition "(A.NetName == '/LICHT_B' && B.NetName == '/N') || (A.NetName == '/N' && B.NetName == '/LICHT_B')")
+	(constraint clearance (min 0.5mm)))
+
+(rule "Snubber R5"
+	(condition "(A.NetName == '/SNUB' && B.NetName == '/L_F') || (A.NetName == '/L_F' && B.NetName == '/SNUB')")
+	(constraint clearance (min 1.5mm)))
+
+(rule "Triac Gate U3 Pin 5 neben Pin 6"
+	(condition "(A.NetName == 'unconnected-(U3-GATE_OFFEN-Pad5)' && B.NetName == '/L_F') || (A.NetName == '/L_F' && B.NetName == 'unconnected-(U3-GATE_OFFEN-Pad5)')")
+	(constraint clearance (min 0.5mm)))
