@@ -1,6 +1,6 @@
-# Gehäuse (Entwurf v2 für den Einbau im Lüfterkasten, noch nicht gedruckt – passt so nicht in die Ecke, siehe unten)
+# Gehäuse (Entwurf v2 für den Einbau im Lüfterkasten, noch nicht gedruckt)
 
-Zweiteiliges Gehäuse für die Platine v1.1. Es steht hochkant in der linken unteren Ecke des Unterputzkastens: Klemmen unten, Feuchtesensor oben rechts und damit am Luftstrom zum Lüfter. Parametrisches OpenSCAD-Modell, druckbar ohne Stützmaterial.
+Zweiteiliges Gehäuse für die Platine v1.1. Es steht hochkant in der linken unteren Ecke des Unterputzkastens, im Raum vor dem Lüftergehäuse: Klemmen unten, Feuchtesensor oben rechts und damit am Luftstrom zum Lüfter. Parametrisches OpenSCAD-Modell, druckbar ohne Stützmaterial.
 
 ![Einbaulage geschlossen und geöffnet](bilder/gehaeuse_einbaulage_beide.png)
 ![Rechte Seite mit Leitungsöffnung und Lüftungsschlitzen](bilder/gehaeuse_leitungsseite.png)
@@ -51,11 +51,11 @@ Rechnerische Kontrolle gegen das 3D-Modell der Platine: keine Durchdringung, Wan
 
 ## Offen und vor dem Druck zu klären
 
-1. **Passt so nicht neben das Lüftergehäuse.** Maßstäblich in ein Foto der Einbaustelle gesetzt (Maßstab aus einer Münze, ±10 %), überschneidet das Gehäuse ab etwa 40 mm Höhe die Rundung des Lüfters. Frei sind in der Ecke nur etwa 75 mm Breite in 15 mm Höhe, 50 mm in 30 mm, 35 mm in 45 mm, 26 mm in 60 mm und 21 mm in 75 mm Höhe. Auch die blanke Platine (70 x 30 mm) passt hochkant nicht. Es bleibt entweder der Platz vor dem Lüftergehäuse, wenn die Tiefe bis zur Frontabdeckung reicht (mindestens 30 mm, nicht gemessen), oder eine neue, an die Ecke angepasste Platinenform.
+1. **Einbauort: vor dem Lüftergehäuse, nicht daneben.** Neben dem Lüftergehäuse ist die Ecke zu schmal (geschätzt nur etwa 75 mm Breite in 15 mm Höhe, 50 mm in 30 mm, 35 mm in 45 mm, 26 mm in 60 mm, 21 mm in 75 mm Höhe). Zwischen der Vorderseite des Lüftergehäuses und der Frontabdeckung sind aber laut Messung etwa 50 mm Tiefe frei; das Gehäuse braucht 28 mm, es bleiben rund 22 mm Luft bis zur Abdeckung. Es steht also hochkant unten links auf dem Kastenboden, links an der Kastenwand, oben mit dem Rücken vor dem Lüftergehäuse. Die Wartungsöffnung der Rückstauklappe und die Ansaugöffnung müssen frei bleiben; ob Rippen oder der Filter der Frontabdeckung in diesen Raum ragen, ist nicht geprüft.
 2. **Einhängenase.** Ob sich der Deckel sauber einschwenken lässt, zeigt erst ein Probedruck (Spiel 0,2 mm, Eingriff 0,8 mm).
 3. **Höhe der Leitungsöffnung.** Sie sitzt 2,7 mm über der Platine auf Höhe der angenommenen Leitereinführung der WAGO 2061; das Maß ist nicht aus dem Datenblatt belegt (`z_teil`).
 4. **Enge im Anschlussraum.** Die Adern müssen auf rund 14 mm Länge um 90° zu den Klemmen gebogen werden. Für flexible Litzen ist das machbar, für starre 1,5-mm²-Adern knapp; `kammer` vergrößern, wenn die Höhe es erlaubt.
 5. **Werkstoff.** Flammhemmendes Material nehmen (UL 94 V-0), z. B. entsprechend ausgewiesenes PETG, ABS oder PC. Normales PLA ist ungeeignet, auch wegen der feuchtwarmen Luft im Lüfterkasten.
-6. **Befestigung.** Vorgesehen ist doppelseitiges Klebeband auf der Rückseite oder der linken Seite; die Flächen vorher entstauben und entfetten.
+6. **Befestigung.** Vorgesehen ist doppelseitiges Klebeband auf der linken Seite (zur Kastenwand); die Rückseite liegt nur oben am Lüftergehäuse an. Flächen vorher entstauben und entfetten.
 7. **Feuchte.** Durch den Kasten strömt die Badluft. Die Platine sollte einen Schutzlack bekommen (Sensor, Klemmen und Programmierpads aussparen).
 8. Kein Schutzgrad und keine Normprüfung: das ist ein Entwurf, kein geprüftes Installationsgehäuse.
