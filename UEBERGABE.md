@@ -76,7 +76,7 @@ Die Platine hat jetzt keine bedrahteten Bauteile mehr; Bohrungen gibt es nur noc
 
 - Firmware (Regellogik siehe erste Übergabe, Abschnitt 7; Lüfter an GPIO10, Licht an GPIO3 low-aktiv, SHT40 an GPIO6/7, Adresse 0x44)
 - Home Assistant vorhanden? (entscheidet über ESPHome oder eigene Firmware)
-- Gehäuse: Entwurf für den 3D-Druck liegt in `gehaeuse/`. Einbau hochkant in der linken unteren Ecke des Lüfterkastens, Klemmen unten, Sensor oben rechts am Luftstrom; die Platine ist auf Leisten geklemmt, weil sie keine Bohrungen hat. Noch nicht gedruckt, der Platz in der Ecke ist nicht nachgemessen; offene Punkte in `gehaeuse/README.md`
+- Gehäuse: Entwurf für den 3D-Druck liegt in `gehaeuse/`. Einbau hochkant in der linken unteren Ecke des Lüfterkastens, Klemmen unten, Sensor oben rechts am Luftstrom; die Platine ist auf Leisten geklemmt, weil sie keine Bohrungen hat. Noch nicht gedruckt. Nach einer maßstäblichen Kontrolle am Foto der Einbaustelle passt es neben dem Lüftergehäuse nicht (die Ecke ist ab etwa 40 mm Höhe schmaler als das Gehäuse); offen ist, ob es vor dem Lüftergehäuse Platz hat oder die Platine eine an die Ecke angepasste Form bekommt. Details in `gehaeuse/README.md`
 
 ## 8. Sicherheit
 
