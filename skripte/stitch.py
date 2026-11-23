@@ -25,9 +25,12 @@ def dseg(px, py, x1, y1, x2, y2):
     u = 0 if l2 == 0 else max(0, min(1, ((px - x1) * dx + (py - y1) * dy) / l2))
     return math.hypot(px - x1 - u * dx, py - y1 - u * dy)
 def ok(x, y):
-    if x < 41.0 or x > 69.2 or y < 0.8 or y > 29.2: return False
-    if x > 54.8 and y < 6.9: return False                       # Antenne
-    if x > 60.7 and y > 19.7: return False                      # Thermoschlitz und Sensorinsel
+    # 3,3-V-Bereiche der Platine v1.2: Arm oben, Verbindung links, linker Teil des Riegels
+    arm = 0.8 <= x <= 57.2 and 0.8 <= y <= 17.2
+    steg = 0.8 <= x <= 13.2 and 17.2 < y <= 28.5
+    riegel = 0.8 <= x <= 13.0 and 28.5 < y <= 57.2
+    if not (arm or steg or riegel): return False
+    if x < 16.0 and y < 7.1: return False                       # Antenne
     for x1, y1, x2, y2 in boxes:
         if x1 - R - CLR < x < x2 + R + CLR and y1 - R - CLR < y < y2 + R + CLR: return False
     for x1, y1, x2, y2, w, n in segs:
@@ -36,10 +39,10 @@ def ok(x, y):
         if math.hypot(x - cx, y - cy) < R + r + (CLR if n != "/GND" else 1.0): return False
     return True
 placed = []
-y = 1.5
-while y < 29.3:
-    x = 41.5
-    while x < 69.3:
+y = 1.0
+while y < 57.5:
+    x = 1.0
+    while x < 57.5:
         if ok(x, y) and all(math.hypot(x - px, y - py) >= PITCH for px, py in placed):
             placed.append((x, y))
         x += 0.5

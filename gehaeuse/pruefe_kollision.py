@@ -4,13 +4,13 @@ import sys, numpy as np, trimesh
 wanne, deckel, platine = (trimesh.load(p) for p in sys.argv[1:4])
 for n, m in (("Wanne", wanne), ("Deckel", deckel)):
     print("%-7s geschlossen: %s, Volumen %.1f cm3, Aussenmasse %s mm" % (n, m.is_watertight, m.volume / 1000, np.round(m.extents, 1).tolist()))
-# Bauteile ohne 3D-Modell als Huellquader (x0, y0, z0, x1, y1, z1), Y = 30 - y aus KiCad
+# Bauteile ohne 3D-Modell als Huellquader (x0, y0, z0, x1, y1, z1) in den Koordinaten des 3D-Exports
 HUELLEN = {
-    "X1 Klemmen":    (1.8, 3.15, 1.6, 17.6, 26.85, 7.2),
-    "F1 Sicherung":  (5.95, 1.55, -3.1, 16.05, 4.65, 0.0),
-    "RV1 Varistor":  (10.15, 11.5, -4.5, 16.45, 19.5, 0.0),
-    "C2 X2":         (21.45, 8.56, -1.5, 27.15, 14.26, 0.0),
-    "U4 Sensor":     (65.65, 3.05, 1.6, 67.15, 4.55, 2.1),
+    "X1 Klemmen":    (36.4, 3.15, 1.6, 52.2, 26.85, 7.2),
+    "F1 Sicherung":  (37.95, 25.35, -3.1, 48.05, 28.45, 0.0),
+    "RV1 Varistor":  (37.55, 10.5, -4.5, 43.85, 18.5, 0.0),
+    "C2 X2":         (26.85, 15.74, -1.5, 32.55, 21.44, 0.0),
+    "U4 Sensor":     (62.45, 45.25, 1.6, 63.95, 46.75, 2.5),
 }
 # Punkte: alle Ecken und Dreiecksmitten der Platine, dazu ein Raster auf den Huellquadern
 pts = [platine.vertices, platine.triangles_center]
@@ -18,6 +18,7 @@ for x0, y0, z0, x1, y1, z1 in HUELLEN.values():
     g = np.mgrid[x0:x1:12j, y0:y1:12j, z0:z1:6j].reshape(3, -1).T
     pts.append(g)
 pts = np.vstack(pts)
+pts[np.abs(pts[:, 2]) < 0.02, 2] = 0.02     # Platinenunterseite liegt auf den Leisten auf: nicht als Durchdringung werten
 ok = True
 for n, m in (("Wanne", wanne), ("Deckel", deckel)):
     inside = m.contains(pts)

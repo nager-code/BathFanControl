@@ -9,7 +9,7 @@ TEILE = {
     "U1":  ("ESP32-C3-MINI-1-H4X", "Espressif ESP32-C3-MINI-1-H4X", "C41349510", "JLCPCB Extended; N4 (C2838502) ist abgekuendigt (NRND)"),
     "U2":  ("LTV-814S AC-Optokoppler", "Lite-On LTV-814S-TA1", "C125118", "JLCPCB Extended"),
     "U3":  ("AQH3223A Photo-Triac 1,2A", "Panasonic AQH3223A", "C719698", "JLCPCB Extended; Bestand pruefen"),
-    "U4":  ("SHT40 Feuchte/Temperatur", "Sensirion SHT40-AD1B-R2", "C2909890", "JLCPCB Extended"),
+    "U4":  ("SHT40 Feuchte/Temperatur mit Membran", "Sensirion SHT40-AD1F-R2", "", "mit Polyimid-Membran (IP68), Sensirion-Bestellnr. 3.000.820; bei LCSC nur als Fremdmarke (Tokmas, C54823945) gefunden: Original beistellen. Nicht ueberlackieren"),
     "R1":  ("100k 1% 1206 200V", "1206W4F1003T5E", "C17900", "JLCPCB Basic"),
     "R2":  ("100k 1% 1206 200V", "1206W4F1003T5E", "C17900", "JLCPCB Basic"),
     "R3":  ("100R 1% 0603", "0603WAF1000T5E", "C22775", "JLCPCB Basic"),

@@ -16,5 +16,5 @@ Varistor 275VAC SMD,RV1,Varistor_TDK_CU3225,C211106,TDK CU3225K275G2 (B72650M027
 ESP32-C3-MINI-1-H4X,U1,ESP32-C3-MINI-1,C41349510,Espressif ESP32-C3-MINI-1-H4X,1,JLCPCB Extended; N4 (C2838502) ist abgekuendigt (NRND)
 LTV-814S AC-Optokoppler,U2,LTV-814S_SMDIP-4_W9.53mm,C125118,Lite-On LTV-814S-TA1,1,JLCPCB Extended
 "AQH3223A Photo-Triac 1,2A",U3,AQH3223A_SMD-8-N7,C719698,Panasonic AQH3223A,1,JLCPCB Extended; Bestand pruefen
-SHT40 Feuchte/Temperatur,U4,Sensirion_DFN-4_1.5x1.5mm_P0.8mm_SHT4x_NoCentralPad,C2909890,Sensirion SHT40-AD1B-R2,1,JLCPCB Extended
+SHT40 Feuchte/Temperatur mit Membran,U4,Sensirion_DFN-4_1.5x1.5mm_P0.8mm_SHT4x_NoCentralPad,,Sensirion SHT40-AD1F-R2,1,"mit Polyimid-Membran (IP68), Sensirion-Bestellnr. 3.000.820; bei LCSC nur als Fremdmarke (Tokmas, C54823945) gefunden: Original beistellen. Nicht ueberlackieren"
 WAGO 2061-602/998-404 SMD-Klemme 2-polig (2 Stueck),"X1A,X1B",WAGO_2061-602_2x_SMD,C2765058,2061-602/998-404,2,"JLCPCB Extended; 2 Stueck nebeneinander, in der Bestueckungsdatei als X1A und X1B"

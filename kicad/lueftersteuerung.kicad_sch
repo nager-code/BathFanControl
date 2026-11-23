@@ -4461,7 +4461,7 @@
 				)
 			)
 		)
-		(property "Value" "SHT40-AD1B"
+		(property "Value" "SHT40-AD1F"
 			(at 172.72 238.76 0)
 			(show_name no)
 			(do_not_autoplace no)

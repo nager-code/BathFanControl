@@ -10,6 +10,7 @@ SMD = {
  "C2":  ("lueftersteuerung:C_2220_Murata_GA355_X2", "10n X2 250VAC"),
  "J1":  ("Connector_PinHeader_1.27mm:PinHeader_1x06_P1.27mm_Vertical_SMD_Pin1Left", None),
  "U1":  (None, "ESP32-C3-MINI-1-H4X"),
+ "U4":  (None, "SHT40-AD1F"),
 }
 t=open(src).read()
 def sub1(pat,rep,s,flags=0):

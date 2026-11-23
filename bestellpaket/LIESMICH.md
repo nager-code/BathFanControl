@@ -1,10 +1,10 @@
-# Bestellpaket Lüftersteuerung Bad v1.1
+# Bestellpaket Lüftersteuerung Bad v1.2
 
 ## Leiterplatte
 - `gerber_lueftersteuerung.zip` hochladen (Inhalt liegt auch entpackt in `gerber/`)
-- 2 Lagen, 70 x 30 mm, FR4 1,6 mm, 35 µm Kupfer
+- 2 Lagen, Umriss 68 x 58 mm (keine Rechteckform: Riegel und Arm mit Spalt dazwischen), FR4 1,6 mm, 35 µm Kupfer
 - Kleinste Leiterbahn 0,2 mm, kleinster Abstand 0,2 mm, kleinste Bohrung 0,3 mm (Durchkontaktierung 0,6 mm)
-- Zwei Fräsungen innerhalb der Kontur: Isolationsschlitz 2 x 20 mm und Thermoschlitz 1 mm (zur Unterkante offen)
+- Fräsungen: Isolationsschlitz 2 x 20 mm innerhalb der Kontur, Thermoschlitz 1 mm und der 10 mm breite Spalt zwischen Riegel und Arm als Teil der Außenkontur
 
 ## Bestückung
 - Beidseitig, nur SMD
@@ -18,3 +18,4 @@
 - PS1 (Mean Well IRM-02-3.3S) ist bei LCSC/JLCPCB nicht gelistet: beistellen oder von Hand löten. Ohne LCSC-Nummer überspringt JLCPCB die Position.
 - Drehlage aller gepolten Bauteile in der Bestückungsvorschau prüfen.
 - Lagerbestand der „Extended“-Teile prüfen, vor allem AQH3223A (C719698).
+- U4 (Sensirion SHT40-AD1F-R2, Sensor mit Membran) hat keine LCSC-Nummer: beistellen. Bei LCSC gibt es unter C54823945 nur eine Fremdmarke.

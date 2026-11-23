@@ -1,7 +1,7 @@
 # BathFanControl
 
 Feuchteabhängige Steuerung für einen Badlüfter (KN2 UP, ca. 50 W) an 230 V mit ESP32-C3, SHT40 und WLAN.
-Platine 70 x 30 mm, 2 Lagen, ausschließlich SMD-Bauteile, entworfen mit KiCad 10.
+Platine 68 x 58 mm in einer Form für den Einbau im Lüfterkasten, 2 Lagen, ausschließlich SMD-Bauteile, entworfen mit KiCad 10.
 
 ![3D-Ansicht der Oberseite](doku/platine_3d_oben_schraeg.png)
 
@@ -12,7 +12,7 @@ Klemme, Sicherung, Varistor, X2-Kondensator und Sensor sind in den Bildern verei
 ## Funktion
 
 - 230 V Versorgung, zweiter 230-V-Eingang vom Lichtschalter als Aktivitätssignal
-- Luftfeuchte messen und den Lüfter danach schalten, mit Fortschrittskontrolle und Pausen
+- Luftfeuchte messen (SHT40 mit Membran, nahe am Lüfter-Einlass) und den Lüfter danach schalten, mit Fortschrittskontrolle und Pausen
 - Lüfter über Photo-Triac (AQH3223A), Lichteingang über AC-Optokoppler (LTV-814S)
 - Netzteil Mean Well IRM-02-3.3S, Eigenverbrauch erwartet 0,2 bis 0,3 W
 
@@ -28,7 +28,7 @@ Klemme, Sicherung, Varistor, X2-Kondensator und Sensor sind in den Bildern verei
 | [`skripte/`](skripte) | Skripte, die Platine und Bestellpaket neu erzeugen |
 | [`eingang/`](eingang) | ursprünglich übergebene Dateien (bedrahtete Fassung) |
 
-![Gehäuse in Einbaulage, geschlossen und geöffnet](gehaeuse/bilder/gehaeuse_einbaulage_beide.png)
+![Gehäuse geschlossen und geöffnet](gehaeuse/bilder/gehaeuse_beide.png)
 
 ## Stand
 
