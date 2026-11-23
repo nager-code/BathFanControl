@@ -58,6 +58,7 @@ Die Platine hat jetzt keine bedrahteten Bauteile mehr; Bohrungen gibt es nur noc
 - `kicad/` – Projekt für KiCad 10: Schaltplan, Platine, Regeln (`.kicad_dru`), Symbol- und Footprint-Bibliothek des Projekts
 - `bestellpaket/` – Gerber und Bohrdaten (auch als `gerber_lueftersteuerung.zip`), `BOM_JLCPCB.csv`, `CPL_JLCPCB.csv`, Bestückungspläne, `LIESMICH.md`
 - `doku/` – Schaltplan als PDF, Bilder der Platine (auch 3D-Ansichten und `platine_3d.glb` zum Drehen), DRC-Bericht
+- `gehaeuse/` – Gehäuse für den 3D-Druck: OpenSCAD-Modell, STL für Wanne und Deckel, Bilder
 - `skripte/` – erzeugen alles aus dem ursprünglichen Schaltplan neu (`alles.sh`, `bis_sauber.sh`, `export_fab.sh`); laufen in einem KiCad-10-Container
 - `eingang/` – die ursprünglich übergebenen Dateien
 
@@ -74,7 +75,7 @@ Die Platine hat jetzt keine bedrahteten Bauteile mehr; Bohrungen gibt es nur noc
 
 - Firmware (Regellogik siehe erste Übergabe, Abschnitt 7; Lüfter an GPIO10, Licht an GPIO3 low-aktiv, SHT40 an GPIO6/7, Adresse 0x44)
 - Home Assistant vorhanden? (entscheidet über ESPHome oder eigene Firmware)
-- Gehäuse und Befestigung: die Platine hat keine Befestigungsbohrungen
+- Gehäuse: Entwurf für den 3D-Druck liegt in `gehaeuse/` (Platine auf Leisten geklemmt, weil sie keine Bohrungen hat); noch nicht gedruckt, offene Punkte in `gehaeuse/README.md`
 
 ## 8. Sicherheit
 
