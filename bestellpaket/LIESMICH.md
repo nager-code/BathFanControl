@@ -15,7 +15,7 @@
 
 ## Besonderheiten
 - X1 besteht aus zwei 2-poligen Klemmen WAGO 2061-602; in Stückliste und Bestückungsdatei heißen sie X1A und X1B.
-- PS1 (Mean Well IRM-02-3.3S) ist bei LCSC/JLCPCB nicht gelistet: beistellen oder von Hand löten. Ohne LCSC-Nummer überspringt JLCPCB die Position.
+- PS1 (Mean Well IRM-02-3.3S, C6062464) ist bei JLCPCB gelistet, hatte am 23.11.2026 aber Bestand 0. Das Teil vor der Bestückung über die Teilebestellung von JLCPCB vorbestellen oder beistellen. Ein anderes SMD-Netzmodul (3,3 V oder 5 V) war dort nicht am Lager; am Lager sind nur bedrahtete Module wie Hi-Link HLK-PM03 (C209904), für die die Platine geändert werden müsste.
 - Drehlage aller gepolten Bauteile in der Bestückungsvorschau prüfen. Bei der RGB-LED D1 liegt die Eckmarke (Pin 1, rot) unten rechts, wenn die Klemmen rechts unten liegen.
-- Lagerbestand der „Extended“-Teile prüfen, vor allem AQH3223A (C719698).
-- U4 (Sensirion SHT40-AD1F-R2, Sensor mit Membran) hat keine LCSC-Nummer: beistellen. Bei LCSC gibt es unter C54823945 nur eine Fremdmarke.
+- Alle übrigen Teile waren am 23.11.2026 bei JLCPCB am Lager. Knapp: AQH3223A (C719698) mit 7 Stück und der X2-Kondensator (C237426) mit 448 Stück. Ausweichtyp für U3 aus derselben Reihe: AQH3213A (C91557, mit Nullspannungsschalter); vor einem Tausch die Pinbelegung im Datenblatt prüfen.
+- U4 ist der Sensirion SHT40-AD1F-R2 mit Membran (C7461846). Nicht mit C54823945 verwechseln: das ist eine Fremdmarke, deren Datenblatt keine Membran nennt.

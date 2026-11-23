@@ -40,11 +40,11 @@ Hinweis zum Snubber: Panasonic nennt allgemein 0,1 µF und 20–100 Ω. Gebliebe
 | X1 | Phoenix MKDS 4-polig | 2 x WAGO 2061-602/998-404 (je 2-polig, Raster 6 mm, 0,5–1,5 mm², 250 V/17,5 A) | C2765058 |
 | F1 | TR5 T1A | Littelfuse 0443001.DR, T1A 250 V, 10 x 3 mm (Pads passen auch für Schurter UMT 250) | C95352 |
 | RV1 | S07K275 | TDK CU3225K275G2, 275 VAC, 8,0 x 6,3 mm | C211106 |
-| PS1 | IRM-02-3.3 | IRM-02-3.3S | nicht gelistet |
+| PS1 | IRM-02-3.3 | IRM-02-3.3S | C6062464 (am 23.11.2026 Bestand 0) |
 | C1 | Elko radial | Elko SMD 100 µF 16 V, 6,3 x 5,4 mm | C970684 |
 | C2 | X2 Folie 10 nF | Murata GA355QR7GB103KW01L, 10 nF X2 250 VAC, Bauform 2220 | C237426 |
 | J1 | Lochreihe 1,27 mm | SMD-Pads 1,27 mm, unbestückt | – |
-| U4 | SHT40-AD1B | SHT40-AD1F-R2 mit Polyimid-Membran (IP68), gleiche Pins, gleicher Footprint, Adresse 0x44 | Original nicht gelistet |
+| U4 | SHT40-AD1B | SHT40-AD1F-R2 mit Polyimid-Membran (IP68), gleiche Pins, gleicher Footprint, Adresse 0x44 | C7461846 |
 | D1, R13–R15 | – | neu: RGB-LED Foshan NationStar FM-B2020RGBA-HG (2,1 x 2,1 mm) mit Vorwiderständen 680 Ω / 220 Ω / 150 Ω | C42421005, C23228, C22962, C22808 |
 
 Die Platine hat keine bedrahteten Bauteile mehr; Bohrungen gibt es nur für Durchkontaktierungen und für die beiden Schraubdome des Gehäuses.
@@ -75,8 +75,8 @@ Die Platine ist so gezeichnet, wie sie eingebaut von vorn zu sehen ist: unten li
 
 1. **Footprint der WAGO-Klemme.** Padgrößen und Raster stammen aus dem Datenblatt, die Lage der Pads zur Gehäusekante ist aus der Zeichnung abgeleitet. Mit dem CAD-Footprint von WAGO vergleichen.
 2. **Drehlage in der JLCPCB-Vorschau.** Die Winkel in `CPL_JLCPCB.csv` sind KiCad-Winkel; JLCPCB dreht einzelne Gehäuse anders. In der Bestückungsvorschau jedes gepolte Bauteil ansehen (U1–U4, C1, D1, PS1, X1A/X1B).
-3. **Sensor.** Der SHT40-AD1F-R2 (Sensirion-Bestellnummer 3.000.820) war bei LCSC nur als Fremdmarke zu finden (Tokmas, C54823945); das Original beistellen. Die Membran nicht überlackieren.
-4. **Lagerbestand.** AQH3223A hatte bei LCSC Bestand 0, IRM-02-3.3S ist dort nicht gelistet (beistellen oder von Hand löten), der Bestand von JLCPCB selbst war nicht abrufbar.
+3. **Sensor.** U4 ist der Sensirion SHT40-AD1F-R2 mit Polyimid-Membran, bei JLCPCB unter C7461846 am Lager. Unter C54823945 gibt es eine Fremdmarke (Tokmas), deren Datenblatt keine Membran nennt: nicht verwenden. Die Membran nicht überlackieren.
+4. **Lagerbestand bei JLCPCB** (Bauteilsuche am 23.11.2026): alle Teile der Stückliste sind dort gelistet und bis auf das Netzteil am Lager. Das IRM-02-3.3S (C6062464) hatte Bestand 0 und muss vorbestellt oder beigestellt werden; ein anderes SMD-Netzmodul war nicht am Lager, nur bedrahtete wie Hi-Link HLK-PM03 (C209904, 3,3 V/1 A). Knapp ist der AQH3223A mit 7 Stück; Ausweichtyp AQH3213A (C91557, Nullspannungsschalter, Pinbelegung vor dem Tausch prüfen).
 5. **Sicherung.** Die 0443001.DR schaltet 50 A bei 250 VAC ab. Wer mehr will: Schurter UMT 250 (200 A) passt auf dieselben Pads.
 6. **Antenne.** Die Antenne sitzt an der Oberkante des Arms, gut 25 mm über dem Netzteil; links liegt die Kastenwand, dahinter das Lüftergehäuse. Wie gut das WLAN im Kasten ist, zeigt erst ein Versuch.
 7. **Typenschild des KN2:** die elektrischen Daten sind weiter nicht bekannt. Im Kasten liegen flexible Litzen mit Steckverbindern; die Klemmen nehmen feindrähtige Leiter von 0,5 bis 1,5 mm² auf.

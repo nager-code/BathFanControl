@@ -1,5 +1,5 @@
 Comment,Designator,Footprint,LCSC Part #,Manufacturer Part,Quantity,Note
-"100u 16V Elko SMD 6,3x5,4",C1,CP_Elec_6.3x5.4,C970684,RVT1C101M0605,1,Bestand/Typ bei JLCPCB pruefen
+"100u 16V Elko SMD 6,3x5,4",C1,CP_Elec_6.3x5.4,C970684,RVT1C101M0605,1,JLCPCB Extended
 10n X2 250VAC 2220,C2,C_2220_Murata_GA355_X2,C237426,Murata GA355QR7GB103KW01L,1,JLCPCB Extended; Sicherheitskondensator Klasse X2
 470n 25V X7R 0603,C3,C_0603_1608Metric,C1623,CL10B474KA8NNNC,1,JLCPCB Basic
 10u 25V X5R 0805,C4,C_0805_2012Metric,C15850,CL21A106KAYNNNE,1,JLCPCB Basic
@@ -7,7 +7,7 @@ Comment,Designator,Footprint,LCSC Part #,Manufacturer Part,Quantity,Note
 1u 50V X5R 0603,C6,C_0603_1608Metric,C15849,CL10A105KB8NNNC,1,JLCPCB Basic
 RGB-LED 2020 gemeinsame Anode,D1,LED_RGB_NationStar_FM-B2020,C42421005,Foshan NationStar FM-B2020RGBA-HG,1,"JLCPCB Extended; Drehlage in der JLC-Vorschau pruefen (Eckmarke = Pin 1 = rot, unten rechts)"
 Sicherung T1A 250VAC SMD 10x3,F1,Fuse_SMD_10x3mm_Littelfuse443_UMT250,C95352,Littelfuse 0443001.DR,1,JLCPCB Extended; alternativ Schurter UMT 250 1A T (3403.0166.11)
-"Netzteil 230V -> 3,3V 0,6A SMD",PS1,Converter_ACDC_MeanWell_IRM-02-xx_SMD,,Mean Well IRM-02-3.3S,1,bei LCSC/JLCPCB nicht gelistet: beistellen oder von Hand loeten
+"Netzteil 230V -> 3,3V 0,6A SMD",PS1,Converter_ACDC_MeanWell_IRM-02-xx_SMD,C6062464,Mean Well IRM-02-3.3S,1,"JLCPCB Extended, am 23.11.2026 Bestand 0: ueber die Teilebestellung von JLCPCB vorbestellen oder beistellen. Kein anderes SMD-Netzmodul bei JLCPCB am Lager"
 100k 1% 1206 200V,"R1,R2",R_1206_3216Metric,C17900,1206W4F1003T5E,2,JLCPCB Basic
 100R 1% 0603,R3,R_0603_1608Metric,C22775,0603WAF1000T5E,1,JLCPCB Basic
 220k 1% 0603,R4,R_0603_1608Metric,C22961,0603WAF2203T5E,1,JLCPCB Basic
@@ -19,6 +19,6 @@ Sicherung T1A 250VAC SMD 10x3,F1,Fuse_SMD_10x3mm_Littelfuse443_UMT250,C95352,Lit
 Varistor 275VAC SMD,RV1,Varistor_TDK_CU3225,C211106,TDK CU3225K275G2 (B72650M0271K072),1,"JLCPCB Extended; Bauform 8,0 x 6,3 mm"
 ESP32-C3-MINI-1-H4X,U1,ESP32-C3-MINI-1,C41349510,Espressif ESP32-C3-MINI-1-H4X,1,JLCPCB Extended; N4 (C2838502) ist abgekuendigt (NRND)
 LTV-814S AC-Optokoppler,U2,LTV-814S_SMDIP-4_W9.53mm,C125118,Lite-On LTV-814S-TA1,1,JLCPCB Extended
-"AQH3223A Photo-Triac 1,2A",U3,AQH3223A_SMD-8-N7,C719698,Panasonic AQH3223A,1,JLCPCB Extended; Bestand pruefen
-SHT40 Feuchte/Temperatur mit Membran,U4,Sensirion_DFN-4_1.5x1.5mm_P0.8mm_SHT4x_NoCentralPad,,Sensirion SHT40-AD1F-R2,1,"mit Polyimid-Membran (IP68), Sensirion-Bestellnr. 3.000.820; bei LCSC nur als Fremdmarke (Tokmas, C54823945) gefunden: Original beistellen. Nicht ueberlackieren"
+"AQH3223A Photo-Triac 1,2A",U3,AQH3223A_SMD-8-N7,C719698,Panasonic AQH3223A,1,"JLCPCB Extended, am 23.11.2026 nur 7 Stueck am Lager. Ausweichtyp gleicher Reihe mit Nullspannungsschalter: AQH3213A (C91557, 91 Stueck), vor dem Tausch Pinbelegung im Datenblatt pruefen"
+SHT40 Feuchte/Temperatur mit Membran,U4,Sensirion_DFN-4_1.5x1.5mm_P0.8mm_SHT4x_NoCentralPad,C7461846,Sensirion SHT40-AD1F-R2,1,JLCPCB Extended; mit Polyimid-Membran (Endung F). Nicht die Fremdmarke C54823945 nehmen. Nicht ueberlackieren
 WAGO 2061-602/998-404 SMD-Klemme 2-polig (2 Stueck),"X1A,X1B",WAGO_2061-602_2x_SMD,C2765058,2061-602/998-404,2,"JLCPCB Extended; 2 Stueck nebeneinander, in der Bestueckungsdatei als X1A und X1B"

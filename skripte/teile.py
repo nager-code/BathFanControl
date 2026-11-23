@@ -1,15 +1,15 @@
 # Bauteildaten fuer Stueckliste und Bestueckung: Referenz -> (Bezeichnung, Hersteller-Typ, LCSC-Nr., Hinweis)
-# LCSC/JLCPCB-Nummern am 23.11.2026 ueber jlcpcb.com/lcsc.com nachgeschlagen; Lagerbestand vor der Bestellung pruefen.
+# LCSC/JLCPCB-Nummern und Lagerbestand am 23.11.2026 in der Bauteilsuche von jlcpcb.com nachgeschlagen; vor der Bestellung erneut pruefen.
 R10K = ("10k 1% 0603", "0603WAF1002T5E", "C25804", "JLCPCB Basic")
 TEILE = {
     "X1":  ("WAGO 2061-602/998-404 SMD-Klemme 2-polig (2 Stueck)", "2061-602/998-404", "C2765058", "JLCPCB Extended; 2 Stueck nebeneinander, in der Bestueckungsdatei als X1A und X1B"),
     "F1":  ("Sicherung T1A 250VAC SMD 10x3", "Littelfuse 0443001.DR", "C95352", "JLCPCB Extended; alternativ Schurter UMT 250 1A T (3403.0166.11)"),
     "RV1": ("Varistor 275VAC SMD", "TDK CU3225K275G2 (B72650M0271K072)", "C211106", "JLCPCB Extended; Bauform 8,0 x 6,3 mm"),
-    "PS1": ("Netzteil 230V -> 3,3V 0,6A SMD", "Mean Well IRM-02-3.3S", "", "bei LCSC/JLCPCB nicht gelistet: beistellen oder von Hand loeten"),
+    "PS1": ("Netzteil 230V -> 3,3V 0,6A SMD", "Mean Well IRM-02-3.3S", "C6062464", "JLCPCB Extended, am 23.11.2026 Bestand 0: ueber die Teilebestellung von JLCPCB vorbestellen oder beistellen. Kein anderes SMD-Netzmodul bei JLCPCB am Lager"),
     "U1":  ("ESP32-C3-MINI-1-H4X", "Espressif ESP32-C3-MINI-1-H4X", "C41349510", "JLCPCB Extended; N4 (C2838502) ist abgekuendigt (NRND)"),
     "U2":  ("LTV-814S AC-Optokoppler", "Lite-On LTV-814S-TA1", "C125118", "JLCPCB Extended"),
-    "U3":  ("AQH3223A Photo-Triac 1,2A", "Panasonic AQH3223A", "C719698", "JLCPCB Extended; Bestand pruefen"),
-    "U4":  ("SHT40 Feuchte/Temperatur mit Membran", "Sensirion SHT40-AD1F-R2", "", "mit Polyimid-Membran (IP68), Sensirion-Bestellnr. 3.000.820; bei LCSC nur als Fremdmarke (Tokmas, C54823945) gefunden: Original beistellen. Nicht ueberlackieren"),
+    "U3":  ("AQH3223A Photo-Triac 1,2A", "Panasonic AQH3223A", "C719698", "JLCPCB Extended, am 23.11.2026 nur 7 Stueck am Lager. Ausweichtyp gleicher Reihe mit Nullspannungsschalter: AQH3213A (C91557, 91 Stueck), vor dem Tausch Pinbelegung im Datenblatt pruefen"),
+    "U4":  ("SHT40 Feuchte/Temperatur mit Membran", "Sensirion SHT40-AD1F-R2", "C7461846", "JLCPCB Extended; mit Polyimid-Membran (Endung F). Nicht die Fremdmarke C54823945 nehmen. Nicht ueberlackieren"),
     "R1":  ("100k 1% 1206 200V", "1206W4F1003T5E", "C17900", "JLCPCB Basic"),
     "R2":  ("100k 1% 1206 200V", "1206W4F1003T5E", "C17900", "JLCPCB Basic"),
     "R3":  ("100R 1% 0603", "0603WAF1000T5E", "C22775", "JLCPCB Basic"),
@@ -17,7 +17,7 @@ TEILE = {
     "R5":  ("100R 1% 1206", "1206W4F1000T5E", "C17901", "JLCPCB Basic; impulsfest waere Panasonic ERJ-P08F1000V (C4195341)"),
     "R6": R10K, "R7": R10K, "R8": R10K, "R9": R10K, "R10": R10K, "R11": R10K,
     "R12": ("3k3 1% 0603", "0603WAF3301T5E", "C22978", "nur bei Bedarf bestuecken"),
-    "C1":  ("100u 16V Elko SMD 6,3x5,4", "RVT1C101M0605", "C970684", "Bestand/Typ bei JLCPCB pruefen"),
+    "C1":  ("100u 16V Elko SMD 6,3x5,4", "RVT1C101M0605", "C970684", "JLCPCB Extended"),
     "C2":  ("10n X2 250VAC 2220", "Murata GA355QR7GB103KW01L", "C237426", "JLCPCB Extended; Sicherheitskondensator Klasse X2"),
     "C3":  ("470n 25V X7R 0603", "CL10B474KA8NNNC", "C1623", "JLCPCB Basic"),
     "C4":  ("10u 25V X5R 0805", "CL21A106KAYNNNE", "C15850", "JLCPCB Basic"),
