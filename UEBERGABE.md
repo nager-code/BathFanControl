@@ -69,13 +69,14 @@ Die Platine hat jetzt keine bedrahteten Bauteile mehr; Bohrungen gibt es nur noc
 3. **Lagerbestand.** AQH3223A hatte bei LCSC Bestand 0, IRM-02-3.3S ist dort nicht gelistet (beistellen oder von Hand löten), der Bestand von JLCPCB selbst war nicht abrufbar.
 4. **Sicherung.** Die 0443001.DR schaltet 50 A bei 250 VAC ab. Wer mehr will: Schurter UMT 250 (200 A) passt auf dieselben Pads.
 5. **Antenne.** Das Netzteil steht 4 mm neben dem Antennenbereich; Espressif empfiehlt 15 mm Freiraum. Auf 70 x 30 mm ist das nicht einzuhalten, die Reichweite wird darunter leiden.
-6. **Typenschild und Anschlussklemme des KN2** liegen weiter nicht vor.
+6. **Typenschild des KN2:** die elektrischen Daten sind weiter nicht bekannt. Im Kasten liegen flexible Litzen mit Steckverbindern; die Klemmen nehmen feindrähtige Leiter von 0,5 bis 1,5 mm² auf.
+7. **Schutzlack.** Die Steuerung sitzt im Lüfterkasten im Strom der Badluft; die Platine sollte lackiert werden (Sensor, Klemmen und Programmierpads aussparen).
 
 ## 7. Noch offen
 
 - Firmware (Regellogik siehe erste Übergabe, Abschnitt 7; Lüfter an GPIO10, Licht an GPIO3 low-aktiv, SHT40 an GPIO6/7, Adresse 0x44)
 - Home Assistant vorhanden? (entscheidet über ESPHome oder eigene Firmware)
-- Gehäuse: Entwurf für den 3D-Druck liegt in `gehaeuse/` (Platine auf Leisten geklemmt, weil sie keine Bohrungen hat); noch nicht gedruckt, offene Punkte in `gehaeuse/README.md`
+- Gehäuse: Entwurf für den 3D-Druck liegt in `gehaeuse/`. Einbau hochkant in der linken unteren Ecke des Lüfterkastens, Klemmen unten, Sensor oben rechts am Luftstrom; die Platine ist auf Leisten geklemmt, weil sie keine Bohrungen hat. Noch nicht gedruckt, der Platz in der Ecke ist nicht nachgemessen; offene Punkte in `gehaeuse/README.md`
 
 ## 8. Sicherheit
 

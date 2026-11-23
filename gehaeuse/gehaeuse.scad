@@ -1,15 +1,17 @@
 // Gehaeuse fuer die Lueftersteuerung Bad (Platine v1.1, 70 x 30 mm) - Wanne und Deckel fuer den 3D-Druck
+// Ausfuehrung fuer den Einbau hochkant in der linken unteren Ecke des Luefterkastens:
+// Klemmen unten, Sensor oben rechts im Luftstrom, glatte Rueckseite und glatte linke Seite.
 //
-// Koordinaten wie im 3D-Export der Platine: X entlang der Platine (Klemmen bei X = 0), Y quer
-// (Y = 30 - y aus KiCad), Z nach oben, Platinenunterseite bei Z = 0.
+// Koordinaten wie im 3D-Export der Platine: X entlang der Platine (Klemmen bei X = 0, im Einbau unten),
+// Y quer (Y = 30 - y aus KiCad; im Einbau zeigt Y = 0 nach rechts zum Luefter), Z = Platinenunterseite 0,
+// Deckel bei +Z (im Einbau vorn).
 //
 // Aufruf:  openscad -D 'teil="wanne"'  -o wanne.stl  gehaeuse.scad
 //          openscad -D 'teil="deckel"' -o deckel.stl gehaeuse.scad
-// teil = "wanne" | "deckel" | "zusammen" | "offen" | "schnitt"
+// teil = "wanne" | "deckel" | "zusammen" | "offen" | "schnitt" | "einbau" | "einbau_offen"
 
 teil = "zusammen";
-laschen = true;          // Befestigungslaschen an den Stirnseiten
-mit_platine = true;      // Platine in den Ansichten "offen" und "schnitt" einblenden
+mit_platine = true;      // Platine in den Ansichten einblenden
 
 /* [Platine] */
 pl = 70;  pb = 30;  pd = 1.6;     // Laenge, Breite, Dicke
@@ -21,7 +23,7 @@ spiel   = 0.3;           // Luft rund um die Platine
 wand    = 2.0;
 boden   = 2.0;
 decke   = 2.0;
-kammer  = 15;            // Anschlussraum vor den Klemmen
+kammer  = 20.5;          // Anschlussraum vor den Klemmen (im Einbau unten)
 luft_u  = 1.0;           // Luft unter dem hoechsten Bauteil unten
 luft_o  = 0.8;           // Luft ueber dem Netzteil
 auflage = 1.2;           // Breite der Auflageleisten an den Laengsseiten
@@ -30,17 +32,22 @@ falz    = 1.5;           // Hoehe der Ueberlappung zwischen Wanne und Deckel
 fuge    = 0.2;
 
 /* [Leitungen] */
-ader_y  = [24, 18, 12, 6];                 // N, Licht, Luefter, L
+ader_y   = [24, 18, 12, 6];                // Klemmen N, Licht, Luefter, L
 ader_txt = ["N", "Licht", "Lüfter", "L"];
-ader_d  = 4.5;           // Oeffnung je Ader (1,5 mm2 mit Isolierung ca. 3 mm)
+schlitz_h = 4.5;         // Hoehe der seitlichen Leitungsoeffnung
+schlitz_l = 10.5;        // Laenge der Leitungsoeffnung
 
-/* [Verschraubung] */
-dom_x   = [-9, 57];      // Lage der Schraubdome an den Laengsseiten
-dom_r   = 3.8;
-dom_ab  = 2.4;           // Mitte der Schraube ausserhalb der Wand
+/* [Verschraubung: zwei Schrauben im Anschlussraum, oben ist der Deckel eingehaengt] */
+dom_ab    = 3.0;         // Abstand der Schraubenmitte von den Innenwaenden
+dom_r     = 3.0;         // Dom in der Wanne
+rohr_r    = 3.6;         // Schraubrohr im Deckel
 schr_kern = 2.5;         // Kernloch fuer Kunststoffschraube 3 mm
 schr_durch = 3.4;
-schr_kopf = 6.0;
+schr_kopf = 5.8;
+
+/* [Einhaengenase am oberen Ende] */
+nase_y  = [0.6, 8.2];    // Bereich in Y (dort sitzt am Platinenrand kein Bauteil)
+nase_t  = 0.8;           // Eingriff in die Stirnwand der Wanne
 
 // ---- abgeleitete Masse
 xi0 = -kammer - spiel;   xi1 = pl + spiel;        // Innenraum in X
@@ -49,21 +56,25 @@ zi0 = -h_unten - luft_u; zi1 = pd + h_oben + luft_o;   // Innenraum in Z
 xa0 = xi0 - wand; xa1 = xi1 + wand; ya0 = yi0 - wand; ya1 = yi1 + wand;
 za0 = zi0 - boden; za1 = zi1 + decke;
 z_falz = z_teil - falz;
+dom_x = xi0 + dom_ab;
+dom_ys = [yi0 + dom_ab, yi1 - dom_ab];
+schlitz_x0 = dom_x + rohr_r + 0.6;                // Leitungsoeffnung beginnt hinter dem Schraubrohr
 $fn = 48;
 
 module quader(x0, y0, z0, x1, y1, z1) { translate([x0, y0, z0]) cube([x1 - x0, y1 - y0, z1 - z0]); }
 
-module aderloecher() {
-    for (y = ader_y) translate([xa0 - 1, y, z_teil]) rotate([0, 90, 0]) cylinder(d = ader_d, h = wand + 2);
+// seitliche Leitungsoeffnung in der rechten Laengswand (Y = 0), je zur Haelfte in Wanne und Deckel
+module leitungsschlitz() {
+    hull() for (x = [schlitz_x0 + schlitz_h / 2, schlitz_x0 + schlitz_l - schlitz_h / 2])
+        translate([x, ya0 - 1, z_teil]) rotate([-90, 0, 0]) cylinder(d = schlitz_h, h = wand + 2);
 }
 
-module dom_stellen() { for (x = dom_x) for (y = [ya0 - dom_ab, ya1 + dom_ab]) translate([x, y, 0]) children(); }
-
-module dom_koerper(z0, z1) {
-    dom_stellen() translate([0, 0, z0]) cylinder(r = dom_r, h = z1 - z0);
-    for (x = dom_x) {                      // Verbindung zur Wand
-        quader(x - dom_r, ya0 - dom_ab, z0, x + dom_r, ya0 + 0.5, z1);
-        quader(x - dom_r, ya1 - 0.5, z0, x + dom_r, ya1 + dom_ab, z1);
+module dom(r, z0, z1) {          // Schraubdom in den beiden unteren Ecken, mit der Wand verschmolzen
+    for (y = dom_ys) {
+        translate([dom_x, y, z0]) cylinder(r = r, h = z1 - z0);
+        quader(xi0 - 0.5, y < 15 ? yi0 - 0.5 : y, z0, dom_x, y < 15 ? y : yi1 + 0.5, z1);
+        quader(xi0 - 0.5, y - r, z0, dom_x, y + r, z1);
+        quader(dom_x - r, y < 15 ? yi0 - 0.5 : y, z0, dom_x + r, y < 15 ? y : yi1 + 0.5, z1);
     }
 }
 
@@ -74,26 +85,24 @@ module wanne() {
             difference() {
                 quader(xa0, ya0, za0, xa1, ya1, z_teil);
                 quader(xi0, yi0, zi0, xi1, yi1, z_teil + 1);
-                // Falz: aeussere Wandhaelfte oben abnehmen
+                // Falz: aeussere Wandhaelfte oben abnehmen (nicht an der oberen Stirnwand, dort haengt der Deckel ein)
                 difference() {
-                    quader(xa0 - 1, ya0 - 1, z_falz, xa1 + 1, ya1 + 1, z_teil + 1);
-                    quader(xa0 + wand / 2, ya0 + wand / 2, z_falz - 1, xa1 - wand / 2, ya1 - wand / 2, z_teil + 2);
+                    quader(xa0 - 1, ya0 - 1, z_falz, xi1, ya1 + 1, z_teil + 1);
+                    quader(xa0 + wand / 2, ya0 + wand / 2, z_falz - 1, xi1 + 1, ya1 - wand / 2, z_teil + 2);
                 }
             }
             // Auflageleisten fuer die Platine (nur an den Laengskanten, dort sitzt unten kein Bauteil)
             quader(-spiel, yi0, zi0, xi1, yi0 + auflage, 0);
             quader(-spiel, yi1 - auflage, zi0, xi1, yi1, 0);
-            // Anschlaege links: die Platine kann nicht in den Anschlussraum rutschen
+            // Anschlaege: die Platine kann nicht in den Anschlussraum rutschen
             quader(-spiel - 2, yi0, zi0, -spiel, yi0 + 2.7, pd);
             quader(-spiel - 2, yi1 - 2.7, zi0, -spiel, yi1, pd);
-            dom_koerper(za0, z_falz);
-            if (laschen) for (x = [[xa0 - 11, xa0], [xa1, xa1 + 11]]) difference() {
-                quader(x[0], 15 - 8, za0, x[1], 15 + 8, za0 + 3);
-                translate([(x[0] + x[1]) / 2, 15, za0 - 1]) cylinder(d = 4.5, h = 5);
-            }
+            dom(dom_r, zi0, z_teil);
         }
-        aderloecher();
-        dom_stellen() translate([0, 0, z_falz - 9]) cylinder(d = schr_kern, h = 10);
+        leitungsschlitz();
+        for (y = dom_ys) translate([dom_x, y, z_teil - 9]) cylinder(d = schr_kern, h = 10);
+        // Tasche fuer die Einhaengenase des Deckels
+        quader(xi1 - 0.1, nase_y[0] - 0.3, pd, xi1 + nase_t + 0.25, nase_y[1] + 0.3, pd + 1.5);
     }
 }
 
@@ -104,40 +113,52 @@ module rippe(x0, x1, seite) {      // Niederhalter an der Laengswand, drueckt au
     quader(x0, seite < 0 ? yi0 - 0.1 : yi1 - 0.9, z_teil, x1, seite < 0 ? yi0 + 0.9 : yi1 + 0.1, zi1 + 0.1);
 }
 
+module einhaengenase() {
+    // Steg innen an der oberen Stirnwand, reicht bis knapp ueber die Platine; die Nase greift in die Wanne.
+    quader(xi1 - 1.1, nase_y[0], pd + 0.2, xi1 - 0.15, nase_y[1], 6.5);
+    quader(xi1 - 1.1, nase_y[0], z_teil, xi1 + 0.1, nase_y[1], 6.5);
+    translate([0, nase_y[1], 0]) rotate([90, 0, 0]) linear_extrude(nase_y[1] - nase_y[0])
+        polygon([[xi1 - 0.2, pd + 0.2], [xi1 + nase_t, pd + 0.2], [xi1 + nase_t, pd + 0.4], [xi1 - 0.2, pd + 0.6 + nase_t]]);
+}
+
 module deckel() {
     difference() {
         union() {
             difference() {
                 union() {
                     quader(xa0, ya0, z_teil, xa1, ya1, za1);
-                    // Falz: aeussere Wandhaelfte greift ueber die Wanne
+                    // Falz: aeussere Wandhaelfte greift ueber die Wanne (nicht an der oberen Stirnwand)
                     difference() {
-                        quader(xa0, ya0, z_falz + fuge, xa1, ya1, z_teil + 0.01);
-                        quader(xa0 + wand / 2 + fuge, ya0 + wand / 2 + fuge, z_falz - 1, xa1 - wand / 2 - fuge, ya1 - wand / 2 - fuge, z_teil + 1);
+                        quader(xa0, ya0, z_falz + fuge, xi1 - fuge, ya1, z_teil + 0.01);
+                        quader(xa0 + wand / 2 - fuge, ya0 + wand / 2 - fuge, z_falz - 1, xi1 + 1, ya1 - wand / 2 + fuge, z_teil + 1);
                     }
                 }
                 quader(xi0, yi0, z_teil - 1, xi1, yi1, zi1);
             }
-            dom_koerper(z_falz + fuge, za1);
+            dom(rohr_r, z_teil, zi1 + 0.1);
+            einhaengenase();
             // Niederhalter fuer die Platine
             for (s = [-1, 1]) { rippe(0.2, 2.2, s); rippe(53, 55, s); }
             rippe(68.0, 69.8, -1);
-            // Trennwaende der Sensorkammer (0,5 mm ueber der Platine, am rechten Rand als Niederhalter)
+            // Trennwaende der Sensorkammer (0,5 mm ueber der Platine, am Rand als Niederhalter)
             quader(60.2, 9.7, pd + 0.5, 69.2, 10.7, zi1 + 0.1);
-            quader(69.2, 9.7, pd + 0.15, xi1 + 0.1, 10.7, zi1 + 0.1);
-            quader(60.2, yi0 - 0.1, pd + 0.5, 61.2, 10.7, zi1 + 0.1);
+            quader(69.2, 9.7, pd + 0.15, xi1 - 0.2, 10.7, zi1 + 0.1);
+            quader(69.2, 9.7, z_teil, xi1 + 0.1, 10.7, zi1 + 0.1);
+            quader(60.2, yi0 + 0.2, pd + 0.5, 61.2, 10.7, zi1 + 0.1);
+            quader(60.2, yi0 - 0.1, z_teil, 61.2, 10.7, zi1 + 0.1);
         }
-        aderloecher();
+        leitungsschlitz();
         // Schrauben: Durchgangsloch und Senkung fuer den Kopf von oben
-        dom_stellen() { translate([0, 0, 0]) cylinder(d = schr_durch, h = za1 + 1); translate([0, 0, z_teil + 2.5]) cylinder(d = schr_kopf, h = za1); }
-        // Lueftungsschlitze der Sensorkammer: Laengswand, Stirnwand, Decke
-        for (x = [62.8, 65.0, 67.2]) quader(x - 0.75, ya0 - 1, 6, x + 0.75, yi0 + 0.15, 14);
-        for (y = [2.0, 4.5, 7.0]) quader(xi1 - 0.15, y - 0.75, 6, xa1 + 1, y + 0.75, 14);
+        for (y = dom_ys) translate([dom_x, y, 0]) { cylinder(d = schr_durch, h = za1 + 1); translate([0, 0, z_teil + 2.5]) cylinder(d = schr_kopf, h = za1); }
+        // Lueftungsschlitze der Sensorkammer: rechte Laengswand, obere Stirnwand, Decke
+        for (x = [62.8, 65.0, 67.2]) quader(x - 0.75, ya0 - 1, 6, x + 0.75, yi0 + 0.15, 15);
+        for (y = [2.0, 4.5, 7.0]) quader(xi1 - 0.15, y - 0.75, 8, xa1 + 1, y + 0.75, 15);
         for (x = [63.0, 65.5, 68.0]) quader(x - 0.75, 2, zi1 - 1, x + 0.75, 8, za1 + 1);
-        // Beschriftung der Adern und Warnhinweis (vertieft)
-        for (i = [0 : 3]) translate([xa0 + 2.5, ader_y[i], za1 - 0.6]) linear_extrude(1)
-            text(ader_txt[i], size = 3.6, font = "DejaVu Sans:style=Bold", valign = "center");
-        translate([24, 15, za1 - 0.6]) linear_extrude(1) text("230 V~", size = 6, font = "DejaVu Sans:style=Bold", valign = "center");
+        // Beschriftung (vertieft): Klemmenbelegung, Warnhinweis, Einbaurichtung
+        for (i = [0 : 3]) translate([dom_x + rohr_r + 1.2, ader_y[i], za1 - 0.6]) linear_extrude(1)
+            text(ader_txt[i], size = 3.4, font = "DejaVu Sans:style=Bold", valign = "center");
+        translate([20, 18.5, za1 - 0.6]) linear_extrude(1) text("230 V~", size = 5.5, font = "DejaVu Sans:style=Bold", valign = "center");
+        translate([20, 10, za1 - 0.6]) linear_extrude(1) text("OBEN >", size = 4.2, font = "DejaVu Sans:style=Bold", valign = "center");
     }
 }
 
@@ -152,13 +173,19 @@ module platine() {
     }
 }
 
+// Einbaulage: X nach oben, Deckel zum Betrachter, Y = 0 (Sensorseite) nach rechts
+module einbaulage() { multmatrix([[0, -1, 0, 0], [0, 0, -1, 0], [1, 0, 0, 0]]) children(); }
+
+c_w = [0.85, 0.85, 0.82];  c_d = [0.75, 0.78, 0.8];
 if (teil == "wanne") wanne();
 if (teil == "deckel") translate([0, 0, za1]) rotate([180, 0, 0]) deckel();     // Druckrichtung: Decke auf dem Bett
 if (teil == "deckel_lage") deckel();                                           // Einbaulage (fuer Pruefungen)
-if (teil == "zusammen") { color([0.85, 0.85, 0.82]) wanne(); color([0.75, 0.78, 0.8]) deckel(); }
-if (teil == "offen") { color([0.85, 0.85, 0.82]) wanne(); platine(); }
+if (teil == "zusammen") { color(c_w) wanne(); color(c_d) deckel(); }
+if (teil == "offen") { color(c_w) wanne(); platine(); }
+if (teil == "einbau") einbaulage() { color(c_w) wanne(); color(c_d) deckel(); }
+if (teil == "einbau_offen") einbaulage() { color(c_w) wanne(); platine(); }
 if (teil == "schnitt") {
-    difference() { union() { color([0.85, 0.85, 0.82]) wanne(); color([0.75, 0.78, 0.8]) deckel(); }
-                   translate([-100, -100, -50]) cube([300, 100 + 11.5, 100]); }
+    difference() { union() { color(c_w) wanne(); color(c_d) deckel(); }
+                   translate([-100, -100, -50]) cube([300, 100 + 4.5, 100]); }
     platine();
 }

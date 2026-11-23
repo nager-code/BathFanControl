@@ -34,4 +34,12 @@ for n, m in (("Wanne", wanne), ("Deckel", deckel)):
     d = trimesh.proximity.closest_point(m, sel)[1]
     i = d.argmin()
     print("%-7s kleinster Abstand zu einem Bauteil: %.2f mm bei (%.1f, %.1f, %.1f)" % (n, d[i], *sel[i]))
+# Wanne und Deckel duerfen sich gegenseitig nicht durchdringen
+try:
+    i = trimesh.boolean.intersection([wanne, deckel], engine="manifold")
+    v = 0.0 if i.is_empty else float(i.volume)
+    print("Ueberschneidung Wanne/Deckel: %.3f mm3" % v)
+    ok = ok and v < 0.01
+except Exception as e:
+    print("Ueberschneidung Wanne/Deckel nicht geprueft:", e)
 sys.exit(0 if ok else 1)

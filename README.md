@@ -24,11 +24,11 @@ Klemme, Sicherung, Varistor, X2-Kondensator und Sensor sind in den Bildern verei
 | [`kicad/`](kicad) | KiCad-10-Projekt: Schaltplan, Platine, Regeln, Projektbibliotheken |
 | [`bestellpaket/`](bestellpaket) | Gerber, Bohrdaten, Stückliste und Bestückungsdatei (JLCPCB-Format) |
 | [`doku/`](doku) | Schaltplan als PDF, Bilder, DRC-Bericht |
-| [`gehaeuse/`](gehaeuse) | Gehäuse für den 3D-Druck (OpenSCAD, STL), Entwurf |
+| [`gehaeuse/`](gehaeuse) | Gehäuse für den 3D-Druck (OpenSCAD, STL), Entwurf für den Einbau im Lüfterkasten |
 | [`skripte/`](skripte) | Skripte, die Platine und Bestellpaket neu erzeugen |
 | [`eingang/`](eingang) | ursprünglich übergebene Dateien (bedrahtete Fassung) |
 
-![Gehäuse mit eingelegter Platine](gehaeuse/bilder/gehaeuse_offen.png)
+![Gehäuse in Einbaulage, geschlossen und geöffnet](gehaeuse/bilder/gehaeuse_einbaulage_beide.png)
 
 ## Stand
 
