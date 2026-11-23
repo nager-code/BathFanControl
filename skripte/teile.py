@@ -24,5 +24,9 @@ TEILE = {
     "C5":  ("100n 50V X7R 0603", "CC0603KRX7R9BB104", "C14663", "JLCPCB Basic"),
     "C6":  ("1u 50V X5R 0603", "CL10A105KB8NNNC", "C15849", "JLCPCB Basic"),
     "C7":  ("100n 50V X7R 0603", "CC0603KRX7R9BB104", "C14663", "JLCPCB Basic"),
+    "D1":  ("RGB-LED 2020 gemeinsame Anode", "Foshan NationStar FM-B2020RGBA-HG", "C42421005", "JLCPCB Extended; Drehlage in der JLC-Vorschau pruefen (Eckmarke = Pin 1 = rot, unten rechts)"),
+    "R13": ("680R 1% 0603", "0603WAF6800T5E", "C23228", "JLCPCB Basic; LED rot"),
+    "R14": ("220R 1% 0603", "0603WAF2200T5E", "C22962", "JLCPCB Basic; LED gruen"),
+    "R15": ("150R 1% 0603", "0603WAF1500T5E", "C22808", "JLCPCB Basic; LED blau"),
     "J1":  ("Programmierpads 1,27 mm (3V3 GND TX RX IO9 EN)", "", "", "nicht bestueckt"),
 }

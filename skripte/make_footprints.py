@@ -85,8 +85,23 @@ def two_pad(name, descr, px, pw, ph, bl, bw):
 two_pad("Fuse_SMD_10x3mm_Littelfuse443_UMT250", "SMD-Sicherung 10,1 x 3 mm, Littelfuse 443 (0443001.DR) oder Schurter UMT 250", 4.675, 3.25, 3.75, 10.1, 3.1)
 # Varistor TDK CU3225K275G2 (8,0 x 6,3 mm): Loetflaechen 2,8 x 3,5 bei +-3,65 (Datenblatt)
 two_pad("Varistor_TDK_CU3225", "SMD-Varistor TDK CU3225 (B72650M), 8,0 x 6,3 x 4,5 mm", 3.65, 2.8, 3.5, 8.0, 6.3)
-# X2-Kondensator Murata GA355 (2220): Loetflaechen 1,5 x 4,8 bei +-2,9, Abstand 4,3 mm (Murata 4,0-4,6)
-two_pad("C_2220_Murata_GA355_X2", "Sicherheitskondensator Murata GA355 (2220, 5,7 x 5,0 mm), Padabstand 4,3 mm", 2.9, 1.5, 4.8, 5.7, 5.0)
+# X2-Kondensator Murata GA355 (2220): Loetflaechen 1,4 x 4,8 bei +-2,7, Abstand 4,0 mm (Murata 4,0-4,6)
+two_pad("C_2220_Murata_GA355_X2", "Sicherheitskondensator Murata GA355 (2220, 5,7 x 5,0 mm), Padabstand 4,0 mm", 2.7, 1.4, 4.8, 5.7, 5.0)
+
+# RGB-LED Foshan NationStar FM-B2020RGBA-HG (2,1 x 2,1 x 1,0 mm, gemeinsame Anode). Loetflaechen laut Datenblatt:
+# vier Flaechen 0,8 x 0,7 mm, Abstand 0,9 mm in x und 0,4 mm in y -> Mitten bei (+-0,85 / +-0,55).
+# Draufsicht: Pin 3 (+) oben links, Pin 4 (gruen) oben rechts, Pin 1 (rot, Eckmarke) unten rechts, Pin 2 (blau) unten links.
+def make_led():
+    name = "LED_RGB_NationStar_FM-B2020"
+    L = header(name, "RGB-LED NationStar FM-B2020RGBA-HG, 2,1 x 2,1 mm, 3 = Anode, 1 = rot, 4 = gruen, 2 = blau", 2.3)
+    L.append(rect("F.Fab", -1.05, -1.05, 1.05, 1.05, 0.1))
+    L.append('  (fp_line (start 0.55 1.05) (end 1.05 0.55) (stroke (width 0.1) (type solid)) (layer "F.Fab"))')      # Eckmarke bei Pin 1
+    L.append('  (fp_circle (center 1.75 1.0) (end 1.85 1.0) (stroke (width 0.2) (type solid)) (fill solid) (layer "F.SilkS"))')
+    L.append(rect("F.CrtYd", -1.5, -1.3, 1.5, 1.3, 0.05))
+    for num, x, y in (("1", 0.85, 0.55), ("2", -0.85, 0.55), ("3", -0.85, -0.55), ("4", 0.85, -0.55)):
+        L.append(smdpad(num, x, y, 0.8, 0.7))
+    save(name, L)
+make_led()
 
 def make_x1():
     n = len(X1["order"]); p = X1["pitch"]

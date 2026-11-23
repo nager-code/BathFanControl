@@ -25,12 +25,15 @@ def dseg(px, py, x1, y1, x2, y2):
     u = 0 if l2 == 0 else max(0, min(1, ((px - x1) * dx + (py - y1) * dy) / l2))
     return math.hypot(px - x1 - u * dx, py - y1 - u * dy)
 def ok(x, y):
-    # 3,3-V-Bereiche der Platine v1.2: Arm oben, Verbindung links, linker Teil des Riegels
-    arm = 0.8 <= x <= 57.2 and 0.8 <= y <= 17.2
-    steg = 0.8 <= x <= 13.2 and 17.2 < y <= 28.5
-    riegel = 0.8 <= x <= 13.0 and 28.5 < y <= 57.2
-    if not (arm or steg or riegel): return False
+    # 3,3-V-Bereiche der Platine v1.3 (y hier wie in KiCad nach unten, Platinenhoehe 63 mm)
+    HH = 63.0
+    arm = 0.8 <= x <= 57.2 and 0.8 <= y <= HH - 48.2
+    links = 0.8 <= x <= 21.0 and y <= HH - 0.8
+    if not (arm or links): return False
     if x < 16.0 and y < 7.1: return False                       # Antenne
+    for lx, ly in ((4.8, HH - 5.5), (46.5, HH - 56.0)):        # Loecher fuer die Schraubdome
+        if abs(x - lx) < 4.2 and abs(y - ly) < 4.2: return False   # Sperrflaeche +-3,75 mm
+    if x > 21.2 and y > HH - 48.2: return False
     for x1, y1, x2, y2 in boxes:
         if x1 - R - CLR < x < x2 + R + CLR and y1 - R - CLR < y < y2 + R + CLR: return False
     for x1, y1, x2, y2, w, n in segs:
@@ -40,7 +43,7 @@ def ok(x, y):
     return True
 placed = []
 y = 1.0
-while y < 57.5:
+while y < 62.5:
     x = 1.0
     while x < 57.5:
         if ok(x, y) and all(math.hypot(x - px, y - py) >= PITCH for px, py in placed):

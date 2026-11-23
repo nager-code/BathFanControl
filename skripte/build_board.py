@@ -1,9 +1,12 @@
-# Erzeugt die Platine der Lueftersteuerung (v1.2, 68 x 58 mm, 2 Lagen) aus der Schaltplan-Netzliste.
-# Form: unten ein Riegel 54 x 30 mm mit Netzteil und Klemmen (Leitungen von rechts), darueber - durch einen
-# 10 mm breiten Spalt getrennt - ein Arm 68 x 18 mm mit WLAN-Modul links und Feuchtesensor ganz rechts.
+# Erzeugt die Platine der Lueftersteuerung (v1.3, 76 x 63 mm, 2 Lagen, nur oben bestueckt) aus der Netzliste.
+# Die Platine ist so gezeichnet, wie sie eingebaut von vorn zu sehen ist. Von unten nach oben:
+#   Riegel 62 x 30 mm: links 3,3 V, dann Netzteil und Klemmen (Leitungen von rechts in den Ausschnitt)
+#   Netzreihe bis y = 43,2 mm (76 mm breit): Sicherung, Varistor, Snubber, Teilerwiderstaende, Optokoppler-Netzseite
+#   Isolationsschlitz 2 mm (nach rechts offen), die Optokoppler sitzen darueber
+#   Arm 68 x 18 mm: WLAN-Modul links, RGB-LED, Feuchtesensor ganz rechts hinter einem Thermoschlitz
 # Aufruf im KiCad-10-Python:  python3 build_board.py <netzliste.net> <projektordner>
 # Ergebnis: <projektordner>/lueftersteuerung.kicad_pcb  (Bauteile platziert, Netzseite geroutet,
-# Sperrflaechen, Masseflaechen; die 3,3-V-Seite wird danach mit route_lv.py geroutet)
+# Sperrflaechen, Masseflaechen; die 3,3-V-Seite wird danach vom Autorouter verlegt)
 import sys, re, os, math
 import pcbnew
 
@@ -12,14 +15,18 @@ PCB = os.path.join(PRJ, "lueftersteuerung.kicad_pcb")
 SYSLIB = "/usr/share/kicad/footprints/"
 PRJLIB = os.path.join(PRJ, "lueftersteuerung.pretty")
 OX, OY = 100.0, 100.0          # linke obere Platinenecke im KiCad-Koordinatensystem
-W, H = 68.0, 58.0               # Umriss gesamt
-BW, BH = 54.0, 30.0             # Riegel unten (Netzteil, Klemmen)
-SH = 18.0                       # Hoehe des Arms oben
-GAP = H - BH - SH               # Spalt zwischen Arm und Riegel
-BRIDGE = 14.0                   # Breite der Verbindung links
+W, H = 68.0, 63.0               # Arm oben: Breite, und Hoehe der ganzen Platine
+SX = 8.0                        # um so viel ist der Netzteil gegenueber dem Arm nach rechts gerueckt (breiter 3,3-V-Teil links)
+WU = W + SX                     # Breite des unteren Teils (Riegel + Netzreihe)
+BW, BH = 54.0 + SX, 30.0        # Riegel unten (Netzteil, Klemmen)
+SLITZ0, SLITZ1 = 43.2, 45.2     # Isolationsschlitz zwischen Netzreihe und Arm (Hoehe ueber der Unterkante)
+NETZ_OBEN, KS_UNTEN = 41.05, 47.35   # bis hier Netzkupfer / ab hier 3,3-V-Kupfer im Arm
+BRIDGE = 14.0 + SX              # Breite der Verbindung links
 FASE = 6.0                      # abgeschraegte Ecke oben rechts (zeigt zum Luefter-Einlass)
 SLOT_X = W - 9.5                # Thermoschlitz vor der Sensorinsel (1 mm breit)
-DXS = W - 72.0                  # Verschiebung der Sensorinsel gegenueber dem ersten Entwurf
+DXS = W - 72.0                  # Lage der Sensorinsel
+ISO0, ISO1 = 13.95 + SX, 20.25 + SX   # kupferfreier Streifen im Riegel zwischen 3,3 V (links) und Netz (rechts)
+LOCH = [(4.8, 5.5), (46.5, 56.0)]   # Loecher fuer die beiden Schraubdome des Gehaeuses (6,6 mm)
 mm = pcbnew.FromMM
 F, B = pcbnew.F_Cu, pcbnew.B_Cu
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -29,10 +36,9 @@ X1LABELX = X1X + X1["body"][1] + 0.2
 def P(x, y):
     return pcbnew.VECTOR2I(mm(OX + x), mm(OY + y))
 
-def T(x, y):
-    """Riegel-Koordinaten (wie Platine v1.1: Klemmen bei x = 0, y nach unten) -> Platinenkoordinaten.
-    Der Riegel ist um 180 Grad gedreht: Klemmen rechts, Leitereinfuehrung nach rechts."""
-    return (BW - x, H - y)
+def U(x, y):
+    """Koordinaten mit y nach oben (Hoehe ueber der Platinenunterkante) -> Platinenkoordinaten."""
+    return (x, H - y)
 
 # ---------------------------------------------------------------- Netzliste lesen
 txt = open(NETLIST).read()
@@ -44,7 +50,7 @@ padnet = {}
 for m in re.finditer(r'\(net\s+\(code\s+"\d+"\)\s+\(name\s+"([^"]*)"\)(.*?)(?=\(net\s+\(code|\Z)', txt, re.S):
     for r, p in re.findall(r'\(node\s+\(ref\s+"([^"]+)"\)\s+\(pin\s+"([^"]+)"\)', m.group(2)):
         padnet[(r, p)] = m.group(1)
-assert len(comps) == 28, len(comps)
+assert len(comps) == 32, len(comps)
 
 # ---------------------------------------------------------------- Platine anlegen
 if os.path.exists(PCB):
@@ -94,44 +100,53 @@ def net(name):
 
 # ---------------------------------------------------------------- Platzierung
 # ref: (x, y, Drehung, Unterseite) - x/y ist der Footprint-Ursprung in Platinenkoordinaten
-# ref: (Ursprung x, y, Unterseite, Pad-Nr., Soll-Lage dieses Pads) - die Drehung wird daraus bestimmt
-RIEGEL = {   # in Riegel-Koordinaten, werden mit T() umgerechnet
-    # Oberseite
-    "X1":  (X1X, 15.0, False, "2", (X1X - 5.25, 6.0)),
-    "PS1": (35.6, 15.0, False, "24", (21.63, 1.765)),
-    # Unterseite Netz
-    "F1":  (11.0, 26.9, True, "1", (6.325, 26.9)),
-    "RV1": (13.3, 14.5, True, "2", (13.3, 10.85)),
-    "R1":  (23.1, 11.3, True, "1", (21.64, 11.3)),
-    "R2":  (27.8, 11.3, True, "1", (26.34, 11.3)),
-    "R12": (29.9, 8.0, True, "2", (29.9, 7.175)),
-    "C2":  (24.3, 18.59, True, "2", (24.3, 15.69)),
-    "R5":  (24.3, 24.85, True, "2", (24.3, 23.39)),
-    "U2":  (36.9, 8.0, True, "2", (32.135, 6.73)),
-    "U3":  (36.9, 19.5, True, "8", (32.55, 15.69)),
-    # Unterseite 3,3 V
-    "R4":  (45.2, 9.27, True, "2", (44.375, 9.27)),
-    "C3":  (45.2, 11.4, True, "1", (44.425, 11.4)),
-    "R3":  (44.4, 18.23, True, "2", (43.575, 18.23)),
-    "J1":  (49.5, 22.0, True, "1", (51.0, 18.825)),
+# ref: (x, y nach oben, Pad-Nr., Soll-Lage dieses Pads) - die Drehung wird daraus bestimmt. Alles auf der Oberseite.
+XK = BW - X1X                   # Mitte der Klemmen
+LED_PAD1 = (37.35, 58.05)           # Soll-Lage von Pad 1 der LED (legt die Drehung fest)
+def N(x, y, n, tg):             # Bauteil der Netzseite: mit dem ganzen Netzteil um SX nach rechts
+    return (x + SX, y, n, (tg[0] + SX, tg[1]))
+OBEN = {
+    # Riegel
+    "X1":  (XK, 15.0, "2", (XK + 5.25, 6.0)),                # von oben: L, Luefter, Licht, N
+    "PS1": N(18.4, 15.0, "24", (32.37, 1.765)),              # 3,3 V links, AC rechts (L oben, N unten)
+    # Netzreihe
+    "F1":  N(56.2, 34.2, "1", (60.875, 34.2)),
+    "RV1": N(41.95, 33.1, "2", (45.6, 33.1)),
+    "C2":  N(30.6, 34.3, "2", (30.6, 37.0)),
+    "R5":  N(25.4, 31.6, "2", (26.8625, 31.6)),
+    "R12": N(46.17, 37.5, "2", (45.345, 37.5)),
+    "R2":  N(51.4, 39.9, "2", (49.9375, 39.9)),
+    "R1":  N(56.4, 39.9, "1", (57.8625, 39.9)),
+    # Optokoppler ueber dem Isolationsschlitz: Netzpins unten, 3,3-V-Pins oben
+    "U3":  N(26.2, 44.2, "8", (30.01, 39.85)),
+    "U2":  N(46.17, 44.465, "1", (44.9, 39.7)),
+    "R3":  N(27.47, 51.9, "2", (27.47, 51.075)),
+    "R4":  N(44.9, 52.2, "2", (44.9, 51.375)),
+    "C3":  N(47.0, 52.2, "1", (47.0, 51.425)),
+    # Arm und Verbindung (3,3 V)
+    "U1":  (8.0, 54.0, "3", (2.1, 53.7)),                    # Antenne an der Oberkante
+    "C1":  (24.0, 57.5, "1", (21.2, 57.5)),
+    "R9":  (17.0, 60.7, "2", (16.175, 60.7)),
+    "R6":  (17.0, 58.8, "2", (16.175, 58.8)),
+    "C6":  (17.0, 56.9, "1", (16.225, 56.9)),
+    "R7":  (17.0, 55.0, "2", (16.175, 55.0)),
+    "R8":  (17.0, 53.1, "2", (16.175, 53.1)),
+    "C5":  (11.5, 43.6, "1", (10.725, 43.6)),
+    "R10": (11.5, 41.6, "2", (10.675, 41.6)),
+    "R11": (11.5, 39.7, "2", (10.675, 39.7)),
+    "C4":  (16.0, 33.0, "1", (15.05, 33.0)),
+    "J1":  (6.0, 35.0, "1", (4.5, 38.175)),                  # Programmierflaechen (nicht bestueckt)
+    # RGB-LED mit Vorwiderstaenden
+    "D1":  (36.5, 58.6, "1", LED_PAD1),
+    "R13": (31.5, 60.5, "1", (30.675, 60.5)),
+    "R14": (31.5, 58.6, "1", (30.675, 58.6)),
+    "R15": (31.5, 56.7, "1", (30.675, 56.7)),
+    "U4":  (W - 4.8, H - 12.0, "1", (W - 5.5, H - 11.6)),    # Sensor ganz rechts auf der Insel
+    "C7":  (W - 2.8, H - 12.0, "1", (W - 2.8, H - 12.775)),
 }
-PLACE = {    # Arm oben, in Platinenkoordinaten
-    "U1":  (8.0, 9.0, False, "3", (2.1, 9.3)),              # Antenne an der Oberkante
-    "C1":  (20.5, 9.0, False, "1", (17.7, 9.0)),
-    "U4":  (W - 4.8, 12.0, False, "1", (W - 5.5, 11.6)),          # Sensor ganz rechts auf der Insel
-    "C7":  (W - 2.8, 12.0, False, "1", (W - 2.8, 12.775)),
-    "C5":  (5.2, 8.2, True, "1", (4.425, 8.2)),
-    "C4":  (5.2, 10.4, True, "1", (4.25, 10.4)),
-    "R9":  (11.0, 8.2, True, "2", (10.175, 8.2)),
-    "R6":  (11.0, 10.3, True, "2", (10.175, 10.3)),
-    "C6":  (11.0, 12.4, True, "1", (10.225, 12.4)),
-    "R10": (17.0, 15.6, True, "2", (16.175, 15.6)),
-    "R11": (17.0, 13.6, True, "2", (16.175, 13.6)),
-    "R8":  (17.0, 11.6, True, "2", (16.175, 11.6)),
-    "R7":  (17.0, 9.6, True, "2", (16.175, 9.6)),
-}
-for r_, (x_, y_, b_, n_, tg_) in RIEGEL.items():
-    PLACE[r_] = T(x_, y_) + (b_, n_, T(*tg_))
+PLACE = {}
+for r_, (x_, y_, n_, tg_) in OBEN.items():
+    PLACE[r_] = U(x_, y_) + (False, n_, U(*tg_))
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from teile import TEILE
 LCSC = dict((r_, v_[2]) for r_, v_ in TEILE.items() if v_[2])
@@ -196,11 +211,16 @@ def edge_poly(pts, closed=True):
         s.SetLayer(pcbnew.Edge_Cuts); s.SetWidth(mm(0.1))
         board.Add(s)
 
-# Aussenkontur: Arm oben mit abgeschraegter Ecke und Thermoschlitz vor der Sensorinsel (nach unten offen),
-# Verbindung links, Riegel unten. Der Spalt zwischen Arm und Riegel ist nach rechts offen.
-edge_poly([(0, 0), (W - FASE, 0), (W, FASE), (W, SH), (SLOT_X + 1.0, SH), (SLOT_X + 1.0, 6.0), (SLOT_X, 6.0),
-           (SLOT_X, SH), (BRIDGE, SH), (BRIDGE, SH + GAP), (BW, SH + GAP), (BW, H), (0, H)])
-# Isolationsschlitz zwischen den Pinreihen von U2/U3 (2 mm breit, runde Enden)
+# Aussenkontur (y nach oben): Riegel, Netzreihe (rechts ueber dem Anschlussraum laenger), Isolationsschlitz
+# nach rechts offen, Arm mit Thermoschlitz vor der Sensorinsel und abgeschraegter Ecke.
+edge_poly([U(*q) for q in [(0, 0), (BW, 0), (BW, BH), (WU, BH), (WU, SLITZ0), (BRIDGE, SLITZ0), (BRIDGE, SLITZ1),
+                           (SLOT_X, SLITZ1), (SLOT_X, H - 6.0), (SLOT_X + 1.0, H - 6.0), (SLOT_X + 1.0, SLITZ1),
+                           (W, SLITZ1), (W, H - FASE), (W - FASE, H), (0, H)]])
+for x_, y_ in LOCH:
+    s = pcbnew.PCB_SHAPE(board); s.SetShape(pcbnew.SHAPE_T_CIRCLE)
+    s.SetCenter(P(*U(x_, y_))); s.SetEnd(P(U(x_, y_)[0] + 3.3, U(x_, y_)[1]))
+    s.SetLayer(pcbnew.Edge_Cuts); s.SetWidth(mm(0.1)); board.Add(s)
+# Isolationsschlitz im Riegel unter dem Netzteil (2 mm breit, runde Enden)
 def slot(x, y1, y2, w):
     r = w / 2.0
     for xx in (x - r, x + r):
@@ -211,8 +231,7 @@ def slot(x, y1, y2, w):
         mid_y = yc - r if yc < (y1 + y2) / 2 else yc + r
         s.SetArcGeometry(P(a0, yc), P(x, mid_y), P(a1, yc))
         s.SetLayer(pcbnew.Edge_Cuts); s.SetWidth(mm(0.1)); board.Add(s)
-sx_, sy1_ = T(36.9, 24.5); sy2_ = T(36.9, 4.5)[1]
-slot(sx_, sy1_, sy2_, 2.0)
+slot((ISO0 + ISO1) / 2, U(0, 24.5)[1], U(0, 4.5)[1], 2.0)
 
 # ---------------------------------------------------------------- Sperrflaechen und Masse
 def zone(pts, layers, netname=None, rule=None, name=""):
@@ -247,16 +266,19 @@ def zone(pts, layers, netname=None, rule=None, name=""):
 def rect(x1, y1, x2, y2):
     return [(x1, y1), (x2, y1), (x2, y2), (x1, y2)]
 
-ISO0, ISO1 = BW - 40.05, BW - 33.75        # kupferfreier Streifen im Riegel zwischen Netz und 3,3 V
-zone(rect(ISO0, SH + GAP, ISO1, H), [F, B], rule=("tracks", "vias", "fill"), name="Isolation Netz / 3,3 V")
+def urect(x1, y1, x2, y2):          # Rechteck in Koordinaten mit y nach oben
+    return rect(x1, H - y2, x2, H - y1)
+zone(urect(ISO0, 0, ISO1, SLITZ0), [F, B], rule=("tracks", "vias", "fill"), name="Isolation im Riegel")
+zone(urect(ISO0, NETZ_OBEN, WU, KS_UNTEN), [F, B], rule=("tracks", "vias", "fill"), name="Isolation Netzreihe / Arm")
 zone(rect(0, 0, 15.2, 6.3), [F, B], rule=("tracks", "vias", "fill"), name="Antenne U1")
-zone(rect(SLOT_X, 0, W, SH), [F, B], rule=("fill",), name="Sensorinsel ohne Flaeche")
-# Randstreifen fuer den Autorouter: keine Bahnen/Durchkontaktierungen dicht an den Kanten
-for i_, r_ in enumerate((rect(15.2, 0, SLOT_X - 1.5, 0.45), rect(BRIDGE, SH - 0.45, SLOT_X, SH), rect(0, 6.3, 0.45, H),
-                         rect(0, H - 0.45, ISO0, H), rect(BRIDGE - 0.45, SH, BRIDGE, SH + GAP), rect(SLOT_X - 0.45, 5.4, SLOT_X, SH),
-                         rect(SLOT_X - 0.45, 5.4, SLOT_X + 1.45, 6.0))):
+zone(rect(SLOT_X, 0, W, H - SLITZ1), [F, B], rule=("fill",), name="Sensorinsel ohne Flaeche")
+# Randstreifen fuer den Autorouter: keine Bahnen/Durchkontaktierungen dicht an Kanten und Loechern
+RAND = [rect(15.2, 0, SLOT_X - 1.5, 0.45), rect(0, 6.3, 0.45, H), urect(0, 0, ISO0, 0.45),
+        rect(SLOT_X - 0.45, 5.4, SLOT_X, H - SLITZ1), rect(SLOT_X - 0.45, 5.4, SLOT_X + 1.45, 6.0)]
+RAND += [urect(x_ - 3.75, y_ - 3.75, x_ + 3.75, y_ + 3.75) for x_, y_ in LOCH]
+for i_, r_ in enumerate(RAND):
     zone(r_, [F, B], rule=("tracks", "vias"), name="Rand %d" % (i_ + 1))
-zone([(0, 0), (W, 0), (W, SH), (BRIDGE, SH), (BRIDGE, SH + GAP), (ISO0 - 0.05, SH + GAP), (ISO0 - 0.05, H), (0, H)],
+zone([U(*q) for q in [(0, 0), (ISO0 - 0.05, 0), (ISO0 - 0.05, SLITZ1), (W, SLITZ1), (W, H), (0, H)]],
      [F, B], netname="/GND", name="GND")
 
 # ---------------------------------------------------------------- Leiterbahnen
@@ -274,58 +296,58 @@ def via(netname, xy, dia, drill):
     v.SetWidth(F, mm(dia)); v.SetDrill(mm(drill)); v.SetNet(net(netname))
     board.Add(v)
 
-# --- Netzseite (von Hand, 1,0 mm; nach den 2 x 100 k duenner), gerechnet in Riegel-Koordinaten
-def padb(ref, num): return T(*pad(ref, num))
-def trackb(netname, pts, w, layer): track(netname, [T(*q) for q in pts], w, layer)
-def viab(netname, xy, dia, drill): via(netname, T(*xy), dia, drill)
-# Oberseite: Klemme und Netzteil. Unterseite: Sicherung, Varistor, Snubber, Optokoppler.
-# An der Klemme liegen von oben nach unten L, Luefter, Licht, N - so kreuzt auf keiner Lage etwas.
-def xpads(num):
-    ps = [T(pcbnew.ToMM(p_.GetPosition().x) - OX, pcbnew.ToMM(p_.GetPosition().y) - OY) for p_ in fps["X1"].Pads() if p_.GetNumber() == num]
-    return sorted(ps)
-(NF, NR), (LLF, LLR), (LFF, LFR), (LF_, LR_) = xpads("2"), xpads("3"), xpads("4"), xpads("1")
-for n_, a_, b_ in (("/N", NF, NR), ("/L_LICHT", LLF, LLR), ("/L_FAN", LFF, LFR), ("/L", LF_, LR_)):
-    trackb(n_, [a_, b_], 1.0, F)            # vordere und hintere Loetflaeche jedes Pols verbinden
-VN, VLL, VLF, VLFT, VL = (19.0, 4.0), (20.2, 11.3), (20.3, 15.69), (23.4, 27.9), (9.0, 24.0)
-# N: Klemme -> Netzteil AC/N (oben), Durchkontaktierung, unten zu Varistor und Optokoppler
-psn, psl = padb("PS1", "24"), padb("PS1", "1")
-trackb("/N", [NR, (17.6, 6.0), VN, (psn[0], 2.3), psn], 1.0, F)
-viab("/N", VN, 1.2, 0.6)
-u22 = padb("U2", "2")
-trackb("/N", [VN, (19.6, 3.4), (28.8, 3.4), (30.9, 5.5), (30.9, u22[1]), u22], 1.0, B)
-rv2 = padb("RV1", "2")
-trackb("/N", [rv2, (rv2[0], 4.6), (rv2[0] + 1.2, 3.4), (19.6, 3.4)], 1.0, B)
-trackb("/N", [padb("R12", "2"), (30.9, u22[1])], 0.5, B)
-# Lichteingang: Klemme (oben) -> Durchkontaktierung -> R1 -> R2 -> Optokoppler (unten)
-trackb("/L_LICHT", [LLR, (18.5, 12.0), VLL], 1.0, F)
-viab("/L_LICHT", VLL, 1.2, 0.6)
-trackb("/L_LICHT", [VLL, padb("R1", "1")], 1.0, B)
-trackb("/LICHT_A", [padb("R1", "2"), padb("R2", "1")], 1.0, B)
-u21 = padb("U2", "1")
-r22 = padb("R2", "2")
-trackb("/LICHT_B", [r22, (r22[0] + 1.14, 10.16), (31.3, u21[1]), u21], 0.4, B)
-trackb("/LICHT_B", [padb("R12", "1"), (31.0, u21[1]), u21], 0.4, B)
-# L_FAN: Klemme (oben) -> Durchkontaktierung -> Snubber-Kondensator -> Triac (unten)
-trackb("/L_FAN", [LFR, (18.5, 18.0), VLF], 1.0, F)
-viab("/L_FAN", VLF, 1.2, 0.6)
-trackb("/L_FAN", [VLF, padb("C2", "2"), padb("U3", "8")], 1.0, B)
-# L: Durchkontaktierung unter der Klemme -> Sicherung (unten)
-viab("/L", VL, 1.2, 0.6)
-f11 = padb("F1", "1")
-trackb("/L", [VL, (f11[0] + 0.6, 26.2), f11], 1.0, B)
-# L_F: Sicherung -> Varistor, Snubber-Widerstand, Triac (unten) und Netzteil AC/L (oben)
-f12 = padb("F1", "2")
-u36 = padb("U3", "6")
-trackb("/L_F", [f12, (f12[0] + 0.6, 26.3), (29.9, 26.3), (29.9, u36[1] + 1.03), (30.93, u36[1]), u36], 1.0, B)
-r51 = padb("R5", "1")
-trackb("/L_F", [r51, (r51[0], 26.3)], 1.0, B)
-rv1 = padb("RV1", "1")
-trackb("/L_F", [rv1, (rv1[0], 23.4), (f12[0], 25.775), f12], 1.0, B)
-trackb("/L_F", [(23.4, 26.3), VLFT], 1.0, B)
-viab("/L_F", VLFT, 1.2, 0.6)
-trackb("/L_F", [VLFT, psl], 1.0, F)
-# Snubber: C2 -> R5
-trackb("/SNUB", [padb("C2", "1"), padb("R5", "2")], 1.0, B)
+# --- Netzseite (von Hand, 1,0 mm; nach den 2 x 100 k duenner), Koordinaten mit y nach oben.
+# Bestueckt ist nur die Oberseite; die Unterseite dient als zweite Verdrahtungsebene: von den Klemmen
+# laufen N, Licht, Luefter und L unten nach oben in die Netzreihe.
+# Alle Zahlen der Netzseite gelten im Rahmen des Netzteils (x ohne die Verschiebung SX).
+def padu(ref, num):
+    x_, y_ = pad(ref, num); return (x_ - SX, H - y_)
+def tr(netname, pts, w, layer): track(netname, [U(q[0] + SX, q[1]) for q in pts], w, layer)
+def vi(netname, xy, dia=1.2, drill=0.6): via(netname, U(xy[0] + SX, xy[1]), dia, drill)
+def pol(num):                         # hintere (links) und vordere (rechts) Loetflaeche eines Klemmenpols
+    ps = sorted((pcbnew.ToMM(p_.GetPosition().x) - OX - SX, H - (pcbnew.ToMM(p_.GetPosition().y) - OY)) for p_ in fps["X1"].Pads() if p_.GetNumber() == num)
+    return ps[0], ps[1]
+(NR, NF), (LLR, LLF), (LFR, LFF), (LR_, LF_) = pol("2"), pol("3"), pol("4"), pol("1")
+for n_, a_, b_ in (("/N", NR, NF), ("/L_LICHT", LLR, LLF), ("/L_FAN", LFR, LFF), ("/L", LR_, LF_)):
+    tr(n_, [a_, b_], 1.0, F)          # beide Loetflaechen jedes Pols verbinden
+psn, psl = padu("PS1", "24"), padu("PS1", "1")
+# N: Klemme -> Netzteil AC/N (oben); unten hoch zur Netzreihe -> Varistor, Optokoppler U2, R12
+tr("/N", [NR, (35.0, NR[1]), (33.2, 4.2), (psn[0], 2.7), psn], 1.0, F)
+vi("/N", (41.9, NR[1])); vi("/N", (41.9, 37.6))
+tr("/N", [(41.9, NR[1]), (41.9, 37.6)], 1.0, B)
+u21, rv2, r122 = padu("U2", "1"), padu("RV1", "2"), padu("R12", "2")
+tr("/N", [(41.9, 37.6), (u21[0], 37.6), u21], 1.0, F)
+tr("/N", [(u21[0], 37.6), (rv2[0], 36.4), rv2], 1.0, F)
+tr("/N", [r122, (u21[0], 37.6)], 0.5, F)
+# Lichteingang: Klemme -> unten hoch -> R1 -> R2 -> Optokoppler U2
+vi("/L_LICHT", (45.7, LLR[1])); vi("/L_LICHT", (59.8, 39.9))
+tr("/L_LICHT", [(45.7, LLR[1]), (45.7, 37.3), (59.8, 37.3), (59.8, 39.9)], 1.0, B)
+tr("/L_LICHT", [(59.8, 39.9), padu("R1", "1")], 1.0, F)
+tr("/LICHT_A", [padu("R1", "2"), padu("R2", "1")], 1.0, F)
+u22 = padu("U2", "2")
+tr("/LICHT_B", [padu("R2", "2"), (u22[0] + 0.6, 39.9), u22], 0.4, F)
+tr("/LICHT_B", [padu("R12", "1"), (u22[0], 38.4), u22], 0.4, F)
+# L_FAN: Klemme -> unter dem Netzteil nach links, unten hoch -> Snubber-Kondensator -> Triac U3
+vi("/L_FAN", (33.9, LFR[1])); vi("/L_FAN", (33.9, 37.0))
+tr("/L_FAN", [LFR, (33.9, LFR[1])], 1.0, F)
+tr("/L_FAN", [(33.9, LFR[1]), (33.9, 37.0)], 1.0, B)
+tr("/L_FAN", [(33.9, 37.0), padu("C2", "2")], 1.0, F)
+tr("/L_FAN", [(padu("U3", "8")[0], padu("C2", "2")[1]), padu("U3", "8")], 1.0, F)
+# L: Durchkontaktierung in der vorderen Klemmenflaeche -> unten zur Sicherung
+f11, f12 = padu("F1", "1"), padu("F1", "2")
+vi("/L", (51.5, LF_[1])); vi("/L", (f11[0], 31.2))
+tr("/L", [(51.5, LF_[1]), (51.5, 29.9), (52.8, 31.2), (f11[0], 31.2)], 1.0, B)
+tr("/L", [(f11[0], 31.2), f11], 1.0, F)
+# L_F: Sicherung -> Varistor -> Netzteil AC/L, weiter unter dem Netzteilrand nach links zu R5 und Triac U3
+rv1 = padu("RV1", "1")
+tr("/L_F", [f12, (50.6, 32.0), (50.6, 28.3), (34.5, 28.3), psl], 1.0, F)
+tr("/L_F", [(rv1[0], 28.3), rv1], 1.0, F)
+r51, u36 = padu("R5", "1"), padu("U3", "6")
+tr("/L_F", [psl, (psl[0], 26.0), (23.9, 26.0)], 1.0, F)
+tr("/L_F", [(23.9, 26.0), (23.9, 30.9), r51], 0.6, F)          # schmal zwischen zwei freien Netzteil-Pads hindurch
+tr("/L_F", [r51, (24.2, 32.6), (24.2, 38.4), u36], 1.0, F)
+# Snubber: R5 -> C2
+tr("/SNUB", [padu("R5", "2"), padu("C2", "1")], 1.0, F)
 
 # --- Sensorinsel (von Hand, 0,2 mm): vier Bahnen laufen oben ueber den Steg neben dem Thermoschlitz
 sda, scl, vdd, vss = pad("U4", "1"), pad("U4", "2"), pad("U4", "3"), pad("U4", "4")
@@ -342,10 +364,6 @@ via("/GND", (XS, 3.2), 0.6, 0.3)
 # Masseflaeche unter dem WLAN-Modul ueber dessen Massepad (EPAD) an die Unterseite anbinden
 via("/GND", (8.0, 11.7), 0.6, 0.3)
 via("/GND", (9.975, 13.675), 0.6, 0.3)
-# Massepad der Programmierpads direkt durchkontaktieren (unbestueckt, daher unkritisch)
-j12 = padb("J1", "2")
-viab("/GND", (j12[0] - 1.0, j12[1]), 0.6, 0.3)
-
 # ---------------------------------------------------------------- Beschriftung
 def text(s, x, y, layer, size=1.0, rot=0, mirror=False, thick=0.15):
     t = pcbnew.PCB_TEXT(board)
@@ -366,9 +384,9 @@ for fp in board.GetFootprints():
 # Klemmenbelegung: auf der Oberseite verdeckt das Klemmengehaeuse alles, deshalb auf der Unterseite
 for lab, num in (("L", "1"), ("Luefter", "4"), ("Licht", "3"), ("N", "2")):
     text(lab, BW - 4.6, pad("X1", num)[1], pcbnew.B_SilkS, 1.0, 0, True)
-text("230 V~", 34.0, 43.0, pcbnew.F_SilkS, 1.5, 0, False, 0.25)
-text("230 V~", 39.5, 36.5, pcbnew.B_SilkS, 1.0, 0, True, 0.15)
-text("Lueftersteuerung Bad v1.2", 42.0, 12.5, pcbnew.B_SilkS, 0.8, 0, True, 0.12)
+text("230 V~", 12.0 + SX, U(0, 15.0)[1], pcbnew.F_SilkS, 1.5, 0, False, 0.25)
+text("230 V~", 30.0 + SX, U(0, 15.0)[1], pcbnew.B_SilkS, 1.2, 0, True, 0.2)
+text("Lueftersteuerung Bad v1.3", 40.0, U(0, 50.3)[1], pcbnew.B_SilkS, 0.8, 0, True, 0.12)
 text("Sensor", W - 4.5, 16.0, pcbnew.F_SilkS, 0.8, 0, False, 0.12)
 
 pcbnew.SaveBoard(PCB, board)
