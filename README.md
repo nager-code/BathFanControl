@@ -3,7 +3,11 @@
 Feuchteabhängige Steuerung für einen Badlüfter (KN2 UP, ca. 50 W) an 230 V mit ESP32-C3, SHT40 und WLAN.
 Platine 70 x 30 mm, 2 Lagen, ausschließlich SMD-Bauteile, entworfen mit KiCad 10.
 
-![Lagen von oben gesehen, Bauteile der Oberseite](doku/lagen_von_oben_bauteile_oben.png)
+![3D-Ansicht der Oberseite](doku/platine_3d_oben_schraeg.png)
+
+![3D-Ansicht der Unterseite](doku/platine_3d_unten_schraeg.png)
+
+Klemme, Sicherung, Varistor, X2-Kondensator und Sensor sind in den Bildern vereinfachte Quader, weil es für sie kein fertiges 3D-Modell gibt. `doku/platine_3d.glb` lässt sich in jedem glTF-Betrachter drehen.
 
 ## Funktion
 
