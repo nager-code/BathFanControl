@@ -82,7 +82,7 @@ Grundsätze: alles bei JLCPCB lieferbar, möglichst SMD, alles von oben bestück
 |---|---|---|---|
 | X1 | Phoenix MKDS 1,5/4-5,08 (1715747), Schraubklemme 4-polig, waagrechte Leitereinführung | C5443561 | bewährte Klemme, 0,14–1,5 mm² |
 | F1 | Littelfuse 0443001.DR, T1A 250 V, 10 x 3 mm | C95352 | vom Netzteil-Datenblatt gefordert; Pads passen auch für Schurter UMT 250 |
-| RV1 | TDK CU3225K275G2, 275 VAC, 8,0 x 6,3 mm | C211106 | Überspannungsschutz, vom Netzteil-Datenblatt gefordert (siehe [Hinweis](#datenblattprüfung)) |
+| RV1 | TDK CU3225K275G2, 275 VAC, 8,0 x 6,3 mm | C211106 | Überspannungsschutz, vom Netzteil-Datenblatt gefordert; festgelegt auf 275 VAC (siehe [Datenblattprüfung](#datenblattprüfung)) |
 | PS1 | Hi-Link HLK-PM03, 3,3 V / 1 A, 34,8 x 20,5 x 15 mm, vergossen | C209904 | Mean Well IRM-02-3.3 und -3.3S waren bei JLCPCB nicht lieferbar |
 | C1 | Panasonic EEHZK1E101UP, Hybrid-Polymer-Elko 100 µF 25 V, 6,3 x 5,8 mm | C454668 | für feuchte Wärme geprüft (85 °C, 85–90 % r. F., 2000 h unter Spannung), 4000 h bei 125 °C, AEC-Q200 |
 | C2 | Murata GA355QR7GB103KW01L, 10 nF X2 250 VAC, Bauform 2220 | C237426 | Snubber-Kondensator mit X2-Zulassung als SMD |
@@ -119,6 +119,6 @@ Alle Pinbelegungen und Grenzwerte wurden gegen die Datenblätter geprüft. Die S
 | RT9013-33GB (SOT-23-5) | 1 = VIN, 2 = GND, 3 = EN, 4 frei, 5 = VOUT; Eingang max. 5,5 V, 500 mA, Dropout typ. 0,25 V | EN an VIN; Eingang über D2 an VBUS, Ausgang direkt an 3,3 V |
 | USB4145-03-0230-C | A1/A12/B1/B12 = GND, A4/A9/B4/B9 = VBUS, A5 = CC1, B5 = CC2, A6/B6 = D+, A7/B7 = D−, A8/B8 = SBU; Lötflächen 0,30 x 1,15 mm im Raster 0,5 mm; vier Gehäusezapfen 2,3 mm lang in metallisierten Langlöchern 1,10 x 0,60 mm | eigener Footprint nach dem Lötbild im Datenblatt; D+ an GPIO19, D− an GPIO18 (im ESP32-C3 fest so belegt) |
 | HLK-PM03, Pins | 1 und 2 = AC (gleichwertig), 3 = −Vo, 4 = +Vo; AC-Stifte 5,0 mm, Ausgangsstifte 15,0 mm auseinander, Reihenabstand 29,08 mm, Stifte 0,8 mm | KiCad-Footprint `Converter_ACDC_Hi-Link_HLK-PMxx` passt. Im Schaltplan AC/N = 1, AC/L = 2 |
-| HLK-PM03, Beschaltung | Sicherung 1 A träge und Varistor am Eingang gefordert; X-Kondensator und Drossel nur für die EMV-Zulassung | F1 (T1A) und RV1 vorhanden. **Abweichung:** RV1 ist ein 275-VAC-Typ, das Datenblatt nennt 10D561K (350 VAC) |
+| HLK-PM03, Beschaltung | Sicherung 1 A träge und Varistor am Eingang gefordert; X-Kondensator und Drossel nur für die EMV-Zulassung | F1 (T1A) und RV1 vorhanden. Das Datenblatt nennt als Beispiel 10D561K (350 VAC); **festgelegt ist der verbaute Typ CU3225K275G2 mit 275 VAC** |
 | MKDS 1,5/4-5,08 | Raster 5,08 mm, Stifte 1,0 mm (Bohrung 1,3 mm), Stiftreihe 4,6 mm hinter der Leitereinführung, 250 V / 17,5 A, 0,14–1,5 mm² | Footprint vom KiCad-Original abgeleitet, Lötaugen 2,4 statt 2,6 mm (2,68 mm Kupferabstand zwischen den Polen) |
 | FM-B2020RGBA-HG | gemeinsame Anode an Pin 3; Pin 1 rot (Eckmarke), Pin 4 grün, Pin 2 blau; U<sub>F</sub> typ. 2,0 / 2,7 / 2,8 V | eigener Footprint nach Datenblatt (Pads 0,8 x 0,7 mm) |

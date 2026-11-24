@@ -20,7 +20,6 @@ Diese Punkte sind bewusst so entschieden. Wer höhere Ansprüche hat, findet hie
 |---|---|---|
 | **Netzteil** | Das HLK-PM03 nennt 3000 VAC (an anderer Stelle 2500 VAC) Isolation und „Entwurf entspricht UL/CE“, weist aber keine Zertifizierung des Moduls aus. | Ein zertifiziertes Netzteil braucht ein anderes Modul und einen neuen Footprint. |
 | **Sicherung** | Die 0443001.DR schaltet 50 A bei 250 VAC ab. | Schurter UMT 250 (200 A), passt auf dieselben Pads. |
-| **Varistor** | RV1 ist ein 275-VAC-Typ; das Netzteil-Datenblatt nennt 10D561K (350 VAC). | – |
 | **Elko C1** | Hybrid-Polymer mit Gummidichtung; Panasonic begrenzt die Lebensdauer deshalb auf 15 Jahre. | Tantal Vishay 293D107X9016D2TE3 (C129696, Bauform D) – braucht einen neuen Footprint. |
 | **Snubber C2** | 10 nF | bis 56 nF mit gleichem Footprint (Murata GA355XR7GB563KW06L) |
 | **USB** | keine ESD-Schutzbeschaltung an den Datenleitungen | – |
