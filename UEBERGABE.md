@@ -91,7 +91,7 @@ Die Platine ist so gezeichnet, wie sie eingebaut von vorn zu sehen ist: unten li
 
 - Firmware (Regellogik siehe erste Übergabe, Abschnitt 7; Lüfter an GPIO10, Licht an GPIO3 low-aktiv, SHT40 an GPIO6/7, Adresse 0x44, RGB-LED low-aktiv an GPIO4 rot / GPIO5 grün / GPIO1 blau)
 - Home Assistant vorhanden? (entscheidet über ESPHome oder eigene Firmware)
-- Gehäuse: Entwurf für den 3D-Druck in `gehaeuse/`, passend zur Platine v1.5 und zum Einbau unten links vor dem Lüftergehäuse (dort sind etwa 50 mm Tiefe bis zur Frontabdeckung frei, das Gehäuse braucht 25,7 mm). Noch nicht gedruckt; die Lage von Kabeltasche, Wartungsklappe und Einlass ist nur aus Fotos geschätzt. Details in `gehaeuse/README.md`
+- Gehäuse: Entwurf für den 3D-Druck in `gehaeuse/`, passend zur Platine v1.5 und zum Einbau unten links vor dem Lüftergehäuse. Dort sind nachgemessen höchstens 85 mm Breite, 40 mm Tiefe und 140 mm Höhe frei; das Gehäuse braucht 80,6 x 25,7 x 67,6 mm. Noch nicht gedruckt. Details in `gehaeuse/README.md`
 
 ## 8. Sicherheit
 
