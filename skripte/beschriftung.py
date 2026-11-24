@@ -8,12 +8,15 @@ H = 68.0                               # Oberkante der Platine ueber y = 0 (Unte
 HMIN, DMIN = 1.0, 0.15
 mm = pcbnew.FromMM
 b = pcbnew.LoadBoard(pcb)
-NEU = []                               # (Text, x, y, Unterseite, Groesse, Drehung)
-def text(s, x, y, unten=False, size=1.0, rot=0):
-    NEU.append((s, x, y, unten, size, rot))
+NEU = []                               # (Text, x, y, Unterseite, Groesse, Drehung, rechtsbuendig)
+def text(s, x, y, unten=False, size=1.0, rot=0, rechts=False):
+    NEU.append((s, x, y, unten, size, rot, rechts))
 # ---- Oberseite (x, Hoehe y ueber der Unterkante des Riegels)
-text("X1 von oben: L  Licht  N  Lüfter", 31.0, -1.5)
-text("Lüftersteuerung Bad v1.7", 31.0, -3.3)
+# Klemmenbelegung: je Pol ein Name direkt hinter der Klemme, sichtbar bei eingelegter Platine und offenem Deckel
+for name, y in (("L", 22.62), ("Licht", 17.54), ("N", 12.46), ("Lüfter", 7.38)):
+    text(name, 44.3, y, size=1.1, rechts=True)
+TITEL = "Lüftersteuerung Bad V1.0"
+text(TITEL, 19.6, -2.6)
 text("BOOT", 21.5, 50.3); text("RST", 25.6, 50.3)
 text("USB", 37.9, 64.0, rot=90)
 text("LED", 35.3, 61.2)
@@ -36,6 +39,9 @@ alt = [d for d in texte if (d.GetText(), d.GetLayer()) in schon]          # Text
 n = 0
 for d in texte:
     if d in alt: continue
+    if d.GetText().startswith("Lüftersteuerung Bad") or d.GetText().startswith("Lueftersteuerung Bad"):   # Titel mit altem Versionsstand
+        if d.GetLayer() == pcbnew.F_SilkS: alt.append(d); continue
+        d.SetText(TITEL)
     if "Lueft" in d.GetText(): d.SetText(d.GetText().replace("Lueft", "Lüft"))
     if d.GetText() == "230 V~" and d.GetLayer() == pcbnew.B_SilkS:
         d.SetPosition(pcbnew.VECTOR2I(mm(OX + 31.0), mm(OY + H + 2.3)))       # unten im Streifen, nicht zwischen den Stiften
@@ -46,12 +52,13 @@ for d in texte:
         d.SetTextThickness(mm(DMIN))
 for d in alt:
     b.Remove(d)
-for s_, x, y, unten, size, rot in NEU:
+for s_, x, y, unten, size, rot, rechts in NEU:
     t = pcbnew.PCB_TEXT(b)
     t.SetText(s_); t.SetPosition(pcbnew.VECTOR2I(mm(OX + x), mm(OY + H - y)))
     t.SetLayer(pcbnew.B_SilkS if unten else pcbnew.F_SilkS)
     t.SetTextSize(pcbnew.VECTOR2I(mm(size), mm(size))); t.SetTextThickness(mm(max(DMIN, size * 0.15)))
     t.SetTextAngleDegrees(rot); t.SetMirrored(unten)
+    if rechts: t.SetHorizJustify(pcbnew.GR_TEXT_H_ALIGN_RIGHT)
     b.Add(t)
 pcbnew.SaveBoard(pcb, b)
 print("Beschriftung: %d Texte gesetzt, %d vergroessert" % (len(NEU), n))

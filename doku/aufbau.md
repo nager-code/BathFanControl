@@ -54,7 +54,7 @@ Das Gehäuse besteht aus Wanne und Deckel für den 3D-Druck. Alle Details – We
 
 - **Werkstoff:** flammhemmend nach UL 94 V-0, z. B. entsprechend ausgewiesenes PETG, ABS oder PC. **Kein normales PLA.**
 - Die Platine liegt auf Leisten der Wanne; zwei Dome gehen durch ihre Bohrungen.
-- Verschlossen wird mit zwei Kunststoffschrauben 3 x 10 mm von vorn.
+- Verschlossen wird mit zwei Kunststoffschrauben 3 x 10 mm von vorn, am besten mit Senkkopf (der Sitz im Deckel ist eine 90°-Senkung).
 
 ## Anschließen
 
@@ -74,7 +74,7 @@ Die vier Adern kommen von rechts durch die Öffnungen im Gehäuse in den Anschlu
 
 ## Im Lüfterkasten befestigen
 
-![Einbaulage im Lüfterkasten](einbaulage.svg)
+![Einbaulage im Lüfterkasten](einbaulage.svg?v=1.0)
 
 - **Einbauort:** unten links im Lüfterkasten, vor dem Lüftergehäuse. Linke Seite an der Kastenwand, Unterseite auf dem Kastenboden.
 - **Platz:** am Einbauort sind höchstens 85 mm Breite, 40 mm Tiefe und 140 mm Höhe frei; das Gehäuse braucht 72,6 x 25,7 x 77,1 mm.

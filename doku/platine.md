@@ -4,7 +4,7 @@
 
 Die Platine hat eine Sonderform, damit sie unten links in den Lüfterkasten passt: Unten liegen Netzteil und Klemme, rechts kommen die Leitungen herein, und oben rechts sitzt der Feuchtesensor in einer abgeschrägten Ecke, die zum Lüfter-Einlass zeigt.
 
-![Lageplan: was sitzt wo auf der Platine](lageplan.png)
+![Lageplan: was sitzt wo auf der Platine](lageplan.png?v=1.0)
 
 Den Lageplan gibt es auch als [SVG](lageplan.svg). Auf der Platine selbst ist für die Namen der kleinen Bauteile kein Platz; der Lageplan ersetzt diese Beschriftung.
 
@@ -27,8 +27,8 @@ Die Platine ist so gezeichnet, wie man sie eingebaut **von vorn** sieht. Höhena
 
 | Bereich | Größe | Inhalt |
 |---|---|---|
-| **Streifen unten** | 4,5 mm hoch | Bohrung für den unteren Schraubdom, unter dem 3,3-V-Ende des Netzteils |
-| **Riegel** | 54,6 x 30 mm | Netzteil PS1 (3,3 V links, Netz rechts), Schraubklemme X1 mit Leitereinführung nach rechts, dazwischen der Snubber R5/C2. Rechts neben der Klemme ist die Platine ausgeschnitten: dort ist der Anschlussraum für die Adern. |
+| **Streifen unten** | 4,5 mm hoch | links die Bohrung für den unteren Schraubdom, unter dem 3,3-V-Ende des Netzteils. Rechts, unter dem Netz-Ende des Netzteils, der Snubber R5/C2; daneben der Titel mit dem Versionsstand und „230 V~“. |
+| **Riegel** | 54,6 x 30 mm | Netzteil PS1 (3,3 V links, Netz rechts), Schraubklemme X1 mit Leitereinführung nach rechts, dazwischen auf der Oberseite die Klemmenbelegung. Rechts neben der Klemme ist die Platine ausgeschnitten: dort ist der Anschlussraum für die Adern. |
 | **Netzreihe** | bis 43,2 mm Höhe, 68 mm breit | Triac Q1 (liegend, Kühlfahne links), Varistor, Sicherung, R1/R2. Links davon ein 14 mm breiter 3,3-V-Streifen. |
 | **Isolationsschlitz** | 2 mm, nach rechts offen | trennt Netzreihe und Arm. Optotriac U3 und Optokoppler U2 sitzen darüber: Netzpins unten, 3,3-V-Pins oben. |
 | **Arm** | 68 x 23 mm | links das WLAN-Modul U1 (Antenne an der Oberkante), daneben C1, RGB-LED D1 mit Vorwiderständen, USB-C-Buchse J2 mit Regler U5. Ganz rechts hinter einem Thermoschlitz die **Sensorinsel** mit U4 und C7. |
@@ -50,7 +50,11 @@ Von oben nach unten (Raster 5,08 mm):
 | 3 | **N** – Neutralleiter |
 | 4 | **Lüfter** – geschaltete Phase zum Lüfter |
 
-Die Reihenfolge ergibt sich aus der kreuzungsfreien Verdrahtung. Sie steht auf der Oberseite im unteren Streifen, auf der Unterseite neben den Stiften und im Gehäusedeckel.
+Die Reihenfolge ergibt sich aus der kreuzungsfreien Verdrahtung. Sie steht:
+
+- auf der Oberseite direkt hinter der Klemme, je Pol ein Name auf Höhe der Schraube – lesbar, wenn die Platine in der Wanne liegt und der Deckel ab ist,
+- auf der Unterseite neben den Stiften,
+- außen auf dem Gehäusedeckel.
 
 ## Isolation
 
@@ -65,16 +69,16 @@ Die Reihenfolge ergibt sich aus der kreuzungsfreien Verdrahtung. Sie steht auf d
 
 ## Bestückungsdruck
 
-- **Oberseite:** Namen der größeren Bauteile, BOOT/RST, USB, LED und die Klemmenbelegung.
+- **Oberseite:** Titel mit Versionsstand, „230 V~“, Namen der größeren Bauteile, BOOT/RST, USB, LED und die Klemmenbelegung.
 - **Unterseite:** Belegung der Netzteil- und Klemmenstifte.
 
 ## Ansichten
 
 | Oberseite | Unterseite |
 |---|---|
-| ![Kupferlagen Oberseite](lagen_oberseite.png) | ![Kupferlagen Unterseite](lagen_unterseite.png) |
+| ![Kupferlagen Oberseite](lagen_oberseite.png?v=1.0) | ![Kupferlagen Unterseite](lagen_unterseite.png?v=1.0) |
 
-![3D-Ansichten der Platine von allen Seiten](platine_3d_ansichten.png)
+![3D-Ansichten der Platine von allen Seiten](platine_3d_ansichten.png?v=1.0)
 
 In den 3D-Bildern sind Sicherung, Varistor, X2-Kondensator, Triac, LED, USB-Buchse und Sensor vereinfachte Quader, weil es für sie kein fertiges 3D-Modell gibt. Die Datei [`platine_3d.glb`](platine_3d.glb) lässt sich in jedem glTF-Betrachter drehen.
 

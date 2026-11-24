@@ -2,7 +2,7 @@
 
 [← Zur Übersicht](../README.md)
 
-**Stand:** 24.11.2026 · **Platine** v1.7 · **Gehäuse** v7
+**Stand:** V1.0 – Planung abgeschlossen · Platine und Gehäuse V1.0
 
 ## Kurz gesagt
 
@@ -10,7 +10,7 @@
 |---|---|
 | Schaltplan | fertig, gegen Datenblätter geprüft, ERC ohne Befund |
 | Platine | fertig geroutet, DRC ohne Befund, Bestellpaket erzeugt |
-| Gehäuse | Entwurf, rechnerisch gegen die Platine geprüft, **noch nicht gedruckt** |
+| Gehäuse | fertig geplant, rechnerisch gegen die Platine und im Slicer geprüft, **noch nicht gedruckt** |
 | Firmware | **fehlt**, Konzept siehe [Funktion](funktion.md) |
 | Muster | **noch nicht gebaut, nicht elektrisch getestet** |
 
@@ -22,7 +22,7 @@ Geprüft wurde bisher nur in KiCad und rechnerisch am 3D-Modell.
 - **Designregelprüfung (DRC)** mit Schaltplanabgleich: 0 Verletzungen, 0 offene Verbindungen ([Bericht](drc_bericht.txt)).
 - **Pinbelegungen und Grenzwerte** aller wichtigen Bauteile gegen die Datenblätter ([Datenblattprüfung](schaltung.md#datenblattprüfung)).
 - **Abstände:** 2,5 mm zwischen Netzpotentialen und 6 mm zwischen Netz und 3,3 V eingehalten ([Isolation](platine.md#isolation)).
-- **Gehäuse gegen Platine:** keine Durchdringung, kleinster Abstand 0,6 mm ([Gehäuse → Geprüft](../gehaeuse/README.md#geprüft)).
+- **Gehäuse gegen Platine:** keine Durchdringung, kleinster Abstand 0,6 mm; beide STL-Dateien laufen ohne Warnung durch PrusaSlicer ([Gehäuse → Geprüft](../gehaeuse/README.md#geprüft)).
 - **Lieferbarkeit:** alle Teile am 23./24.11.2026 bei JLCPCB am Lager ([Lagerbestand](bestellen.md#lagerbestand)).
 
 ## Offene Punkte

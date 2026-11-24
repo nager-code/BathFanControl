@@ -2,10 +2,10 @@
 
 **Feuchteabhängige Steuerung für einen Badlüfter.** Die Platine sitzt direkt im Lüfterkasten, misst die Luftfeuchte und schaltet den Lüfter nur so lange, wie das Lüften tatsächlich etwas bringt. Über WLAN lässt sie sich einstellen und aktualisieren.
 
-![3D-Ansicht der Platine](doku/platine_3d_oben_schraeg.png)
+![3D-Ansicht der Platine](doku/platine_3d_oben_schraeg.png?v=1.0)
 
 > [!WARNING]
-> **Entwurfsstand – nicht gebaut, nicht getestet.** Schaltplan und Platine sind in KiCad ohne Befund geprüft, es gibt aber noch kein gefertigtes Muster und noch keine Firmware. Siehe [Projektstand](doku/stand.md).
+> **Stand V1.0: Planung abgeschlossen – noch nicht gebaut, nicht getestet.** Schaltplan und Platine sind in KiCad ohne Befund geprüft, es gibt aber noch kein gefertigtes Muster und noch keine Firmware. Siehe [Projektstand](doku/stand.md).
 
 > [!CAUTION]
 > **Netzspannung 230 V.** Die Schaltung führt Netzspannung und wird in einem Feuchtraum eingebaut. Betrieb nur im geschlossenen Gehäuse, Anschluss durch eine Elektrofachkraft. Mehr unter [Sicherheit](#sicherheit).
@@ -41,7 +41,7 @@ Entwickelt für einen **KN2-UP-Unterputzlüfter** (Einrohr-Lüftungssystem, ca. 
 
 | Lageplan der Bauteile | Gehäuse geschlossen und offen |
 |---|---|
-| ![Lageplan: was sitzt wo auf der Platine](doku/lageplan.png) | ![Gehäuse geschlossen und geöffnet](gehaeuse/bilder/gehaeuse_beide.png) |
+| ![Lageplan: was sitzt wo auf der Platine](doku/lageplan.png?v=1.0) | ![Gehäuse geschlossen und geöffnet](gehaeuse/bilder/gehaeuse_beide.png?v=1.0) |
 
 Weitere Ansichten: [Platine von allen Seiten](doku/platine_3d_ansichten.png), [Einbaulage im Lüfterkasten](doku/einbaulage.svg), [3D-Modell zum Drehen](doku/platine_3d.glb) (glTF), [Schaltplan als PDF](doku/schaltplan.pdf).
 

@@ -21,7 +21,7 @@ NETZ = [
     ("U3", "Optotriac, zündet Q1 (MOC3052S), über dem Isolationsschlitz"),
     ("R16", "Zündwiderstand 390 Ω"),
     ("R17", "Gate-Widerstand 390 Ω"),
-    ("R5, C2", "Snubber 100 Ω + 10 nF parallel zu Q1"),
+    ("R5, C2", "Snubber 100 Ω + 10 nF parallel zu Q1 (unten im Streifen)"),
     ("U2", "Optokoppler Lichteingang (LTV-814S), über dem Isolationsschlitz"),
     ("R1, R2", "Vorwiderstände Lichteingang 2 x 100 kΩ"),
     ("R12", "3,3 kΩ parallel zum Optokoppler, nicht bestückt"),
@@ -63,7 +63,7 @@ TOT_W, TOT_H = LX + 97.0, max(K * H + 2 * M + 9.0, 7.0 + 2 * M + 3.2 * (len(NETZ
 S = []
 S.append('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 %.1f %.1f" width="%.0fmm" height="%.0fmm" font-family="DejaVu Sans, Arial, sans-serif">' % (TOT_W, TOT_H, TOT_W, TOT_H))
 S.append('<rect width="100%" height="100%" fill="#ffffff"/>')
-S.append('<text x="%.1f" y="7.5" font-size="3.4" font-weight="bold" fill="#222">Lüftersteuerung Bad – Lageplan der Platine (Ansicht von vorn, wie eingebaut)</text>' % M)
+S.append('<text x="%.1f" y="7.5" font-size="3.4" font-weight="bold" fill="#222">Lüftersteuerung Bad V1.0 – Lageplan der Platine (Ansicht von vorn, wie eingebaut)</text>' % M)
 S.append('<g transform="translate(%.1f %.1f) scale(%.2f)">' % (M, M + 7.0, K))
 S.append('<clipPath id="pl"><path d="%s" clip-rule="evenodd"/></clipPath>' % path)
 YB = 4.5                                        # Streifen unter dem Riegel
@@ -111,7 +111,7 @@ for p in x1.Pads():
     S.append('<line x1="%.2f" y1="%.2f" x2="%.2f" y2="%.2f" stroke="#b3261e" stroke-width="0.15"/>' % (px + 5.0, py, px + 7.6, py))
     note(px + 8.2, py + 0.6, namen[p.GetNumber()], size=1.7, col="#b3261e", bold=True)
 note(55.2, yb(27.3), "Adern von rechts", size=1.25, col="#b3261e")
-note(40.8, yb(-3.3), "230 V~", "middle", 1.7, "#b3261e", True)
+note(49.6, yb(-3.6), "230 V~", "middle", 1.7, "#b3261e", True)
 note(1.0, yb(34.0), "3,3 V", "start", 1.7, "#1f4e9c", True)
 note(15.5, yb(48.6), "3,3 V", "start", 1.7, "#1f4e9c", True)
 note(49.3, yb(43.8), "Isolationsschlitz", "start", 1.1, "#666")

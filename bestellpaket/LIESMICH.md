@@ -1,4 +1,4 @@
-# Bestellpaket – Lüftersteuerung Bad v1.7
+# Bestellpaket – Lüftersteuerung Bad V1.0
 
 [← Zur Übersicht](../README.md)
 
@@ -15,7 +15,7 @@ Fertigungsdaten für Leiterplatte und Bestückung bei **JLCPCB**. Vor der Bestel
 | `bestueckung_oben.pdf` | Bestückungsplan |
 | `bestueckung_unten.pdf` | zeigt nur die Beschriftung der Unterseite |
 
-Auf der Platine selbst stehen keine Bauteilnamen für die kleinen Bauteile. Eine beschriftete Übersicht ist der [Lageplan](../doku/lageplan.png).
+Auf der Platine selbst stehen nur die Namen der größeren Bauteile und die Klemmenbelegung. Eine beschriftete Übersicht ist der [Lageplan](../doku/lageplan.png).
 
 ## Angaben für den Leiterplatten-Auftrag
 

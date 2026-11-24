@@ -1,8 +1,8 @@
-# Erzeugt die Platine der Lueftersteuerung (v1.7, 68 x 72,5 mm, 2 Lagen, nur von oben bestueckt) aus der Netzliste.
+# Erzeugt die Platine der Lueftersteuerung (V1.0, 68 x 72,5 mm, 2 Lagen, nur von oben bestueckt) aus der Netzliste.
 # SMD-Bauteile, dazu bedrahtet das Netzteil (Hi-Link HLK-PM03) und die Netzklemme (Phoenix MKDS 1,5/4-5,08).
 # Die Platine ist so gezeichnet, wie sie eingebaut von vorn zu sehen ist. Hoehen y zaehlen ab der Unterkante des
 # Netzteil-Riegels (y = 0); darunter haengt ein 4,5 mm hoher Streifen fuer den Schraubdom. Von unten nach oben:
-#   Streifen y = -4,5..0: Bohrung fuer den Schraubdom unter dem Netzteil
+#   Streifen y = -4,5..0: Bohrung fuer den Schraubdom unter dem Netzteil, rechts davon der Snubber R5/C2
 #   Riegel 54,6 x 30 mm: Netzteil (3,3 V links, Netz rechts) und Klemme (Leiter von rechts in den Ausschnitt)
 #   Netzreihe bis y = 43,2 mm (68 mm breit): Triac Q1, Varistor, Sicherung, Teilerwiderstaende, Netzseite von U2 und U3
 #   Isolationsschlitz 2 mm (nach rechts offen), die Optokoppler sitzen darueber
@@ -121,9 +121,9 @@ OBEN = {
     "Q1":  N(29.7, 31.7, "3", (34.55, 34.247)),              # 1 = COM unten (L_F), 3 = G oben, Fahne = OUT (L_FAN)
     "R16": N(27.4975, 37.0, "1", (28.96, 37.0)),             # Zuendwiderstand: Optotriac Pin 4 -> Fahne
     "R17": N(37.7, 38.1, "1", (37.7, 38.925)),               # Gate -> COM
-    # Snubber im Streifen zwischen Netzteil und Klemme
-    "C2":  N(40.8, 20.5, "2", (40.8, 17.8)),
-    "R5":  N(40.8, 26.6, "2", (40.8, 25.1375)),
+    # Snubber im Streifen unter Netzteil und Klemme (der Platz hinter der Klemme bleibt fuer die Polbeschriftung frei)
+    "C2":  N(40.5, 0.3, "2", (43.2, 0.3)),
+    "R5":  N(33.5, 0.3, "2", (34.9625, 0.3)),
     "R12": N(46.17, 37.5, "2", (45.345, 37.5)),
     "R2":  N(51.4, 39.9, "2", (49.9375, 39.9)),
     "R1":  N(56.4, 39.9, "1", (57.8625, 39.9)),
@@ -345,11 +345,11 @@ u22 = padu("U2", "2")
 tr("/LICHT_B", [padu("R2", "2"), (u22[0] + 0.6, 39.9), u22], 0.4, F)
 tr("/LICHT_B", [padu("R12", "1"), (u22[0], 38.4), u22], 0.4, F)
 # L_FAN: Klemme -> unten nach links und hoch, unter der Oberkante des Netzteils weiter zur Kuehlfahne (OUT) von Q1;
-# unterwegs ein Abzweig nach oben zum Snubber-Kondensator C2
-vi("/L_FAN", (26.7, 26.9)); vi("/L_FAN", (38.3, 16.2), 1.0, 0.5)
+# vom untersten Pol ausserdem oben nach unten links zum Snubber-Kondensator C2
+vi("/L_FAN", (26.7, 26.9))
 tr("/L_FAN", [PF, (38.3, PF[1]), (38.3, 26.9), (26.7, 26.9)], 1.0, B)
 tr("/L_FAN", [(26.7, 26.9), (26.7, 29.5)], 1.0, F)
-tr("/L_FAN", [(38.3, 16.2), (39.2, 17.8), padu("C2", "2")], 1.0, F)
+tr("/L_FAN", [padu("C2", "2"), (47.0, 0.3), (50.0, 3.3), PF], 1.0, F)
 r162 = padu("R16", "2")
 tr("/L_FAN", [r162, (r162[0], 34.5)], 0.8, F)
 # Zuendkreis: Optotriac Pin 4 -> R16 -> OUT, Optotriac Pin 6 -> Gate, R17 vom Gate nach COM
@@ -362,12 +362,14 @@ f11, f12 = padu("F1", "1"), padu("F1", "2")
 vi("/L", (f11[0], 31.2))
 tr("/L", [PL, (51.5, PL[1] + 1.5), (51.5, 29.9), (52.8, 31.2), (f11[0], 31.2)], 1.0, B)
 tr("/L", [(f11[0], 31.2), f11], 1.0, F)
-# L_F: Sicherung -> Varistor -> Snubber R5 -> COM von Q1 und Netzteil (AC oben)
+# L_F: Sicherung -> Varistor -> COM von Q1 und Netzteil (AC oben); vom Netzteilstift unten weiter zum Snubber R5
 rv1 = padu("RV1", "1")
 r51, qc = padu("R5", "1"), padu("Q1", "1")
 tr("/L_F", [f12, (50.6, 32.0), (50.6, 28.3), (34.5, 28.3), (psl[0], 26.7), psl], 1.0, F)
 tr("/L_F", [(rv1[0], 28.3), rv1], 1.0, F)
-tr("/L_F", [(r51[0], 28.3), r51], 1.0, F)
+vi("/L_F", (30.0, 0.3))
+tr("/L_F", [psl, (30.0, psl[1]), (30.0, 0.3)], 1.0, B)
+tr("/L_F", [(30.0, 0.3), r51], 1.0, F)
 tr("/L_F", [(qc[0], 28.3), qc], 1.0, F)
 r172 = padu("R17", "2")
 tr("/L_F", [r172, (r172[0], 34.2)], 0.5, F)
@@ -409,9 +411,9 @@ for fp in board.GetFootprints():
 # Klemmenbelegung: auf der Oberseite verdeckt das Klemmengehaeuse alles, deshalb auf der Unterseite neben den Stiften
 for lab, num in (("L", "4"), ("Licht", "3"), ("N", "2"), ("Lüfter", "1")):
     text(lab, XT + SX - 4.6, pad("X1", num)[1], pcbnew.B_SilkS, 1.0, 0, True)
-text("230 V~", 38.0 + SX, U(0, 1.6)[1], pcbnew.F_SilkS, 1.3, 0, False, 0.2)
+text("230 V~", 49.6 + SX, U(0, -3.1)[1], pcbnew.F_SilkS, 1.3, 0, False, 0.2)
 text("230 V~", 31.0 + SX, U(0, -2.3)[1], pcbnew.B_SilkS, 1.2, 0, True, 0.2)
-text("Lüftersteuerung Bad v1.7", 40.0, U(0, 50.3)[1], pcbnew.B_SilkS, 1.0, 0, True, 0.15)
+text("Lüftersteuerung Bad V1.0", 40.0, U(0, 50.3)[1], pcbnew.B_SilkS, 1.0, 0, True, 0.15)
 text("Sensor", W - 4.5, 16.0, pcbnew.F_SilkS, 1.0, 0, False, 0.15)
 
 pcbnew.SaveBoard(PCB, board)

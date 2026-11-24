@@ -2,17 +2,17 @@
 
 [← Zur Übersicht](../README.md)
 
-**Entwurf v7 für Platine v1.7 – noch nicht gedruckt.**
+**Version V1.0 für Platine V1.0 – noch nicht gedruckt.**
 
 Zweiteiliges Gehäuse aus Wanne und Deckel für den Einbau unten links im Lüfterkasten, vor dem Lüftergehäuse. Netzteil und Klemme liegen unten, die Leitungen kommen von rechts, der Feuchtesensor sitzt oben rechts hinter der abgeschrägten Ecke zum Lüfter-Einlass. Das Modell ist parametrisch in OpenSCAD aufgebaut und ohne Stützmaterial druckbar.
 
-![Gehäuse geschlossen und geöffnet](bilder/gehaeuse_beide.png)
+![Gehäuse geschlossen und geöffnet](bilder/gehaeuse_beide.png?v=1.0)
 
 | Wanne mit Platine von vorn | Seite mit Leitungsöffnungen und Lüftungsschlitzen |
 |---|---|
-| ![Wanne mit Platine von vorn](bilder/gehaeuse_offen_von_vorn.png) | ![Seite mit Leitungsöffnungen und Lüftungsschlitzen](bilder/gehaeuse_leitungsseite.png) |
+| ![Wanne mit Platine von vorn](bilder/gehaeuse_offen_von_vorn.png?v=1.0) | ![Seite mit Leitungsöffnungen und Lüftungsschlitzen](bilder/gehaeuse_leitungsseite.png?v=1.0) |
 
-![Wanne und Deckel von innen: Sensorkammer oben rechts, Anschlussraum mit Innenwand unten rechts](bilder/gehaeuse_kammern.png)
+![Wanne und Deckel von innen: Sensorkammer oben rechts, Anschlussraum mit Innenwand unten rechts](bilder/gehaeuse_kammern.png?v=1.0)
 
 ## Maße
 
@@ -20,10 +20,10 @@ Zweiteiliges Gehäuse aus Wanne und Deckel für den Einbau unten links im Lüfte
 |---|---|
 | Außen | 72,6 breit x 77,1 hoch x 25,7 mm tief |
 | Wandstärke | 2 mm |
-| Druckvolumen | Wanne 19,3 cm³, Deckel 20,1 cm³ |
+| Druckvolumen | Wanne 19,3 cm³, Deckel 20,2 cm³ |
 | Werkstoff | flammhemmend nach UL 94 V-0, z. B. entsprechend ausgewiesenes PETG, ABS oder PC – **kein normales PLA** (Brandschutz und feuchtwarme Luft im Kasten) |
-| Schrauben | 2 Kunststoffschrauben 3 x 10 mm |
-| Druck | keine besonderen Einstellungen vorgegeben; ohne Stützmaterial druckbar, beide STL-Dateien liegen schon in Druckausrichtung |
+| Schrauben | 2 Kunststoffschrauben 3 x 10 mm, am besten mit Senkkopf |
+| Druck | keine besonderen Einstellungen vorgegeben; ohne Stützmaterial drucken. Geprüft mit Düse 0,4 mm und Schichthöhen 0,15 bis 0,3 mm |
 
 ## Aufbau
 
@@ -47,7 +47,7 @@ Von vorn gesehen wie in den Bildern: linke Seite an der Kastenwand, Unterseite a
 
 | Kammer | Lage | Aufbau |
 |---|---|---|
-| **Sensorkammer** | oben rechts | möglichst offen: zwei Fenster 3,6 mm in der abgeschrägten Ecke zum Einlass, vier Fenster 3,0 mm in der rechten Wand, eines oben, dazu drei Öffnungen 2,2 mm in der Deckelfläche. In der Kammer liegt nur die Sensorinsel der Platine (3,3 V). |
+| **Sensorkammer** | oben rechts | möglichst offen: zwei Fenster 3,6 mm in der abgeschrägten Ecke zum Einlass, vier Fenster 3,0 mm in der rechten Wand, eines oben, dazu drei Öffnungen 2,0 mm in der Deckelfläche. In der Kammer liegt nur die Sensorinsel der Platine (3,3 V). |
 | **Anschlussraum** | unten rechts, 11,9 mm tief | im Ausschnitt der Platine vor der Schraubklemme. Die vier Adern kommen von rechts durch je eine Öffnung (3,4 mm, Raster 5,08 mm) in der Außenwand und eine zweite in der Innenwand direkt vor der Klemme. Beide Öffnungen liegen in der Trennfuge und umfassen die Adern beim Schließen. |
 | **Geräteraum** | Rest | Netzteil, Netzseite und Controller, ringsum geschlossen |
 
@@ -56,17 +56,17 @@ Von vorn gesehen wie in den Bildern: linke Seite an der Kastenwand, Unterseite a
 ### Weitere Details
 
 - **Trennung Netz / 3,3 V:** Im 2 mm breiten Isolationsschlitz der Platine steht ein Steg der Wanne. Eine Rippe des Deckels setzt ihn bis zur Decke fort – überall außer unter den beiden Optokopplern.
-- **Klemme:** Die Schrauben sind nur bei abgenommenem Deckel erreichbar. Die Belegung ist im Deckel eingeprägt, von oben nach unten: L, Licht, N, Lüfter.
+- **Klemme:** Die Schrauben sind nur bei abgenommenem Deckel erreichbar. Belegung von oben nach unten: L, Licht, N, Lüfter. Sie steht auf der Platine direkt hinter der Klemme (sichtbar bei abgenommenem Deckel) und ist außen in den Deckel eingeprägt.
 - **USB-C-Buchse:** Sie steht 7,5 mm hoch auf der Platine und liegt unter dem geschlossenen Deckel. Eine Öffnung dafür gibt es nicht; zum Programmieren den Deckel abnehmen (Netzspannung vorher abschalten).
 - **Lichtschacht der RGB-LED:** Ein Rohr im Deckel (innen 3,6 mm) reicht bis 2 mm über die LED. In der Deckelfläche bleibt ein 0,6 mm dünnes Fenster stehen; das Licht ist nur mit hellem oder transparentem Filament zu sehen. Mit `led_fenster = 0` wird daraus ein offenes Loch.
-- **Verschluss:** zwei Kunststoffschrauben 3 x 10 mm von vorn in die Dome (Kernloch 2,5 mm, 10 mm tief), dazu rundum ein Falz mit 1,5 mm Überlappung. Öffnen nur mit Werkzeug. Beide Schrauben sitzen im 3,3-V-Bereich, mehr als 10 mm vom Netzkupfer entfernt.
+- **Verschluss:** zwei Kunststoffschrauben 3 x 10 mm von vorn in die Dome (Kernloch 2,5 mm, 10 mm tief), dazu rundum ein Falz mit 1,5 mm Überlappung. Der Schraubensitz im Deckel ist ein 45°-Kegel (Senkung 90°, Durchmesser 5,8 mm): Er passt für Senkkopfschrauben; Linsenkopfschrauben liegen auf dem Rand auf. Öffnen nur mit Werkzeug. Beide Schrauben sitzen im 3,3-V-Bereich, mehr als 10 mm vom Netzkupfer entfernt.
 
 ## Dateien
 
 | Datei | Inhalt |
 |---|---|
 | `gehaeuse.scad` | OpenSCAD-Modell mit allen Maßen als Parameter |
-| `wanne.stl`, `deckel.stl` | Druckdateien; der Deckel liegt schon mit der Deckelfläche nach unten |
+| `wanne.stl`, `deckel.stl` | Druckdateien; der Deckel liegt schon mit der Deckelfläche nach unten. Beide ohne Stützmaterial drucken |
 | `platine_bestueckt.stl` | 3D-Modell der bestückten Platine aus KiCad (nur zur Kontrolle und für die Bilder) |
 | `pruefe_kollision.py` | prüft Wanne und Deckel gegen die Platine und gegeneinander |
 | `bilder/` | Ansichten für diese Doku |
@@ -92,7 +92,9 @@ openscad -D 'teil="deckel"' -o deckel.stl gehaeuse.scad
 
 ## Geprüft
 
-Rechnerische Kontrolle gegen das 3D-Modell der Platine: **keine Durchdringung**, Wanne und Deckel überschneiden sich nicht.
+**Druckbarkeit:** Beide STL-Dateien sind geschlossene Körper und laufen in PrusaSlicer 2.7 (Düse 0,4 mm, Schichthöhen 0,15 bis 0,3 mm, ohne Stützen) ohne Warnung durch. Dafür ist die eingeprägte Schrift auf der Deckelfläche als V-Nut mit 45°-Flanken ausgeführt und der Schraubensitz als Kegel. Senkrechte Nuten und ein flacher Sitz müssten über dem Druckbett frei überbrückt werden; der Slicer meldet das als „Long bridging extrusions“.
+
+**Passform:** Rechnerische Kontrolle gegen das 3D-Modell der Platine: **keine Durchdringung**, Wanne und Deckel überschneiden sich nicht.
 
 - Kleinster Abstand in der Wanne: 0,6 mm (Boden zu den ungekürzten Stiften des Netzteils).
 - Kleinster Abstand im Deckel: 0,6 mm (Innenwand zur Vorderseite der Klemme).
