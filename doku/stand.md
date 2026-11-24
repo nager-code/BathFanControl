@@ -32,6 +32,9 @@ Geprüft wurde bisher nur in KiCad und rechnerisch am 3D-Modell.
 - Regellogik umsetzen (Konzept und Pinbelegung in [Funktion](funktion.md) und [Schaltung](schaltung.md#gpio-belegung)).
 - Erstes Aufspielen über die USB-C-Buchse, danach Updates über WLAN.
 - Offen: Ist Home Assistant vorhanden? Davon hängt ab, ob ESPHome oder eine eigene Firmware mit MQTT/REST die bessere Wahl ist.
+- Offen: Welche LED-Farbe zeigt welchen Zustand an?
+
+Beide Fragen werden zu Beginn der Firmware-Entwicklung geklärt.
 
 ### Hardware
 
