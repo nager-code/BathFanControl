@@ -23,6 +23,7 @@ Zweiteiliges Gehäuse aus Wanne und Deckel für den Einbau unten links im Lüfte
 | Druckvolumen | Wanne 19,3 cm³, Deckel 20,1 cm³ |
 | Werkstoff | flammhemmend nach UL 94 V-0, z. B. entsprechend ausgewiesenes PETG, ABS oder PC – **kein normales PLA** (Brandschutz und feuchtwarme Luft im Kasten) |
 | Schrauben | 2 Kunststoffschrauben 3 x 10 mm |
+| Druck | keine besonderen Einstellungen vorgegeben; ohne Stützmaterial druckbar, beide STL-Dateien liegen schon in Druckausrichtung |
 
 ## Aufbau
 
