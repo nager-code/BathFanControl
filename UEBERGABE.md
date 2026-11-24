@@ -1,4 +1,4 @@
-# Übergabe: Lüftersteuerung Bad (KN2 UP) – Stand 24.11.2026, Platine v1.7 (von oben bestückt, SMD mit bedrahtetem Netzteil und bedrahteter Klemme, Form für den Lüfterkasten)
+# Übergabe: Lüftersteuerung Bad (KN2 UP) – Stand 24.11.2026, Platine V1.0 (von oben bestückt, SMD mit bedrahtetem Netzteil und bedrahteter Klemme, Form für den Lüfterkasten)
 
 Stand nach der Überarbeitung des ersten Entwurfs (der ursprüngliche Schaltplan und seine Übergabe liegen in der Git-Historie). Neu: Pinbelegungen gegen Datenblätter geprüft, Umstellung auf KiCad 10 und auf SMD-Bauteile, Platinenform und Gehäuse für den Einbau unten links im Lüfterkasten, einseitige Bestückung, RGB-LED, USB-C-Buchse zum Programmieren, geroutetes Layout, Bestellpaket. Netzteil und Netzklemme sind bedrahtet, weil es bei JLCPCB kein lagerndes SMD-Netzteil gibt; alle Bauteile der Stückliste waren am 24.11.2026 dort am Lager.
 
@@ -101,13 +101,13 @@ Bedrahtet sind nur noch Netzteil und Klemme. Beide werden von oben bestückt und
 
 Die Platine ist so gezeichnet, wie sie eingebaut von vorn zu sehen ist: unten links im Lüfterkasten, vor dem Lüftergehäuse. Alle Bauteile sitzen auf der Oberseite; die Unterseite dient als zweite Verdrahtungsebene, dort stehen nur die Lötstifte von Netzteil und Klemme über. Einen beschrifteten Plan zeigt `doku/lageplan.png`. Höhen zählen ab der Unterkante des Netzteil-Riegels (y = 0).
 
-- **Streifen ganz unten (4,5 mm hoch):** hier sitzt links die Bohrung für den unteren Schraubdom, unter dem 3,3-V-Ende des Netzteils.
-- **Riegel (54,6 x 30 mm):** das Netzteil PS1 (3,3 V links, Netz rechts) und die Schraubklemme X1 mit der Leitereinführung nach rechts. Rechts neben der Klemme ist die Platine ausgeschnitten: dort liegt der Anschlussraum für die Adern. Zwischen Netzteil und Klemme sitzt der Snubber R5/C2.
+- **Streifen ganz unten (4,5 mm hoch):** links die Bohrung für den unteren Schraubdom, unter dem 3,3-V-Ende des Netzteils. Rechts, unter dem Netz-Ende des Netzteils, sitzt der Snubber R5/C2; daneben stehen der Titel mit dem Versionsstand und „230 V~“.
+- **Riegel (54,6 x 30 mm):** das Netzteil PS1 (3,3 V links, Netz rechts) und die Schraubklemme X1 mit der Leitereinführung nach rechts. Rechts neben der Klemme ist die Platine ausgeschnitten: dort liegt der Anschlussraum für die Adern. Zwischen Netzteil und Klemme steht auf der Oberseite die Klemmenbelegung.
 - **Netzreihe (bis 43,2 mm Höhe, 68 mm breit):** Triac Q1 (liegend, Kühlfahne links), Varistor, Sicherung und Teilerwiderstände. Links davon bleibt ein 14 mm breiter 3,3-V-Streifen.
 - **Isolationsschlitz 2 mm**, nach rechts offen, zwischen Netzreihe und Arm. Der Optotriac U3 und der Optokoppler U2 sitzen darüber: Netzpins unten, 3,3-V-Pins oben.
 - **Arm oben (68 x 23 mm):** links das WLAN-Modul U1 mit der Antenne an der Oberkante, daneben C1, die RGB-LED D1 mit ihren Vorwiderständen und die stehende USB-C-Buchse J2 mit Regler; ganz rechts hinter einem Thermoschlitz die Sensorinsel mit U4 und C7. Die Ecke oben rechts ist abgeschrägt und zeigt zum Lüfter-Einlass.
 - **Zwei Bohrungen 6,6 mm** (unten links und im Arm) für die Schraubdome des Gehäuses, beide im 3,3-V-Bereich und mehr als 10 mm vom Netzkupfer entfernt.
-- **Klemmenbelegung von oben nach unten: L, Licht, N, Lüfter** (Raster 5,08 mm). Die Reihenfolge ergibt sich aus der kreuzungsfreien Verdrahtung. Sie steht auf der Oberseite im unteren Streifen, auf der Unterseite neben den Stiften und im Gehäusedeckel.
+- **Klemmenbelegung von oben nach unten: L, Licht, N, Lüfter** (Raster 5,08 mm). Die Reihenfolge ergibt sich aus der kreuzungsfreien Verdrahtung. Sie steht auf der Oberseite direkt hinter der Klemme, je Pol ein Name auf Höhe der Schraube (lesbar, wenn die Platine in der Wanne liegt und der Deckel ab ist), außerdem auf der Unterseite neben den Stiften und außen auf dem Gehäusedeckel.
 - **Isolation:** kupferfreie Streifen von 6,3 mm zwischen Netz und 3,3 V (im unteren Teil senkrecht mit Schlitz 2 x 20 mm unter dem Netzteil, darüber waagrecht mit dem durchgehenden Schlitz).
 - **Netzseite von Hand geroutet** (1,0 mm; nach den 2 x 100 kΩ 0,4 mm, dort fließt weniger als 2 mA). Licht, N und Lüfter laufen auf der Unterseite von den Stiften der Klemme erst nach links und dann nebeneinander nach oben in die Netzreihe, L vom obersten Pol direkt zur Sicherung. Die **3,3-V-Seite hat der Autorouter Freerouting verlegt**, danach Masseflächen auf beiden Lagen mit Masse-Durchkontaktierungen.
 - **RGB-LED D1** (gemeinsame Anode an 3,3 V): rot an GPIO4 über 680 Ω, grün an GPIO5 über 220 Ω, blau an GPIO1 über 150 Ω. Die LED leuchtet bei Pegel 0; beim Start sind die Pins hochohmig, die LED ist aus. Rechnerisch je etwa 2 bis 3 mA; grün und blau werden dunkler, wenn ihre Flussspannung an der oberen Grenze (3,2 V) liegt.
@@ -139,7 +139,7 @@ Die Platine ist so gezeichnet, wie sie eingebaut von vorn zu sehen ist: unten li
 
 - Firmware (Regellogik und GPIO-Belegung siehe Abschnitt 0). Erstes Aufspielen über die USB-C-Buchse, danach Updates über WLAN.
 - Home Assistant vorhanden? (entscheidet über ESPHome oder eigene Firmware)
-- Gehäuse: Entwurf für den 3D-Druck in `gehaeuse/`, passend zur Platine v1.7 und zum Einbau unten links vor dem Lüftergehäuse. Dort sind nachgemessen höchstens 85 mm Breite, 40 mm Tiefe und 140 mm Höhe frei; das Gehäuse braucht 72,6 x 25,7 x 77,1 mm. Noch nicht gedruckt. Details in `gehaeuse/README.md`
+- Gehäuse: Entwurf für den 3D-Druck in `gehaeuse/`, passend zur Platine V1.0 und zum Einbau unten links vor dem Lüftergehäuse. Dort sind nachgemessen höchstens 85 mm Breite, 40 mm Tiefe und 140 mm Höhe frei; das Gehäuse braucht 72,6 x 25,7 x 77,1 mm. Noch nicht gedruckt. Details in `gehaeuse/README.md`
 
 ## 8. Sicherheit
 

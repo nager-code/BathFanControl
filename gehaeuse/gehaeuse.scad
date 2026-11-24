@@ -1,4 +1,4 @@
-// Gehaeuse fuer die Lueftersteuerung Bad, Platine v1.7 (68 x 72,5 mm, von oben bestueckt) - Wanne und Deckel fuer den 3D-Druck
+// Gehaeuse V1.0 fuer die Lueftersteuerung Bad, Platine V1.0 (68 x 72,5 mm, von oben bestueckt) - Wanne und Deckel fuer den 3D-Druck
 //
 // Einbau unten links im Luefterkasten, vor dem Lueftergehaeuse: Netzteil und Klemme unten, die Leitungen
 // kommen von rechts in den Anschlussraum (Ausschnitt der Platine unten rechts), der Feuchtesensor sitzt oben
@@ -17,7 +17,7 @@
 teil = "zusammen";
 mit_platine = true;      // Platine in den Ansichten einblenden
 
-/* [Platine v1.7] */
+/* [Platine V1.0] */
 pw = 68;  ph = 68;  pd = 1.6;    // Breite, Oberkante ueber Y = 0, Dicke
 yu = -4.5;                       // Unterkante der Platine (Streifen fuer den Schraubdom unter dem Netzteil)
 pu = 68;                         // Breite des unteren Teils (gleich dem Arm, keine Stufe mehr)
@@ -57,6 +57,7 @@ rohr_r    = 3.6;         // Schraubrohr im Deckel
 schr_kern = 2.5;         // Kernloch fuer Kunststoffschraube 3 mm
 schr_durch = 3.4;
 schr_kopf = 5.8;
+z_sitz    = z_teil + 2.5;  // Unterkante des Schraubensitzes im Deckel
 
 /* [Lichtschacht der RGB-LED] */
 ls_da = 6.0;  ls_di = 3.6;       // Aussen- und Innendurchmesser
@@ -103,11 +104,12 @@ module wandschlitze() {
     for (y = [47.5, 51.7, 55.9, 60.1]) quader(xi1 - 0.15, y - 1.5, ls_z0, xa1 + 1, y + 1.5, ls_z1);       // rechts: 4 x 3,0 mm
     quader(58.9, yi1 - 0.15, ls_z0, 62.3, ya1 + 1, ls_z1);                                                // oben: 3,4 mm
 }
-// Fenster in der Deckelflaeche ueber der Sensorkammer: drei Oeffnungen 2,2 mm mit 1 mm breiten Stegen
+// Fenster in der Deckelflaeche ueber der Sensorkammer: drei Oeffnungen 2,0 mm mit 1 mm breiten Stegen
+// (sie enden vor dem Niederhalter am rechten Platinenrand)
 module dachfenster() {
     intersection() {
         prisma(zi1 - 1, za1 + 1) offset(delta = -(wand + 0.7)) aussen2d();
-        for (x0 = [58.9, 62.1, 65.3]) quader(x0, 46.0, zi1 - 1, x0 + 2.2, ya1, za1 + 1);
+        for (x0 = [58.9, 61.9, 64.9]) quader(x0, 46.0, zi1 - 1, x0 + 2.0, ya1, za1 + 1);
     }
 }
 // Abschottung der Sensorkammer gegen den Rest des Gehaeuses: Wand links vom Thermoschlitz, im Deckel bis auf die
@@ -160,6 +162,13 @@ module wanne() {
 // ------------------------------------------------------------------ Deckel
 module nh(x0, y0, x1, y1) { quader(x0, y0, pd + 0.15, x1, y1, zi1 + 0.1); }      // Niederhalter auf dem Platinenrand
 
+// Vertiefte Schrift in der Deckelflaeche als V-Nut: die Flanken laufen unter 45 Grad zusammen. Die Deckelflaeche liegt
+// beim Druck auf dem Bett - eine Nut mit senkrechten Flanken muesste der Drucker frei ueberbruecken (Slicer-Warnung).
+module gravur(tiefe = 0.6, stufe = 0.1) {
+    for (k = [0 : round(tiefe / stufe) - 1])
+        translate([0, 0, za1 - (k + 1) * stufe]) linear_extrude(stufe + (k == 0 ? 1 : 0.01)) offset(delta = -k * stufe) children();
+}
+
 module deckel() {
     difference() {
         union() {
@@ -190,18 +199,23 @@ module deckel() {
             }
         }
         aderloecher();
-        // Schrauben: Durchgangsloch und Senkung fuer den Kopf von vorn
-        for (p = loch) translate([p[0], p[1], 0]) { cylinder(d = schr_durch, h = za1 + 1); translate([0, 0, z_teil + 2.5]) cylinder(d = schr_kopf, h = za1); }
+        // Schrauben: Durchgangsloch und Senkung fuer den Kopf von vorn (Senkkopf oder Linsenkopf 3 mm).
+        // Der Sitz ist ein 45-Grad-Kegel (Senkung 90 Grad): er laesst sich mit der Deckelflaeche auf dem Bett ohne Stuetzen drucken
+        for (p = loch) translate([p[0], p[1], 0]) {
+            cylinder(d = schr_durch, h = za1 + 1);
+            translate([0, 0, z_sitz]) cylinder(d1 = schr_durch, d2 = schr_kopf, h = (schr_kopf - schr_durch) / 2 + 0.01);
+            translate([0, 0, z_sitz + (schr_kopf - schr_durch) / 2]) cylinder(d = schr_kopf, h = za1);
+        }
         // Lichtschacht: innen hohl, in der Deckelflaeche bleibt ein duennes Fenster stehen (led_fenster = 0: offenes Loch)
         translate([led[0], led[1], pd + 1.9]) cylinder(d = ls_di, h = za1 - led_fenster - pd - 1.9);
         // Oeffnungen der Sensorkammer: in den Waenden und in der Deckelflaeche
         wandschlitze();
         dachfenster();
         // Beschriftung (vertieft): Klemmenbelegung, Warnhinweis, Sensor
-        for (i = [0 : 3]) translate([xu1 - 0.5, ader_y[i], za1 - 0.6]) linear_extrude(1)
+        for (i = [0 : 3]) translate([xu1 - 0.5, ader_y[i], 0]) gravur()
             text(ader_txt[i], size = 3.4, font = "DejaVu Sans:style=Bold", valign = "center", halign = "right");
-        translate([6, 15, za1 - 0.6]) linear_extrude(1) text("230 V~", size = 6, font = "DejaVu Sans:style=Bold", valign = "center");
-        translate([22, 49.5, za1 - 0.6]) linear_extrude(1) text("Sensor >", size = 3.6, font = "DejaVu Sans:style=Bold", valign = "center");
+        translate([6, 15, 0]) gravur() text("230 V~", size = 6, font = "DejaVu Sans:style=Bold", valign = "center");
+        translate([22, 49.5, 0]) gravur() text("Sensor >", size = 3.6, font = "DejaVu Sans:style=Bold", valign = "center");
     }
 }
 
@@ -211,7 +225,7 @@ module platine() {
         // Bauteile ohne 3D-Modell als Quader in den Datenblattmassen
         color([0.9, 0.88, 0.8]) quader(51.15, 32.65, pd, 61.25, 35.75, pd + 3.1);                        // Sicherung
         color([0.1, 0.25, 0.5]) quader(37.95, 29.95, pd, 45.95, 36.25, pd + 4.5);                        // Varistor
-        color([0.55, 0.4, 0.25]) quader(38.3, 17.65, pd, 43.3, 23.35, pd + 2.0);                         // X2-Kondensator
+        color([0.55, 0.4, 0.25]) quader(37.65, -2.2, pd, 43.35, 2.8, pd + 2.0);                         // X2-Kondensator
         color([0.15, 0.15, 0.15]) quader(25.95, 28.4, pd, 33.05, 35.0, pd + 2.3);                        // Triac (DPAK)
         color([0.95, 0.95, 0.95]) quader(pw - 5.55, ph - 12.75, pd, pw - 4.05, ph - 11.25, pd + 0.9);    // Feuchtesensor
         color([0.75, 0.75, 0.78]) quader(39.53, 62.42, pd, 48.47, 65.58, pd + 7.46);                     // USB-C-Buchse, stehend

@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 248.2 164.2" width="248mm" height="164mm" font-family="DejaVu Sans, Arial, sans-serif">
 <rect width="100%" height="100%" fill="#ffffff"/>
-<text x="5.0" y="7.5" font-size="3.4" font-weight="bold" fill="#222">Lüftersteuerung Bad – Lageplan der Platine (Ansicht von vorn, wie eingebaut)</text>
+<text x="5.0" y="7.5" font-size="3.4" font-weight="bold" fill="#222">Lüftersteuerung Bad V1.0 – Lageplan der Platine (Ansicht von vorn, wie eingebaut)</text>
 <g transform="translate(5.0 12.0) scale(2.00)">
 <clipPath id="pl"><path d="M68.00 6.00 L68.00 22.80 L59.50 22.80 L59.50 6.00 L58.50 6.00 L58.50 22.80 L14.00 22.80 L14.00 24.80 L68.00 24.80 L68.00 38.00 L54.60 38.00 L54.60 72.50 L0.00 72.50 L0.00 0.00 L62.00 0.00 ZM5.55 64.93 L5.19 65.00 L4.84 65.11 L4.51 65.25 L4.19 65.44 L3.90 65.65 L3.63 65.90 L3.39 66.17 L3.19 66.47 L3.01 66.79 L2.88 67.13 L2.78 67.48 L2.72 67.84 L2.70 68.20 L2.72 68.56 L2.78 68.92 L2.88 69.27 L3.01 69.61 L3.19 69.93 L3.39 70.23 L3.63 70.50 L3.90 70.75 L4.19 70.96 L4.51 71.15 L4.84 71.29 L5.19 71.40 L5.55 71.47 L5.91 71.50 L6.27 71.49 L6.63 71.44 L6.99 71.35 L7.33 71.22 L7.65 71.06 L7.96 70.86 L8.24 70.63 L8.49 70.37 L8.71 70.08 L8.90 69.77 L9.06 69.44 L9.18 69.10 L9.26 68.74 L9.30 68.38 L9.30 68.20 L9.30 68.02 L9.26 67.66 L9.18 67.30 L9.06 66.96 L8.90 66.63 L8.71 66.32 L8.49 66.03 L8.24 65.77 L7.96 65.54 L7.65 65.34 L7.33 65.18 L6.99 65.05 L6.63 64.96 L6.27 64.91 L5.91 64.90 ZM16.81 43.54 L16.63 43.62 L16.46 43.73 L16.33 43.86 L16.22 44.03 L16.14 44.21 L16.10 44.40 L16.10 44.50 L16.10 62.50 L16.10 62.60 L16.14 62.79 L16.22 62.97 L16.33 63.14 L16.46 63.27 L16.63 63.38 L16.81 63.46 L17.00 63.50 L17.20 63.50 L17.39 63.46 L17.57 63.38 L17.74 63.27 L17.87 63.14 L17.98 62.97 L18.06 62.79 L18.10 62.60 L18.10 62.50 L18.10 44.50 L18.10 44.40 L18.06 44.21 L17.98 44.03 L17.87 43.86 L17.74 43.73 L17.57 43.62 L17.39 43.54 L17.20 43.50 L17.00 43.50 ZM51.55 10.73 L51.19 10.80 L50.84 10.91 L50.51 11.05 L50.19 11.24 L49.90 11.45 L49.63 11.70 L49.39 11.97 L49.19 12.27 L49.01 12.59 L48.88 12.93 L48.78 13.28 L48.72 13.64 L48.70 14.00 L48.72 14.36 L48.78 14.72 L48.88 15.07 L49.01 15.41 L49.19 15.73 L49.39 16.03 L49.63 16.30 L49.90 16.55 L50.19 16.76 L50.51 16.95 L50.84 17.09 L51.19 17.20 L51.55 17.27 L51.91 17.30 L52.27 17.29 L52.63 17.24 L52.99 17.15 L53.33 17.02 L53.65 16.86 L53.96 16.66 L54.24 16.43 L54.49 16.17 L54.71 15.88 L54.90 15.57 L55.06 15.24 L55.18 14.90 L55.26 14.54 L55.30 14.18 L55.30 14.00 L55.30 13.82 L55.26 13.46 L55.18 13.10 L55.06 12.76 L54.90 12.43 L54.71 12.12 L54.49 11.83 L54.24 11.57 L53.96 11.34 L53.65 11.14 L53.33 10.98 L52.99 10.85 L52.63 10.76 L52.27 10.71 L51.91 10.70 Z" clip-rule="evenodd"/></clipPath>
 <g clip-path="url(#pl)">
@@ -12,8 +12,8 @@
 <path d="M68.00 6.00 L68.00 22.80 L59.50 22.80 L59.50 6.00 L58.50 6.00 L58.50 22.80 L14.00 22.80 L14.00 24.80 L68.00 24.80 L68.00 38.00 L54.60 38.00 L54.60 72.50 L0.00 72.50 L0.00 0.00 L62.00 0.00 ZM5.55 64.93 L5.19 65.00 L4.84 65.11 L4.51 65.25 L4.19 65.44 L3.90 65.65 L3.63 65.90 L3.39 66.17 L3.19 66.47 L3.01 66.79 L2.88 67.13 L2.78 67.48 L2.72 67.84 L2.70 68.20 L2.72 68.56 L2.78 68.92 L2.88 69.27 L3.01 69.61 L3.19 69.93 L3.39 70.23 L3.63 70.50 L3.90 70.75 L4.19 70.96 L4.51 71.15 L4.84 71.29 L5.19 71.40 L5.55 71.47 L5.91 71.50 L6.27 71.49 L6.63 71.44 L6.99 71.35 L7.33 71.22 L7.65 71.06 L7.96 70.86 L8.24 70.63 L8.49 70.37 L8.71 70.08 L8.90 69.77 L9.06 69.44 L9.18 69.10 L9.26 68.74 L9.30 68.38 L9.30 68.20 L9.30 68.02 L9.26 67.66 L9.18 67.30 L9.06 66.96 L8.90 66.63 L8.71 66.32 L8.49 66.03 L8.24 65.77 L7.96 65.54 L7.65 65.34 L7.33 65.18 L6.99 65.05 L6.63 64.96 L6.27 64.91 L5.91 64.90 ZM16.81 43.54 L16.63 43.62 L16.46 43.73 L16.33 43.86 L16.22 44.03 L16.14 44.21 L16.10 44.40 L16.10 44.50 L16.10 62.50 L16.10 62.60 L16.14 62.79 L16.22 62.97 L16.33 63.14 L16.46 63.27 L16.63 63.38 L16.81 63.46 L17.00 63.50 L17.20 63.50 L17.39 63.46 L17.57 63.38 L17.74 63.27 L17.87 63.14 L17.98 62.97 L18.06 62.79 L18.10 62.60 L18.10 62.50 L18.10 44.50 L18.10 44.40 L18.06 44.21 L17.98 44.03 L17.87 43.86 L17.74 43.73 L17.57 43.62 L17.39 43.54 L17.20 43.50 L17.00 43.50 ZM51.55 10.73 L51.19 10.80 L50.84 10.91 L50.51 11.05 L50.19 11.24 L49.90 11.45 L49.63 11.70 L49.39 11.97 L49.19 12.27 L49.01 12.59 L48.88 12.93 L48.78 13.28 L48.72 13.64 L48.70 14.00 L48.72 14.36 L48.78 14.72 L48.88 15.07 L49.01 15.41 L49.19 15.73 L49.39 16.03 L49.63 16.30 L49.90 16.55 L50.19 16.76 L50.51 16.95 L50.84 17.09 L51.19 17.20 L51.55 17.27 L51.91 17.30 L52.27 17.29 L52.63 17.24 L52.99 17.15 L53.33 17.02 L53.65 16.86 L53.96 16.66 L54.24 16.43 L54.49 16.17 L54.71 15.88 L54.90 15.57 L55.06 15.24 L55.18 14.90 L55.26 14.54 L55.30 14.18 L55.30 14.00 L55.30 13.82 L55.26 13.46 L55.18 13.10 L55.06 12.76 L54.90 12.43 L54.71 12.12 L54.49 11.83 L54.24 11.57 L53.96 11.34 L53.65 11.14 L53.33 10.98 L52.99 10.85 L52.63 10.76 L52.27 10.71 L51.91 10.70 Z" fill="none" stroke="#333" stroke-width="0.2" fill-rule="evenodd"/>
 <rect x="20.65" y="2.15" width="6.70" height="6.70" rx="0.25" fill="#ffffff" fill-opacity="0.92" stroke="#1f4e9c" stroke-width="0.14"/>
 <text x="24.00" y="5.50" font-size="2.00" text-anchor="middle" dominant-baseline="central" fill="#1f4e9c" font-weight="bold">C1</text>
-<rect x="38.25" y="44.60" width="5.10" height="5.80" rx="0.25" fill="#ffffff" fill-opacity="0.92" stroke="#b3261e" stroke-width="0.14"/>
-<text x="40.80" y="47.50" font-size="2.00" text-anchor="middle" dominant-baseline="central" fill="#b3261e" font-weight="bold">C2</text>
+<rect x="37.60" y="65.15" width="5.80" height="5.10" rx="0.25" fill="#ffffff" fill-opacity="0.92" stroke="#b3261e" stroke-width="0.14"/>
+<text x="40.50" y="67.70" font-size="2.00" text-anchor="middle" dominant-baseline="central" fill="#b3261e" font-weight="bold">C2</text>
 <rect x="46.55" y="14.95" width="0.90" height="1.70" rx="0.25" fill="#ffffff" fill-opacity="0.92" stroke="#1f4e9c" stroke-width="0.14"/>
 <text x="47.00" y="15.80" font-size="0.80" text-anchor="middle" dominant-baseline="central" fill="#1f4e9c" font-weight="bold" transform="rotate(-90 47.00 15.80)">C3</text>
 <rect x="7.45" y="39.12" width="2.10" height="1.35" rx="0.25" fill="#ffffff" fill-opacity="0.92" stroke="#1f4e9c" stroke-width="0.14"/>
@@ -72,8 +72,8 @@
 <text x="34.04" y="16.10" font-size="0.80" text-anchor="middle" dominant-baseline="central" fill="#1f4e9c" font-weight="bold" transform="rotate(-90 34.04 16.10)">R3</text>
 <rect x="44.44" y="14.95" width="0.93" height="1.70" rx="0.25" fill="#ffffff" fill-opacity="0.92" stroke="#1f4e9c" stroke-width="0.14"/>
 <text x="44.90" y="15.80" font-size="0.80" text-anchor="middle" dominant-baseline="central" fill="#1f4e9c" font-weight="bold" transform="rotate(-90 44.90 15.80)">R4</text>
-<rect x="39.95" y="39.75" width="1.70" height="3.30" rx="0.25" fill="#ffffff" fill-opacity="0.92" stroke="#b3261e" stroke-width="0.14"/>
-<text x="40.80" y="41.40" font-size="1.22" text-anchor="middle" dominant-baseline="central" fill="#b3261e" font-weight="bold">R5</text>
+<rect x="31.85" y="66.85" width="3.30" height="1.70" rx="0.25" fill="#ffffff" fill-opacity="0.92" stroke="#b3261e" stroke-width="0.14"/>
+<text x="33.50" y="67.70" font-size="1.22" text-anchor="middle" dominant-baseline="central" fill="#b3261e" font-weight="bold">R5</text>
 <rect x="16.15" y="3.74" width="1.70" height="0.93" rx="0.25" fill="#ffffff" fill-opacity="0.92" stroke="#1f4e9c" stroke-width="0.14"/>
 <text x="17.00" y="4.20" font-size="0.80" text-anchor="middle" dominant-baseline="central" fill="#1f4e9c" font-weight="bold">R6</text>
 <rect x="16.15" y="7.54" width="1.70" height="0.93" rx="0.25" fill="#ffffff" fill-opacity="0.92" stroke="#1f4e9c" stroke-width="0.14"/>
@@ -105,7 +105,7 @@
 <line x1="55.00" y1="45.38" x2="57.60" y2="45.38" stroke="#b3261e" stroke-width="0.15"/>
 <text x="58.20" y="45.98" font-size="1.70" text-anchor="start" fill="#b3261e" font-weight="bold">L</text>
 <text x="55.20" y="40.80" font-size="1.25" text-anchor="start" fill="#b3261e">Adern von rechts</text>
-<text x="40.80" y="71.40" font-size="1.70" text-anchor="middle" fill="#b3261e" font-weight="bold">230 V~</text>
+<text x="49.60" y="71.70" font-size="1.70" text-anchor="middle" fill="#b3261e" font-weight="bold">230 V~</text>
 <text x="1.00" y="34.10" font-size="1.70" text-anchor="start" fill="#1f4e9c" font-weight="bold">3,3 V</text>
 <text x="15.50" y="19.50" font-size="1.70" text-anchor="start" fill="#1f4e9c" font-weight="bold">3,3 V</text>
 <text x="49.30" y="24.30" font-size="1.10" text-anchor="start" fill="#666">Isolationsschlitz</text>
@@ -133,7 +133,7 @@
 <text x="151.2" y="40.50" font-size="2.05" font-weight="bold" fill="#b3261e">R17</text>
 <text x="170.7" y="40.50" font-size="2.05" fill="#222">Gate-Widerstand 390 Ω</text>
 <text x="151.2" y="43.70" font-size="2.05" font-weight="bold" fill="#b3261e">R5, C2</text>
-<text x="170.7" y="43.70" font-size="2.05" fill="#222">Snubber 100 Ω + 10 nF parallel zu Q1</text>
+<text x="170.7" y="43.70" font-size="2.05" fill="#222">Snubber 100 Ω + 10 nF parallel zu Q1 (unten im Streifen)</text>
 <text x="151.2" y="46.90" font-size="2.05" font-weight="bold" fill="#b3261e">U2</text>
 <text x="170.7" y="46.90" font-size="2.05" fill="#222">Optokoppler Lichteingang (LTV-814S), über dem Isolationsschlitz</text>
 <text x="151.2" y="50.10" font-size="2.05" font-weight="bold" fill="#b3261e">R1, R2</text>

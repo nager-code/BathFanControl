@@ -1,4 +1,4 @@
-# Bestellpaket Lüftersteuerung Bad v1.7
+# Bestellpaket Lüftersteuerung Bad V1.0
 
 ## Leiterplatte
 - `gerber_lueftersteuerung.zip` hochladen (Inhalt liegt auch entpackt in `gerber/`)
