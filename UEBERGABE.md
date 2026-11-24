@@ -44,7 +44,7 @@ Hinweis zum Snubber: ST gibt an, dass der ACST4 induktive Lasten bis 4 A ohne Sn
 | F1 | TR5 T1A | Littelfuse 0443001.DR, T1A 250 V, 10 x 3 mm (Pads passen auch für Schurter UMT 250) | C95352 |
 | RV1 | S07K275 | TDK CU3225K275G2, 275 VAC, 8,0 x 6,3 mm | C211106 |
 | PS1 | IRM-02-3.3 | bedrahtet: Hi-Link HLK-PM03, 3,3 V / 1 A, 34,8 x 20,5 x 15 mm, vergossen. Mean Well IRM-02-3.3 und -3.3S hatten bei JLCPCB Bestand 0 | C209904 |
-| C1 | Elko radial | Elko SMD 100 µF 16 V, 6,3 x 5,4 mm | C970684 |
+| C1 | Elko radial | Panasonic EEHZK1E101UP, Hybrid-Polymer-Elko 100 µF 25 V, 6,3 x 5,8 mm; laut Datenblatt auf feuchte Wärme geprüft (85 °C, 85–90 % r. F., 2000 h unter Spannung), 4000 h bei 125 °C, AEC-Q200 | C454668 |
 | C2 | X2 Folie 10 nF | Murata GA355QR7GB103KW01L, 10 nF X2 250 VAC, Bauform 2220 | C237426 |
 | J1 | Lochreihe 1,27 mm | SMD-Pads 1,27 mm, unbestückt | – |
 | U4 | SHT40-AD1B | SHT40-AD1F-R2 mit Polyimid-Membran (IP68), gleiche Pins, gleicher Footprint, Adresse 0x44 | C7461846 |
@@ -85,7 +85,7 @@ Die Platine ist so gezeichnet, wie sie eingebaut von vorn zu sehen ist: unten li
 6. **Sicherung.** Die 0443001.DR schaltet 50 A bei 250 VAC ab. Wer mehr will: Schurter UMT 250 (200 A) passt auf dieselben Pads.
 7. **Antenne.** Die Antenne sitzt an der Oberkante des Arms, gut 25 mm über dem Netzteil; links liegt die Kastenwand, dahinter das Lüftergehäuse. Wie gut das WLAN im Kasten ist, zeigt erst ein Versuch.
 8. **Typenschild des KN2:** die elektrischen Daten sind weiter nicht bekannt. Im Kasten liegen flexible Litzen mit Steckverbindern; die Schraubklemme nimmt Leiter von 0,14 bis 1,5 mm² auf, feindrähtige am besten mit Aderendhülse.
-9. **Schutzlack.** Die Steuerung sitzt im Lüfterkasten im Strom der Badluft; die Platine sollte lackiert werden (Sensor, Klemmen und Programmierpads aussparen).
+9. **Schutzlack.** Die Steuerung sitzt im Lüfterkasten im Strom der Badluft; die Platine sollte lackiert werden (Sensor, Klemme, LED und Programmierpads aussparen). Panasonic verlangt für den Kondensator C1 einen halogenfreien Lack, der die Gummidichtung am Boden zu höchstens zwei Dritteln bedeckt, und schließt Betauung als Betriebsbedingung aus; die Lebensdauer begrenzt Panasonic wegen der Dichtung auf 15 Jahre. Wer ganz ohne Elektrolyt auskommen will: Tantal Vishay 293D107X9016D2TE3 (C129696, Bauform D, neuer Footprint nötig).
 
 ## 7. Noch offen
 

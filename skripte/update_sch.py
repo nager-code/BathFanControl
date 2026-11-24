@@ -8,7 +8,7 @@ SMD = {
  "X1":  (X1_FP, X1_VAL),
  "F1":  ("lueftersteuerung:Fuse_SMD_10x3mm_Littelfuse443_UMT250", "T1A 250V 0443001.DR"),
  "RV1": ("lueftersteuerung:Varistor_TDK_CU3225", "CU3225K275G2"),
- "C1":  ("Capacitor_SMD:CP_Elec_6.3x5.4", "100u 16V"),
+ "C1":  ("Capacitor_SMD:CP_Elec_6.3x5.8", "100u 25V Hybrid"),
  "C2":  ("lueftersteuerung:C_2220_Murata_GA355_X2", "10n X2 250VAC"),
  "J1":  ("Connector_PinHeader_1.27mm:PinHeader_1x06_P1.27mm_Vertical_SMD_Pin1Left", None),
  "U1":  (None, "ESP32-C3-MINI-1-H4X"),

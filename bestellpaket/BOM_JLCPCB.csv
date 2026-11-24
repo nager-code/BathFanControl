@@ -1,5 +1,5 @@
 Comment,Designator,Footprint,LCSC Part #,Manufacturer Part,Quantity,Note
-"100u 16V Elko SMD 6,3x5,4",C1,CP_Elec_6.3x5.4,C970684,RVT1C101M0605,1,JLCPCB Extended
+"100u 25V Hybrid-Polymer-Elko SMD 6,3x5,8",C1,CP_Elec_6.3x5.8,C454668,Panasonic EEHZK1E101UP,1,"JLCPCB Extended; fuer feuchte Waerme spezifiziert (85 C / 85-90 % r. F., 2000 h, AEC-Q200). Beim Lackieren die Gummidichtung am Boden nicht ganz verschliessen, Lack halogenfrei"
 10n X2 250VAC 2220,C2,C_2220_Murata_GA355_X2,C237426,Murata GA355QR7GB103KW01L,1,JLCPCB Extended; Sicherheitskondensator Klasse X2
 470n 25V X7R 0603,C3,C_0603_1608Metric,C1623,CL10B474KA8NNNC,1,JLCPCB Basic
 10u 25V X5R 0805,C4,C_0805_2012Metric,C15850,CL21A106KAYNNNE,1,JLCPCB Basic

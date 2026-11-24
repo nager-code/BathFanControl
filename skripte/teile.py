@@ -20,7 +20,7 @@ TEILE = {
     "R5":  ("100R 1% 1206", "1206W4F1000T5E", "C17901", "JLCPCB Basic; impulsfest waere Panasonic ERJ-P08F1000V (C4195341)"),
     "R6": R10K, "R7": R10K, "R8": R10K, "R9": R10K, "R10": R10K, "R11": R10K,
     "R12": ("3k3 1% 0603", "0603WAF3301T5E", "C22978", "nur bei Bedarf bestuecken"),
-    "C1":  ("100u 16V Elko SMD 6,3x5,4", "RVT1C101M0605", "C970684", "JLCPCB Extended"),
+    "C1":  ("100u 25V Hybrid-Polymer-Elko SMD 6,3x5,8", "Panasonic EEHZK1E101UP", "C454668", "JLCPCB Extended; fuer feuchte Waerme spezifiziert (85 C / 85-90 % r. F., 2000 h, AEC-Q200). Beim Lackieren die Gummidichtung am Boden nicht ganz verschliessen, Lack halogenfrei"),
     "C2":  ("10n X2 250VAC 2220", "Murata GA355QR7GB103KW01L", "C237426", "JLCPCB Extended; Sicherheitskondensator Klasse X2"),
     "C3":  ("470n 25V X7R 0603", "CL10B474KA8NNNC", "C1623", "JLCPCB Basic"),
     "C4":  ("10u 25V X5R 0805", "CL21A106KAYNNNE", "C15850", "JLCPCB Basic"),

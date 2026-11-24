@@ -22,3 +22,4 @@
 - Alle Teile der Stückliste waren am 23./24.11.2026 bei JLCPCB am Lager. Die kleinsten Bestände: X2-Kondensator C2 (C237426) 448 Stück, Triac Q1 (C221462) rund 1.200, Sensor U4 rund 2.100, Netzteil rund 3.200.
 - U4 ist der Sensirion SHT40-AD1F-R2 mit Membran (C7461846). Nicht mit C54823945 verwechseln: das ist eine Fremdmarke, deren Datenblatt keine Membran nennt.
 - Lüfterstufe: Optotriac U3 (Lite-On MOC3052S-TA1, C115471) zündet den Triac Q1 (ST ACST410-8BTR, C221462). Q1 liegt mit der Kühlfahne nach links, Pin 1 (COM) unten; U3 sitzt über dem Isolationsschlitz mit den Pins 1 bis 3 oben (3,3-V-Seite).
+- C1 ist ein Hybrid-Polymer-Elko Panasonic EEHZK1E101UP (C454668), für feuchte Wärme spezifiziert. Beim Lackieren der Platine halogenfreien Lack nehmen und die Dichtung am Boden des Kondensators nicht ganz verschließen.
