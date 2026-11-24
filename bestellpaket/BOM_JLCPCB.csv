@@ -19,6 +19,6 @@ Sicherung T1A 250VAC SMD 10x3,F1,Fuse_SMD_10x3mm_Littelfuse443_UMT250,C95352,Lit
 Varistor 275VAC SMD,RV1,Varistor_TDK_CU3225,C211106,TDK CU3225K275G2 (B72650M0271K072),1,"JLCPCB Extended; Bauform 8,0 x 6,3 mm"
 ESP32-C3-MINI-1-H4X,U1,ESP32-C3-MINI-1,C41349510,Espressif ESP32-C3-MINI-1-H4X,1,JLCPCB Extended; N4 (C2838502) ist abgekuendigt (NRND)
 LTV-814S AC-Optokoppler,U2,LTV-814S_SMDIP-4_W9.53mm,C125118,Lite-On LTV-814S-TA1,1,JLCPCB Extended
-"AQH3223A Photo-Triac 1,2A",U3,AQH3223A_SMD-8-N7,C719698,Panasonic AQH3223A,1,"JLCPCB Extended, am 23.11.2026 nur 7 Stueck am Lager. Ausweichtyp gleicher Reihe mit Nullspannungsschalter: AQH3213A (C91557, 91 Stueck), vor dem Tausch Pinbelegung im Datenblatt pruefen"
+"AQH3223A Photo-Triac 1,2A",U3,AQH3223A_SMD-8-N7,C719698,Panasonic AQH3223A,1,"JLCPCB Extended, am 24.11.2026 nur 7 Stueck am Lager. Pin- und footprintgleich laut Datenblatt, ohne Nullspannungsschalter: NQUNXIN QX3223-CuH-SE (C52164452, 2000 Stueck), BC BC3223A (C596515, 938), BC BC2223A (C596513, 0,9 A, 3558). Original mit Nullspannungsschalter: AQH3213A (C91557, 91)"
 SHT40 Feuchte/Temperatur mit Membran,U4,Sensirion_DFN-4_1.5x1.5mm_P0.8mm_SHT4x_NoCentralPad,C7461846,Sensirion SHT40-AD1F-R2,1,JLCPCB Extended; mit Polyimid-Membran (Endung F). Nicht die Fremdmarke C54823945 nehmen. Nicht ueberlackieren
 "Schraubklemme 4-polig 5,08 mm, bedrahtet",X1,Klemme_4pol_P5.08mm_Horizontal_THT,C5443561,"Phoenix Contact MKDS 1,5/4-5,08 (1715747)",1,"JLCPCB Extended, bedrahtet (Wellenloeten); 250 V / 17,5 A, 0,14-1,5 mm2"

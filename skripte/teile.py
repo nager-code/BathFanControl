@@ -8,7 +8,7 @@ TEILE = {
     "PS1": ("Netzteil 230V -> 3,3V 1A, bedrahtet", "Hi-Link HLK-PM03", "C209904", "JLCPCB Extended, bedrahtet (Wellenloeten); Ausweichtyp mit fast gleichem Stiftbild: YLPTEC HAW3-220S03T2 (C19724490), vor dem Tausch Masse pruefen"),
     "U1":  ("ESP32-C3-MINI-1-H4X", "Espressif ESP32-C3-MINI-1-H4X", "C41349510", "JLCPCB Extended; N4 (C2838502) ist abgekuendigt (NRND)"),
     "U2":  ("LTV-814S AC-Optokoppler", "Lite-On LTV-814S-TA1", "C125118", "JLCPCB Extended"),
-    "U3":  ("AQH3223A Photo-Triac 1,2A", "Panasonic AQH3223A", "C719698", "JLCPCB Extended, am 23.11.2026 nur 7 Stueck am Lager. Ausweichtyp gleicher Reihe mit Nullspannungsschalter: AQH3213A (C91557, 91 Stueck), vor dem Tausch Pinbelegung im Datenblatt pruefen"),
+    "U3":  ("AQH3223A Photo-Triac 1,2A", "Panasonic AQH3223A", "C719698", "JLCPCB Extended, am 24.11.2026 nur 7 Stueck am Lager. Pin- und footprintgleich laut Datenblatt, ohne Nullspannungsschalter: NQUNXIN QX3223-CuH-SE (C52164452, 2000 Stueck), BC BC3223A (C596515, 938), BC BC2223A (C596513, 0,9 A, 3558). Original mit Nullspannungsschalter: AQH3213A (C91557, 91)"),
     "U4":  ("SHT40 Feuchte/Temperatur mit Membran", "Sensirion SHT40-AD1F-R2", "C7461846", "JLCPCB Extended; mit Polyimid-Membran (Endung F). Nicht die Fremdmarke C54823945 nehmen. Nicht ueberlackieren"),
     "R1":  ("100k 1% 1206 200V", "1206W4F1003T5E", "C17900", "JLCPCB Basic"),
     "R2":  ("100k 1% 1206 200V", "1206W4F1003T5E", "C17900", "JLCPCB Basic"),

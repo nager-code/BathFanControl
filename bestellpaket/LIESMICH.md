@@ -19,5 +19,9 @@
 - Die Lötstifte des Netzteils sind 5 mm lang und stehen unten bis zu 3,4 mm über; das Gehäuse lässt dafür 4 mm Platz. Sie müssen nicht gekürzt werden.
 - PS1 ist das bedrahtete Netzteil Hi-Link HLK-PM03 (C209904). Ausweichtyp mit fast gleichem Stiftbild: YLPTEC HAW3-220S03T2 (C19724490, Reihenabstand 29,4 statt 29,08 mm); vor einem Tausch die Maße prüfen.
 - Drehlage aller gepolten Bauteile in der Bestückungsvorschau prüfen. Bei der RGB-LED D1 liegt die Eckmarke (Pin 1, rot) unten rechts, wenn die Klemmen rechts unten liegen.
-- Alle Teile der Stückliste waren am 23./24.11.2026 bei JLCPCB am Lager (HLK-PM03 rund 3.200, MKDS 1,5/4-5,08 rund 5.300 Stück). Knapp: AQH3223A (C719698) mit 7 Stück und der X2-Kondensator (C237426) mit 448 Stück. Ausweichtyp für U3 aus derselben Reihe: AQH3213A (C91557, mit Nullspannungsschalter); vor einem Tausch die Pinbelegung im Datenblatt prüfen.
+- Alle Teile der Stückliste waren am 23./24.11.2026 bei JLCPCB am Lager (HLK-PM03 rund 3.200, MKDS 1,5/4-5,08 rund 5.300 Stück). Knapp: der X2-Kondensator (C237426) mit 448 Stück und der Photo-Triac AQH3223A (C719698) mit 7 Stück.
 - U4 ist der Sensirion SHT40-AD1F-R2 mit Membran (C7461846). Nicht mit C54823945 verwechseln: das ist eine Fremdmarke, deren Datenblatt keine Membran nennt.
+- Ersatz für U3 (AQH3223A), wenn der Bestand nicht reicht. Alle passen laut Datenblatt auf denselben Footprint und haben dieselbe Pinbelegung (600 V, Zündstrom max. 10 mA, 5000 V Isolation); in der Stückliste nur die LCSC-Nummer tauschen:
+  - NQUNXIN QX3223-CuH-SE, C52164452, 1,2 A, 2.000 Stück; das Datenblatt nennt UL 1577 und VDE 0884-5. JLCPCB führt ihn fälschlich als Typ mit Nullspannungsschalter.
+  - BC BC3223A, C596515, 1,2 A, 938 Stück; BC BC2223A, C596513, 0,9 A, 3.558 Stück. Das Datenblatt nennt keine Zulassungen und zählt die Pins 1 bis 7 durch (ihr Pin 7 ist Pin 8).
+  - Panasonic AQH3213A, C91557, 91 Stück: Original, aber mit Nullspannungsschalter. Für reines Ein/Aus des Lüfters geeignet.
