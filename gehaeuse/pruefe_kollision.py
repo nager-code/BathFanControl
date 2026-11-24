@@ -8,7 +8,8 @@ for n, m in (("Wanne", wanne), ("Deckel", deckel)):
 HUELLEN = {
     "F1 Sicherung":  (59.15, 32.65, 1.6, 69.25, 35.75, 4.7),
     "RV1 Varistor":  (45.95, 29.95, 1.6, 53.95, 36.25, 6.1),
-    "C2 X2":         (36.1, 31.45, 1.6, 41.1, 37.15, 3.6),
+    "C2 X2":         (46.3, 17.65, 1.6, 51.3, 23.35, 3.6),
+    "Q1 Triac":      (33.9, 28.3, 1.6, 44.1, 35.1, 4.1),
     "U4 Sensor":     (62.45, 50.25, 1.6, 63.95, 51.75, 2.5),
     "D1 LED":        (35.45, 57.55, 1.6, 37.55, 59.65, 2.6),
     # Stifte der bedrahteten Teile unter der Platine (ungekuerzt): Netzteil 3,4 mm, Klemme 1,9 mm

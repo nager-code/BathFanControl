@@ -10,7 +10,7 @@ def cls(name, prio, **kw):
 ns["classes"] = [base,
     cls("Netz", 0, clearance=0.5, track_width=1.0, via_diameter=1.2, via_drill=0.6),
     cls("Versorgung", 1, clearance=0.2, track_width=0.4, via_diameter=0.7, via_drill=0.3)]
-mains = ["/L", "/L_F", "/N", "/L_LICHT", "/LICHT_A", "/LICHT_B", "/L_FAN", "/SNUB", "unconnected-(U3-GATE_OFFEN-Pad5)"]
+mains = ["/L", "/L_F", "/N", "/L_LICHT", "/LICHT_A", "/LICHT_B", "/L_FAN", "/SNUB", "/TRIAC_G", "/OPTO_R", "unconnected-(U3-SUB-Pad5)"]
 ns["netclass_patterns"] = [{"netclass": "Netz", "pattern": n} for n in mains] + \
                           [{"netclass": "Versorgung", "pattern": n} for n in ("/+3V3", "/GND")]
 r = d["board"]["design_settings"]["rules"]

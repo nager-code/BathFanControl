@@ -370,7 +370,15 @@
       },
       {
         "netclass": "Netz",
-        "pattern": "unconnected-(U3-GATE_OFFEN-Pad5)"
+        "pattern": "/TRIAC_G"
+      },
+      {
+        "netclass": "Netz",
+        "pattern": "/OPTO_R"
+      },
+      {
+        "netclass": "Netz",
+        "pattern": "unconnected-(U3-SUB-Pad5)"
       },
       {
         "netclass": "Versorgung",

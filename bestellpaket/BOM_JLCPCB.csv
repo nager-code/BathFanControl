@@ -8,6 +8,7 @@ Comment,Designator,Footprint,LCSC Part #,Manufacturer Part,Quantity,Note
 RGB-LED 2020 gemeinsame Anode,D1,LED_RGB_NationStar_FM-B2020,C42421005,Foshan NationStar FM-B2020RGBA-HG,1,"JLCPCB Extended; Drehlage in der JLC-Vorschau pruefen (Eckmarke = Pin 1 = rot, unten rechts)"
 Sicherung T1A 250VAC SMD 10x3,F1,Fuse_SMD_10x3mm_Littelfuse443_UMT250,C95352,Littelfuse 0443001.DR,1,JLCPCB Extended; alternativ Schurter UMT 250 1A T (3403.0166.11)
 "Netzteil 230V -> 3,3V 1A, bedrahtet",PS1,Converter_ACDC_Hi-Link_HLK-PMxx,C209904,Hi-Link HLK-PM03,1,"JLCPCB Extended, bedrahtet (Wellenloeten); Ausweichtyp mit fast gleichem Stiftbild: YLPTEC HAW3-220S03T2 (C19724490), vor dem Tausch Masse pruefen"
+"ACST410-8B Triac 800V 4A DPAK, ueberspannungsfest",Q1,DPAK_ST_ACST4,C221462,STMicroelectronics ACST410-8BTR,1,JLCPCB Extended; IGT max. 10 mA
 100k 1% 1206 200V,"R1,R2",R_1206_3216Metric,C17900,1206W4F1003T5E,2,JLCPCB Basic
 100R 1% 0603,R3,R_0603_1608Metric,C22775,0603WAF1000T5E,1,JLCPCB Basic
 220k 1% 0603,R4,R_0603_1608Metric,C22961,0603WAF2203T5E,1,JLCPCB Basic
@@ -16,9 +17,11 @@ Sicherung T1A 250VAC SMD 10x3,F1,Fuse_SMD_10x3mm_Littelfuse443_UMT250,C95352,Lit
 680R 1% 0603,R13,R_0603_1608Metric,C23228,0603WAF6800T5E,1,JLCPCB Basic; LED rot
 220R 1% 0603,R14,R_0603_1608Metric,C22962,0603WAF2200T5E,1,JLCPCB Basic; LED gruen
 150R 1% 0603,R15,R_0603_1608Metric,C22808,0603WAF1500T5E,1,JLCPCB Basic; LED blau
+390R 1% 1206,R16,R_1206_3216Metric,C4491,1206W4F3900T5E,1,"JLCPCB Extended; Zuendwiderstand, Bauform 1206 wegen der Impulsspannung"
+390R 1% 0603,R17,R_0603_1608Metric,C23151,0603WAF3900T5E,1,JLCPCB Basic; Gate nach COM
 Varistor 275VAC SMD,RV1,Varistor_TDK_CU3225,C211106,TDK CU3225K275G2 (B72650M0271K072),1,"JLCPCB Extended; Bauform 8,0 x 6,3 mm"
 ESP32-C3-MINI-1-H4X,U1,ESP32-C3-MINI-1,C41349510,Espressif ESP32-C3-MINI-1-H4X,1,JLCPCB Extended; N4 (C2838502) ist abgekuendigt (NRND)
 LTV-814S AC-Optokoppler,U2,LTV-814S_SMDIP-4_W9.53mm,C125118,Lite-On LTV-814S-TA1,1,JLCPCB Extended
-"AQH3223A Photo-Triac 1,2A",U3,AQH3223A_SMD-8-N7,C719698,Panasonic AQH3223A,1,"JLCPCB Extended, am 24.11.2026 nur 7 Stueck am Lager. Pin- und footprintgleich laut Datenblatt, ohne Nullspannungsschalter: NQUNXIN QX3223-CuH-SE (C52164452, 2000 Stueck), BC BC3223A (C596515, 938), BC BC2223A (C596513, 0,9 A, 3558). Original mit Nullspannungsschalter: AQH3213A (C91557, 91)"
+"MOC3052S Optotriac 600V, ohne Nullspannungsschalter",U3,MOC3052S_SMDIP-6_W9.53mm,C115471,Lite-On MOC3052S-TA1,1,"JLCPCB Extended; zuendet Q1. IFT max. 10 mA, 5 kV Isolation (UL, VDE)"
 SHT40 Feuchte/Temperatur mit Membran,U4,Sensirion_DFN-4_1.5x1.5mm_P0.8mm_SHT4x_NoCentralPad,C7461846,Sensirion SHT40-AD1F-R2,1,JLCPCB Extended; mit Polyimid-Membran (Endung F). Nicht die Fremdmarke C54823945 nehmen. Nicht ueberlackieren
 "Schraubklemme 4-polig 5,08 mm, bedrahtet",X1,Klemme_4pol_P5.08mm_Horizontal_THT,C5443561,"Phoenix Contact MKDS 1,5/4-5,08 (1715747)",1,"JLCPCB Extended, bedrahtet (Wellenloeten); 250 V / 17,5 A, 0,14-1,5 mm2"

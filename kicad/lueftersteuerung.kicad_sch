@@ -10,7 +10,7 @@
 		(rev "0.1")
 	)
 	(lib_symbols
-		(symbol "Luefter:AQH3223A"
+		(symbol "Luefter:ACST"
 			(pin_names
 				(offset 1.016)
 			)
@@ -19,8 +19,8 @@
 			(on_board yes)
 			(in_pos_files yes)
 			(duplicate_pin_numbers_are_jumpers no)
-			(property "Reference" "U"
-				(at 0 10.16 0)
+			(property "Reference" "Q"
+				(at 0 8.89 0)
 				(show_name no)
 				(do_not_autoplace no)
 				(effects
@@ -29,8 +29,8 @@
 					)
 				)
 			)
-			(property "Value" "AQH3223A"
-				(at 0 7.62 0)
+			(property "Value" "ACST"
+				(at 0 6.35 0)
 				(show_name no)
 				(do_not_autoplace no)
 				(effects
@@ -72,10 +72,10 @@
 					)
 				)
 			)
-			(symbol "AQH3223A_0_1"
+			(symbol "ACST_0_1"
 				(rectangle
-					(start -10.16 6.35)
-					(end 10.16 -6.35)
+					(start -7.62 5.08)
+					(end 7.62 -5.08)
 					(stroke
 						(width 0.254)
 						(type default)
@@ -85,11 +85,11 @@
 					)
 				)
 			)
-			(symbol "AQH3223A_1_1"
+			(symbol "ACST_1_1"
 				(pin passive line
-					(at -12.7 -1.27 0)
+					(at 10.16 -2.54 180)
 					(length 2.54)
-					(name "K_INT"
+					(name "COM"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -105,9 +105,9 @@
 					)
 				)
 				(pin passive line
-					(at -12.7 3.81 0)
+					(at 10.16 2.54 180)
 					(length 2.54)
-					(name "A"
+					(name "OUT"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -123,9 +123,9 @@
 					)
 				)
 				(pin passive line
-					(at -12.7 1.27 0)
+					(at -10.16 0 0)
 					(length 2.54)
-					(name "K"
+					(name "G"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -133,78 +133,6 @@
 						)
 					)
 					(number "3"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at -12.7 -3.81 0)
-					(length 2.54)
-					(name "K_INT"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "4"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at 12.7 -1.27 180)
-					(length 2.54)
-					(name "GATE_OFFEN"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "5"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at 12.7 1.27 180)
-					(length 2.54)
-					(name "T1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "6"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at 12.7 3.81 180)
-					(length 2.54)
-					(name "T2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "8"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -1851,6 +1779,193 @@
 			)
 			(embedded_fonts no)
 		)
+		(symbol "Luefter:MOC3052"
+			(pin_names
+				(offset 1.016)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "U"
+				(at 0 10.16 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "MOC3052"
+				(at 0 7.62 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "MOC3052_0_1"
+				(rectangle
+					(start -10.16 6.35)
+					(end 10.16 -6.35)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+			)
+			(symbol "MOC3052_1_1"
+				(pin passive line
+					(at -12.7 3.81 0)
+					(length 2.54)
+					(name "A"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -12.7 1.27 0)
+					(length 2.54)
+					(name "K"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -12.7 -1.27 0)
+					(length 2.54)
+					(name "NC"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 12.7 1.27 180)
+					(length 2.54)
+					(name "MT_B"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 12.7 -1.27 180)
+					(length 2.54)
+					(name "SUB"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 12.7 3.81 180)
+					(length 2.54)
+					(name "MT_A"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "6"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 		(symbol "Luefter:PROG_1x6"
 			(pin_names
 				(offset 1.016)
@@ -2486,13 +2601,20 @@
 		)
 		(uuid "e53a0e37-b015-592c-a675-50ed2e5669e4")
 	)
+	(text "Optotriac U3 zuendet Triac Q1; Snubber R5/C2 parallel zu Q1"
+		(exclude_from_sim no)
+		(at 157.48 144.78 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "ee8cddbb-f746-508c-a227-2fed4555c25b")
+	)
 	(no_connect
 		(at 124.46 138.43)
 		(uuid "103cecf5-b19a-53ed-bb09-3c5259b8aa25")
-	)
-	(no_connect
-		(at 99.06 140.97)
-		(uuid "1607f73d-6e3b-5475-86a0-751eca53a094")
 	)
 	(no_connect
 		(at 99.06 138.43)
@@ -2612,6 +2734,16 @@
 	)
 	(wire
 		(pts
+			(xy 240.03 152.4) (xy 242.57 152.4)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "13932c4b-39b4-5c84-90ae-b2156792abed")
+	)
+	(wire
+		(pts
 			(xy 179.07 45.72) (xy 181.61 45.72)
 		)
 		(stroke
@@ -2692,6 +2824,16 @@
 	)
 	(wire
 		(pts
+			(xy 284.48 152.4) (xy 281.94 152.4)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "22890640-9b50-53a8-8caf-e902f316e448")
+	)
+	(wire
+		(pts
 			(xy 63.5 179.07) (xy 66.04 179.07)
 		)
 		(stroke
@@ -2739,6 +2881,16 @@
 			(type default)
 		)
 		(uuid "36112360-60cd-580a-b28b-bb9b591b612a")
+	)
+	(wire
+		(pts
+			(xy 227.33 152.4) (xy 224.79 152.4)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "36aaf9c5-4624-5213-ae56-e5d4b47c4f84")
 	)
 	(wire
 		(pts
@@ -3082,6 +3234,16 @@
 	)
 	(wire
 		(pts
+			(xy 179.07 152.4) (xy 181.61 152.4)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a465ffeb-54fb-5f5f-a22d-f70c237cc963")
+	)
+	(wire
+		(pts
 			(xy 99.06 135.89) (xy 96.52 135.89)
 		)
 		(stroke
@@ -3109,6 +3271,16 @@
 			(type default)
 		)
 		(uuid "b14d42f5-ab7a-5c9f-9d11-ace2a8de7928")
+	)
+	(wire
+		(pts
+			(xy 166.37 152.4) (xy 163.83 152.4)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b170a552-ca8d-52c5-b0b6-ab85bbd8b9c8")
 	)
 	(wire
 		(pts
@@ -3172,6 +3344,16 @@
 	)
 	(wire
 		(pts
+			(xy 304.8 149.86) (xy 307.34 149.86)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "bc9cc991-71c7-5ed2-8332-ee6ea9b1cb05")
+	)
+	(wire
+		(pts
 			(xy 38.1 186.69) (xy 35.56 186.69)
 		)
 		(stroke
@@ -3179,6 +3361,16 @@
 			(type default)
 		)
 		(uuid "bf8ae66c-ca37-5085-9d00-ecdc10dcef29")
+	)
+	(wire
+		(pts
+			(xy 304.8 154.94) (xy 307.34 154.94)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c10d5c83-ad40-5ba0-921f-9854cd0e9254")
 	)
 	(wire
 		(pts
@@ -3470,6 +3662,26 @@
 		)
 		(uuid "033f595d-f4b9-59c5-9c6b-9170fd40bef1")
 	)
+	(label "L_FAN"
+		(at 307.34 149.86 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "0502cda8-9a70-54c9-9008-8c163f70c9d5")
+	)
+	(label "TRIAC_G"
+		(at 281.94 152.4 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "06141b6d-b026-5e07-ab1c-1cf4904c7cd1")
+	)
 	(label "EN"
 		(at 120.65 190.5 0)
 		(effects
@@ -3500,7 +3712,7 @@
 		)
 		(uuid "132991b6-5fd9-53d1-8c1b-c01151a02409")
 	)
-	(label "L_F"
+	(label "OPTO_R"
 		(at 127 135.89 0)
 		(effects
 			(font
@@ -3580,6 +3792,16 @@
 		)
 		(uuid "2e1f122e-dc1e-5d20-ab1a-512713aec168")
 	)
+	(label "TRIAC_G"
+		(at 224.79 152.4 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "30ded518-f51a-5835-911f-d069253432fe")
+	)
 	(label "LED_G_IO5"
 		(at 66.04 196.85 0)
 		(effects
@@ -3610,7 +3832,7 @@
 		)
 		(uuid "36e8e02f-5e97-5681-8d0c-e5ac331150ab")
 	)
-	(label "L_FAN"
+	(label "TRIAC_G"
 		(at 127 133.35 0)
 		(effects
 			(font
@@ -3860,6 +4082,16 @@
 		)
 		(uuid "6745c1e7-2e17-5a87-be1f-b604d89af326")
 	)
+	(label "L_FAN"
+		(at 181.61 152.4 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "6aaca559-2322-535a-bbbd-a03966c0c32d")
+	)
 	(label "LICHT_N_IO3"
 		(at 303.53 91.44 0)
 		(effects
@@ -4050,6 +4282,16 @@
 		)
 		(uuid "95dcd2b3-d2fd-5be5-afe8-140caa34f8b7")
 	)
+	(label "OPTO_R"
+		(at 163.83 152.4 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "9d7d44ef-5dce-5411-8739-dca62bff965a")
+	)
 	(label "+3V3"
 		(at 285.75 243.84 180)
 		(effects
@@ -4169,6 +4411,16 @@
 			(justify right bottom)
 		)
 		(uuid "c2e71e24-20ab-5c4d-8fdb-c9eefc9b7c62")
+	)
+	(label "L_F"
+		(at 242.57 152.4 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "cf785b32-4eb9-5cce-b68a-a463973f94f7")
 	)
 	(label "FAN_EN_IO10"
 		(at 35.56 194.31 180)
@@ -4360,6 +4612,16 @@
 		)
 		(uuid "f4358768-b6cf-5e6d-86ab-765c49a89878")
 	)
+	(label "L_F"
+		(at 307.34 154.94 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "f99fbfa0-5895-528a-92f3-8798793e05c1")
+	)
 	(label "GND"
 		(at 157.48 245.11 180)
 		(effects
@@ -4527,6 +4789,84 @@
 			(project "lueftersteuerung"
 				(path "/37a615a9-7dc8-5c22-8ec7-95bcc30ad7d7"
 					(reference "X1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Luefter:R")
+		(at 233.68 152.4 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "333295fc-1b6a-5367-9ab3-ce80fddfff72")
+		(property "Reference" "R17"
+			(at 233.68 146.05 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "390R"
+			(at 233.68 148.59 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+			(at 233.68 152.4 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 233.68 152.4 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 233.68 152.4 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "cf662511-6389-5ea1-88d3-74a4744ddba6")
+		)
+		(pin "2"
+			(uuid "da4ea3de-bd04-594d-a51e-b33546e62f25")
+		)
+		(instances
+			(project "lueftersteuerung"
+				(path "/37a615a9-7dc8-5c22-8ec7-95bcc30ad7d7"
+					(reference "R17")
 					(unit 1)
 				)
 			)
@@ -5514,6 +5854,87 @@
 		)
 	)
 	(symbol
+		(lib_id "Luefter:ACST")
+		(at 294.64 152.4 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "7eadb7d3-d20c-54a7-8564-250787cd7c21")
+		(property "Reference" "Q1"
+			(at 294.64 143.51 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "ACST410-8B"
+			(at 294.64 146.05 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "lueftersteuerung:DPAK_ST_ACST4"
+			(at 294.64 152.4 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 294.64 152.4 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 294.64 152.4 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "3"
+			(uuid "4e778dd9-e0f7-5de7-8131-82f66e226aaf")
+		)
+		(pin "2"
+			(uuid "9743bcf4-df05-5ab0-be85-1efa649cf9c0")
+		)
+		(pin "1"
+			(uuid "3639432f-8234-5d35-9dee-1368eaf1dfdd")
+		)
+		(instances
+			(project "lueftersteuerung"
+				(path "/37a615a9-7dc8-5c22-8ec7-95bcc30ad7d7"
+					(reference "Q1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Luefter:R")
 		(at 294.64 190.5 0)
 		(unit 1)
@@ -5586,6 +6007,84 @@
 			(project "lueftersteuerung"
 				(path "/37a615a9-7dc8-5c22-8ec7-95bcc30ad7d7"
 					(reference "R9")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Luefter:R")
+		(at 172.72 152.4 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "8dd5ef5e-b42b-55c4-9ddb-57731631ae94")
+		(property "Reference" "R16"
+			(at 172.72 146.05 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "390R"
+			(at 172.72 148.59 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_1206_3216Metric"
+			(at 172.72 152.4 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 172.72 152.4 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 172.72 152.4 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "dca344bb-1f72-5b67-be3d-b2880474c66a")
+		)
+		(pin "2"
+			(uuid "d775e5e8-4e7a-5914-96d0-2bcfb6da58b2")
+		)
+		(instances
+			(project "lueftersteuerung"
+				(path "/37a615a9-7dc8-5c22-8ec7-95bcc30ad7d7"
+					(reference "R16")
 					(unit 1)
 				)
 			)
@@ -6708,7 +7207,7 @@
 		)
 	)
 	(symbol
-		(lib_id "Luefter:AQH3223A")
+		(lib_id "Luefter:MOC3052")
 		(at 111.76 137.16 0)
 		(unit 1)
 		(body_style 1)
@@ -6728,7 +7227,7 @@
 				)
 			)
 		)
-		(property "Value" "AQH3223A"
+		(property "Value" "MOC3052S"
 			(at 111.76 129.54 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6738,7 +7237,7 @@
 				)
 			)
 		)
-		(property "Footprint" "lueftersteuerung:AQH3223A_SMD-8-N7"
+		(property "Footprint" "lueftersteuerung:MOC3052S_SMDIP-6_W9.53mm"
 			(at 111.76 137.16 0)
 			(hide yes)
 			(show_name no)
@@ -6770,22 +7269,19 @@
 				)
 			)
 		)
-		(pin "2"
+		(pin "1"
 			(uuid "6a2b6004-3417-54e0-bc97-499443bf345c")
 		)
-		(pin "3"
+		(pin "2"
 			(uuid "ce71201d-0593-598e-8506-2c8cbb4ebe23")
 		)
-		(pin "1"
+		(pin "3"
 			(uuid "fe1c52f6-ed41-5024-b06b-f3538b8b61b7")
 		)
-		(pin "4"
-			(uuid "3fdcc33d-be39-500b-b5a7-0b34c71727f9")
-		)
-		(pin "8"
+		(pin "6"
 			(uuid "4e2773ae-1d56-546a-a2d4-a91c7ccdbd7e")
 		)
-		(pin "6"
+		(pin "4"
 			(uuid "3a4fea61-c6a9-5ca3-ad5e-d32c46fd2688")
 		)
 		(pin "5"

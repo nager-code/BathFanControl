@@ -1,8 +1,8 @@
-# Erzeugt die Platine der Lueftersteuerung (v1.4, 76 x 63 mm, 2 Lagen, nur von oben bestueckt) aus der Netzliste.
+# Erzeugt die Platine der Lueftersteuerung (v1.5, 76 x 63 mm, 2 Lagen, nur von oben bestueckt) aus der Netzliste.
 # SMD-Bauteile, dazu bedrahtet das Netzteil (Hi-Link HLK-PM03) und die Netzklemme (Phoenix MKDS 1,5/4-5,08).
 # Die Platine ist so gezeichnet, wie sie eingebaut von vorn zu sehen ist. Von unten nach oben:
 #   Riegel 62,6 x 30 mm: links 3,3 V, dann Netzteil und Klemme (Leiter von rechts in den Ausschnitt)
-#   Netzreihe bis y = 43,2 mm (76 mm breit): Sicherung, Varistor, Snubber, Teilerwiderstaende, Optokoppler-Netzseite
+#   Netzreihe bis y = 43,2 mm (76 mm breit): Triac Q1, Varistor, Sicherung, Teilerwiderstaende, Netzseite von U2 und U3
 #   Isolationsschlitz 2 mm (nach rechts offen), die Optokoppler sitzen darueber
 #   Arm 68 x 18 mm: WLAN-Modul links, RGB-LED, Feuchtesensor ganz rechts hinter einem Thermoschlitz
 # Aufruf im KiCad-10-Python:  python3 build_board.py <netzliste.net> <projektordner>
@@ -51,7 +51,7 @@ padnet = {}
 for m in re.finditer(r'\(net\s+\(code\s+"\d+"\)\s+\(name\s+"([^"]*)"\)(.*?)(?=\(net\s+\(code|\Z)', txt, re.S):
     for r, p in re.findall(r'\(node\s+\(ref\s+"([^"]+)"\)\s+\(pin\s+"([^"]+)"\)', m.group(2)):
         padnet[(r, p)] = m.group(1)
-assert len(comps) == 32, len(comps)
+assert len(comps) == 35, len(comps)
 
 # ---------------------------------------------------------------- Platine anlegen
 if os.path.exists(PCB):
@@ -113,15 +113,20 @@ OBEN = {
     # Netzreihe
     "F1":  N(56.2, 34.2, "1", (60.875, 34.2)),
     "RV1": N(41.95, 33.1, "2", (45.6, 33.1)),
-    "C2":  N(30.6, 34.3, "2", (30.6, 37.0)),
-    "R5":  N(25.4, 31.6, "2", (26.8625, 31.6)),
+    # Luefterstufe: Triac Q1 liegend (Anschluesse nach rechts, Fahne links), darueber der Optotriac U3 am Schlitz
+    "Q1":  N(29.7, 31.7, "3", (34.55, 34.247)),              # 1 = COM unten (L_F), 3 = G oben, Fahne = OUT (L_FAN)
+    "R16": N(27.4975, 37.0, "1", (28.96, 37.0)),             # Zuendwiderstand: Optotriac Pin 4 -> Fahne
+    "R17": N(37.7, 38.1, "1", (37.7, 38.925)),               # Gate -> COM
+    # Snubber im Streifen zwischen Netzteil und Klemme
+    "C2":  N(40.8, 20.5, "2", (40.8, 17.8)),
+    "R5":  N(40.8, 26.6, "2", (40.8, 25.1375)),
     "R12": N(46.17, 37.5, "2", (45.345, 37.5)),
     "R2":  N(51.4, 39.9, "2", (49.9375, 39.9)),
     "R1":  N(56.4, 39.9, "1", (57.8625, 39.9)),
     # Optokoppler ueber dem Isolationsschlitz: Netzpins unten, 3,3-V-Pins oben
-    "U3":  N(26.2, 44.2, "8", (30.01, 39.85)),
+    "U3":  N(31.5, 44.2, "4", (28.96, 39.435)),              # Netzseite von links: 4, 5, 6; 3,3-V-Seite: 3, 2, 1
     "U2":  N(46.17, 44.465, "1", (44.9, 39.7)),
-    "R3":  N(27.47, 51.9, "2", (27.47, 51.075)),
+    "R3":  N(34.04, 51.9, "2", (34.04, 51.075)),
     "R4":  N(44.9, 52.2, "2", (44.9, 51.375)),
     "C3":  N(47.0, 52.2, "1", (47.0, 51.425)),
     # Arm und Verbindung (3,3 V)
@@ -325,23 +330,33 @@ tr("/LICHT_A", [padu("R1", "2"), padu("R2", "1")], 1.0, F)
 u22 = padu("U2", "2")
 tr("/LICHT_B", [padu("R2", "2"), (u22[0] + 0.6, 39.9), u22], 0.4, F)
 tr("/LICHT_B", [padu("R12", "1"), (u22[0], 38.4), u22], 0.4, F)
-# L_FAN: Klemme -> unten nach links und hoch -> Snubber-Kondensator -> Triac U3
-vi("/L_FAN", (33.9, 37.0))
-tr("/L_FAN", [PF, (38.3, PF[1]), (38.3, 33.5), (34.8, 37.0), (33.9, 37.0)], 1.0, B)
-tr("/L_FAN", [(33.9, 37.0), padu("C2", "2")], 1.0, F)
-tr("/L_FAN", [(padu("U3", "8")[0], padu("C2", "2")[1]), padu("U3", "8")], 1.0, F)
+# L_FAN: Klemme -> unten nach links und hoch, unter der Oberkante des Netzteils weiter zur Kuehlfahne (OUT) von Q1;
+# unterwegs ein Abzweig nach oben zum Snubber-Kondensator C2
+vi("/L_FAN", (26.7, 26.9)); vi("/L_FAN", (38.3, 16.2), 1.0, 0.5)
+tr("/L_FAN", [PF, (38.3, PF[1]), (38.3, 26.9), (26.7, 26.9)], 1.0, B)
+tr("/L_FAN", [(26.7, 26.9), (26.7, 29.5)], 1.0, F)
+tr("/L_FAN", [(38.3, 16.2), (39.2, 17.8), padu("C2", "2")], 1.0, F)
+r162 = padu("R16", "2")
+tr("/L_FAN", [r162, (r162[0], 34.5)], 0.8, F)
+# Zuendkreis: Optotriac Pin 4 -> R16 -> OUT, Optotriac Pin 6 -> Gate, R17 vom Gate nach COM
+tr("/OPTO_R", [padu("R16", "1"), padu("U3", "4")], 0.5, F)
+qg, u34 = padu("Q1", "3"), padu("U3", "6")
+tr("/TRIAC_G", [qg, (u34[0], 35.6), u34], 0.5, F)
+tr("/TRIAC_G", [padu("R17", "1"), (u34[0], padu("R17", "1")[1])], 0.5, F)
 # L: vom obersten Pol unten zur Sicherung
 f11, f12 = padu("F1", "1"), padu("F1", "2")
 vi("/L", (f11[0], 31.2))
 tr("/L", [PL, (51.5, PL[1] + 1.5), (51.5, 29.9), (52.8, 31.2), (f11[0], 31.2)], 1.0, B)
 tr("/L", [(f11[0], 31.2), f11], 1.0, F)
-# L_F: Sicherung -> Varistor -> Netzteil (AC oben), weiter ueber dem Netzteil nach links zu R5 und Triac U3
+# L_F: Sicherung -> Varistor -> Snubber R5 -> COM von Q1 und Netzteil (AC oben)
 rv1 = padu("RV1", "1")
-r51, u36 = padu("R5", "1"), padu("U3", "6")
-tr("/L_F", [f12, (50.6, 32.0), (50.6, 28.3), (r51[0], 28.3), r51], 1.0, F)
-tr("/L_F", [(34.5, 28.3), (psl[0], 26.7), psl], 1.0, F)
+r51, qc = padu("R5", "1"), padu("Q1", "1")
+tr("/L_F", [f12, (50.6, 32.0), (50.6, 28.3), (34.5, 28.3), (psl[0], 26.7), psl], 1.0, F)
 tr("/L_F", [(rv1[0], 28.3), rv1], 1.0, F)
-tr("/L_F", [r51, (24.2, 32.6), (24.2, 38.4), u36], 1.0, F)
+tr("/L_F", [(r51[0], 28.3), r51], 1.0, F)
+tr("/L_F", [(qc[0], 28.3), qc], 1.0, F)
+r172 = padu("R17", "2")
+tr("/L_F", [r172, (r172[0], 34.2)], 0.5, F)
 # Snubber: R5 -> C2
 tr("/SNUB", [padu("R5", "2"), padu("C2", "1")], 1.0, F)
 
@@ -382,7 +397,7 @@ for lab, num in (("L", "4"), ("Licht", "3"), ("N", "2"), ("Luefter", "1")):
     text(lab, XT + SX - 4.6, pad("X1", num)[1], pcbnew.B_SilkS, 1.0, 0, True)
 text("230 V~", 12.0 + SX, U(0, 15.0)[1], pcbnew.F_SilkS, 1.5, 0, False, 0.25)
 text("230 V~", 30.0 + SX, U(0, 15.0)[1], pcbnew.B_SilkS, 1.2, 0, True, 0.2)
-text("Lueftersteuerung Bad v1.4", 40.0, U(0, 50.3)[1], pcbnew.B_SilkS, 0.8, 0, True, 0.12)
+text("Lueftersteuerung Bad v1.5", 40.0, U(0, 50.3)[1], pcbnew.B_SilkS, 0.8, 0, True, 0.12)
 text("Sensor", W - 4.5, 16.0, pcbnew.F_SilkS, 0.8, 0, False, 0.12)
 
 pcbnew.SaveBoard(PCB, board)

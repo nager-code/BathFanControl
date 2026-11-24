@@ -3,7 +3,7 @@ import sys, pcbnew
 SRC, TMP, DSN = sys.argv[1:4]
 STEP = int(sys.argv[4]) if len(sys.argv) > 4 else 9
 b = pcbnew.LoadBoard(SRC)
-MAINS = ("/L", "/L_F", "/N", "/L_LICHT", "/LICHT_A", "/LICHT_B", "/L_FAN", "/SNUB")
+MAINS = ("/L", "/L_F", "/N", "/L_LICHT", "/LICHT_A", "/LICHT_B", "/L_FAN", "/SNUB", "/TRIAC_G", "/OPTO_R")
 drop = lambda n: n in MAINS or n.startswith("unconnected-")
 print("geladen", flush=True)
 if STEP >= 1:

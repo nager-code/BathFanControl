@@ -1,4 +1,4 @@
-# Gehäuse (Entwurf v5 für Platine v1.4, noch nicht gedruckt)
+# Gehäuse (Entwurf v5 für Platine v1.5, noch nicht gedruckt)
 
 Zweiteiliges Gehäuse aus Wanne und Deckel für den Einbau unten links im Lüfterkasten, vor dem Lüftergehäuse. Netzteil und Klemmen liegen unten, die Leitungen kommen von rechts, der Feuchtesensor sitzt oben rechts hinter der abgeschrägten Ecke zum Lüfter-Einlass. Parametrisches OpenSCAD-Modell, druckbar ohne Stützmaterial.
 
@@ -45,7 +45,7 @@ openscad -D 'teil="deckel"' -o deckel.stl gehaeuse.scad
 
 ## Geprüft
 
-Rechnerische Kontrolle gegen das 3D-Modell der Platine: keine Durchdringung, Wanne und Deckel überschneiden sich nicht. Der kleinste Abstand beträgt 0,6 mm in der Wanne (Boden zu den ungekürzten Stiften des Netzteils) und 0,8 mm im Deckel (Trennwand der Sensorkammer zum Optokoppler U2). Netzteil und Klemme gingen mit ihren KiCad-3D-Modellen in die Prüfung ein, Sicherung, Varistor, X2-Kondensator, LED und Sensor als Quader in den Datenblattmaßen.
+Rechnerische Kontrolle gegen das 3D-Modell der Platine: keine Durchdringung, Wanne und Deckel überschneiden sich nicht. Der kleinste Abstand beträgt 0,6 mm in der Wanne (Boden zu den ungekürzten Stiften des Netzteils) und 0,8 mm im Deckel (Trennwand der Sensorkammer zum Optokoppler U2). Netzteil und Klemme gingen mit ihren KiCad-3D-Modellen in die Prüfung ein, Sicherung, Varistor, X2-Kondensator, Triac, LED und Sensor als Quader in den Datenblattmaßen.
 
 ## Offen und vor dem Druck zu klären
 

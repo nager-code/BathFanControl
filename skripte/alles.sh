@@ -6,7 +6,7 @@ set -e
 cd $W
 python3 -I skripte/update_sch.py eingang/lueftersteuerung.kicad_sch kicad/lueftersteuerung.kicad_sch kicad/Luefter.kicad_sym
 docker exec -w /w/kicad kc bash -c 'kicad-cli sym upgrade Luefter.kicad_sym >/dev/null 2>&1; kicad-cli sch upgrade lueftersteuerung.kicad_sch >/dev/null 2>&1; kicad-cli sch export netlist -o /w/work/sch/neu.net lueftersteuerung.kicad_sch >/dev/null 2>&1'
-for m in aqh text; do docker exec kc python3 /w/skripte/make_footprints.py /w/kicad $m 2>&1 | grep -v -E "Debug|leak" | tail -1; done
+docker exec kc python3 /w/skripte/make_footprints.py /w/kicad text 2>&1 | grep -v -E "Debug|leak" | tail -1
 docker exec kc python3 /w/skripte/build_board.py /w/work/sch/neu.net /w/kicad 2>&1 | grep -v -E "Debug|leak" | head -1
 python3 -I skripte/patch_pro.py kicad/lueftersteuerung.kicad_pro
 if [ "$1" = "nurnetz" ]; then exit 0; fi

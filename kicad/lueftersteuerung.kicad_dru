@@ -22,6 +22,14 @@
 	(condition "(A.NetName == '/SNUB' && B.NetName == '/L_F') || (A.NetName == '/L_F' && B.NetName == '/SNUB')")
 	(constraint clearance (min 1.5mm)))
 
-(rule "Triac Gate U3 Pin 5 neben Pin 6"
-	(condition "(A.NetName == 'unconnected-(U3-GATE_OFFEN-Pad5)' && B.NetName == '/L_F') || (A.NetName == '/L_F' && B.NetName == 'unconnected-(U3-GATE_OFFEN-Pad5)')")
+(rule "Optotriac U3: Substrat-Pin 5 zwischen den Ausgangspins"
+	(condition "(A.NetName == 'unconnected-(U3-SUB-Pad5)' && B.NetClass == 'Netz') || (B.NetName == 'unconnected-(U3-SUB-Pad5)' && A.NetClass == 'Netz')")
 	(constraint clearance (min 0.5mm)))
+
+(rule "Gate-Widerstand R17 zwischen Gate und COM von Q1"
+	(condition "(A.NetName == '/TRIAC_G' && B.NetName == '/L_F') || (A.NetName == '/L_F' && B.NetName == '/TRIAC_G')")
+	(constraint clearance (min 0.5mm)))
+
+(rule "Zuendwiderstand R16 zwischen Optotriac und OUT von Q1"
+	(condition "(A.NetName == '/OPTO_R' && B.NetName == '/L_FAN') || (A.NetName == '/L_FAN' && B.NetName == '/OPTO_R')")
+	(constraint clearance (min 1.0mm)))

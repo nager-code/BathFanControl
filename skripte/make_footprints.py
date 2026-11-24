@@ -1,33 +1,12 @@
 # Erzeugt die Projekt-Footprints in <projektordner>/lueftersteuerung.pretty.
 # Aufruf im KiCad-10-Python, je Schritt ein eigener Aufruf:
-#   python3 make_footprints.py <projektordner> aqh    Photo-Triac AQH3223A (aus SMDIP-8 abgeleitet)
-#   python3 make_footprints.py <projektordner> text   alle uebrigen (reine Textausgabe, ohne pcbnew)
+#   python3 make_footprints.py <projektordner> text   (reine Textausgabe, ohne pcbnew)
 import sys, os
 PRJ, MODE = sys.argv[1], sys.argv[2]
 SYSLIB = "/usr/share/kicad/footprints/"
 PRJLIB = os.path.join(PRJ, "lueftersteuerung.pretty")
 os.makedirs(PRJLIB, exist_ok=True)
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-
-if MODE == "aqh":
-    import pcbnew
-    mm = pcbnew.FromMM
-    # Panasonic AQ-H SMD (AQH3223A): 8 Pins ohne Pin 7, Raster 2,54 mm.
-    # Datenblatt-Loetflaeche 1,5 x 1,9 mm bei Reihenabstand 8,3 mm; hier nach aussen auf 2,3 mm
-    # verlaengert (Reihenmitte 8,7 mm), damit auch laengere Anschluesse sicher aufliegen.
-    fp = pcbnew.FootprintLoad(SYSLIB + "Package_DIP.pretty", "SMDIP-8_W9.53mm")
-    for pad in list(fp.Pads()):
-        if pad.GetNumber() == "7":
-            fp.Remove(pad)
-            continue
-        pos = pad.GetPosition()
-        sx = -1 if pos.x < 0 else 1
-        pad.SetPosition(pcbnew.VECTOR2I(sx * mm(4.35), pos.y))
-        pad.SetSize(pcbnew.F_Cu, pcbnew.VECTOR2I(mm(2.3), mm(1.5)))
-    fp.SetFPID(pcbnew.LIB_ID("lueftersteuerung", "AQH3223A_SMD-8-N7"))
-    fp.SetLibDescription("Panasonic AQ-H SMD, 8 Pins ohne Pin 7 (AQH3223A), Reihenmitte 8,7 mm, Pads 2,3 x 1,5 mm")
-    pcbnew.PCB_IO_MGR.FindPlugin(pcbnew.PCB_IO_MGR.KICAD_SEXP).FootprintSave(PRJLIB, fp)
-    print("AQH ok"); sys.exit(0)
 
 def strip_silk(src, dst, newname=None):
     """Kopiert eine .kicad_mod-Datei ohne Grafik auf F.SilkS (reine Textbearbeitung)."""
@@ -49,10 +28,11 @@ def strip_silk(src, dst, newname=None):
                     out.append("\t" + el)
     open(dst, "w").write(head + "\n".join(out) + "\n)\n")
 
-# LTV-814S und AQH3223A sitzen ueber dem Isolationsschlitz: Footprints ohne Bestueckungsdruck
+# LTV-814S und MOC3052S sitzen ueber dem Isolationsschlitz: Footprints ohne Bestueckungsdruck.
+# MOC3052S (Lite-On, SMD-6): Anschlussbreite 10,16 +-0,3 mm, Fuss 1,0 mm, Raster 2,54 mm -> passt auf SMDIP-6_W9.53mm
+# (Pads 2,0 x 1,78 mm bei +-4,765 mm).
 strip_silk(SYSLIB + "Package_DIP.pretty/SMDIP-4_W9.53mm.kicad_mod", os.path.join(PRJLIB, "LTV-814S_SMDIP-4_W9.53mm.kicad_mod"), "LTV-814S_SMDIP-4_W9.53mm")
-f_ = os.path.join(PRJLIB, "AQH3223A_SMD-8-N7.kicad_mod")
-strip_silk(f_, f_)
+strip_silk(SYSLIB + "Package_DIP.pretty/SMDIP-6_W9.53mm.kicad_mod", os.path.join(PRJLIB, "MOC3052S_SMDIP-6_W9.53mm.kicad_mod"), "MOC3052S_SMDIP-6_W9.53mm")
 
 # ---- Footprints als Text im KiCad-Format
 
@@ -101,6 +81,22 @@ def make_led():
         L.append(smdpad(num, x, y, 0.8, 0.7))
     save(name, L)
 make_led()
+
+# Triac ST ACST410-8B im DPAK. Loetflaechen nach ST-Datenblatt (Figure 22): Kuehlfahne 6,7 x 6,7 mm, 3,0 mm Abstand,
+# zwei Anschlussflaechen 3,0 x 1,6 mm im Abstand 5,094 mm. 1 = COM, 2 = OUT (Fahne), 3 = G.
+# Ursprung in der Mitte des Loetbilds, Anschluesse zeigen nach links, Pin 1 oben (Draufsicht).
+def make_dpak():
+    name = "DPAK_ST_ACST4"
+    L = header(name, "DPAK (TO-252) nach ST-Datenblatt ACST4: Fahne 6,7 x 6,7, Anschluesse 3,0 x 1,6, 1 = COM, 2 = OUT (Fahne), 3 = G", 4.6)
+    L.append(rect("F.Fab", -3.35, -3.3, 2.75, 3.3, 0.1))            # Gehaeuse 6,1 x 6,6 mm
+    L.append(rect("F.Fab", 2.75, -2.7, 3.75, 2.7, 0.1))             # Kuehlfahne
+    L.append(rect("F.CrtYd", -6.6, -3.6, 6.6, 3.6, 0.05))
+    L.append('  (fp_circle (center -6.9 -2.55) (end -6.8 -2.55) (stroke (width 0.2) (type solid)) (fill solid) (layer "F.SilkS"))')
+    L.append(smdpad("1", -4.85, -2.547, 3.0, 1.6))
+    L.append(smdpad("3", -4.85, 2.547, 3.0, 1.6))
+    L.append(smdpad("2", 3.0, 0, 6.7, 6.7))
+    save(name, L)
+make_dpak()
 
 # Netzklemme X1, bedrahtet: 4-polige Schraubklemme im Raster 5,08 mm, Leitereinfuehrung parallel zur Platine.
 # Abgeleitet vom KiCad-Footprint der Phoenix MKDS 1,5/4-5,08 (Stifte 1,0 mm, Bohrung 1,3 mm); die Loetaugen sind

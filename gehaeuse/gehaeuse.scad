@@ -29,7 +29,7 @@ h_oben  = 15.3;                  // hoechstes Bauteil oben (Netzteil 15,1 mm)
 h_unten = 3.4;                   // Stifte des bedrahteten Netzteils unter der Platine (Klemme 1,9 mm)
 loch    = [[4.8, 5.5], [46.5, 56.0]];   // Bohrungen 6,6 mm in der Platine fuer die Schraubdome
 // Abschnitte des Isolationsschlitzes, in denen keine Optokoppler sitzen: dort steht ein Steg im Schlitz
-iso_frei = [[22.6, 28.2], [40.4, 50.4], [58.0, 68.4]];
+iso_frei = [[22.6, 34.6], [44.4, 50.4], [58.0, 68.4]];
 led     = [36.5, 58.6];          // Lage der RGB-LED: darueber sitzt der Lichtschacht im Deckel
 
 /* [Gehaeuse] */
@@ -190,7 +190,8 @@ module platine() {
         // Bauteile ohne 3D-Modell als Quader in den Datenblattmassen
         color([0.9, 0.88, 0.8]) quader(59.15, 32.65, pd, 69.25, 35.75, pd + 3.1);                        // Sicherung
         color([0.1, 0.25, 0.5]) quader(45.95, 29.95, pd, 53.95, 36.25, pd + 4.5);                        // Varistor
-        color([0.55, 0.4, 0.25]) quader(36.1, 31.45, pd, 41.1, 37.15, pd + 2.0);                         // X2-Kondensator
+        color([0.55, 0.4, 0.25]) quader(46.3, 17.65, pd, 51.3, 23.35, pd + 2.0);                         // X2-Kondensator
+        color([0.15, 0.15, 0.15]) quader(33.95, 28.4, pd, 41.05, 35.0, pd + 2.3);                        // Triac (DPAK)
         color([0.95, 0.95, 0.95]) quader(pw - 5.55, ph - 12.75, pd, pw - 4.05, ph - 11.25, pd + 0.9);    // Feuchtesensor
     }
 }

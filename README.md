@@ -5,13 +5,13 @@ Platine 76 x 63 mm in einer Form für den Einbau im Lüfterkasten, 2 Lagen, nur 
 
 ![3D-Ansicht der Platine](doku/platine_3d_oben_schraeg.png)
 
-Die Unterseite trägt keine Bauteile, dort stehen nur die Lötstifte von Netzteil und Klemme über. Sicherung, Varistor, X2-Kondensator, LED und Sensor sind in den Bildern vereinfachte Quader, weil es für sie kein fertiges 3D-Modell gibt. `doku/platine_3d.glb` lässt sich in jedem glTF-Betrachter drehen.
+Die Unterseite trägt keine Bauteile, dort stehen nur die Lötstifte von Netzteil und Klemme über. Sicherung, Varistor, X2-Kondensator, Triac, LED und Sensor sind in den Bildern vereinfachte Quader, weil es für sie kein fertiges 3D-Modell gibt. `doku/platine_3d.glb` lässt sich in jedem glTF-Betrachter drehen.
 
 ## Funktion
 
 - 230 V Versorgung, zweiter 230-V-Eingang vom Lichtschalter als Aktivitätssignal
 - Luftfeuchte messen (SHT40 mit Membran, nahe am Lüfter-Einlass) und den Lüfter danach schalten, mit Fortschrittskontrolle und Pausen
-- Lüfter über Photo-Triac (AQH3223A), Lichteingang über AC-Optokoppler (LTV-814S)
+- Lüfter über Optotriac (Lite-On MOC3052S) und Triac (ST ACST410-8B), Lichteingang über AC-Optokoppler (LTV-814S)
 - RGB-LED als Anzeige (drei GPIOs, im Gehäusedeckel ein Lichtschacht)
 - Netzteil Hi-Link HLK-PM03 (3,3 V, 1 A), Anschluss über eine 4-polige Schraubklemme Phoenix MKDS 1,5/4-5,08
 

@@ -36,26 +36,48 @@ blk=t[i:j]
 for name,old,new_ in (("L","1","4"),("L_LUEFTER","4","1")):
     blk=sub1(r'(\(name "%s"[^\n]*?\(number ")%s(")'%(re.escape(name),old),r'\g<1>%s\2'%new_,blk)
 t=t[:i]+blk+t[j:]
-# 2) AQH3223A: Pins 1/4 intern an Kathode, Pin 5 = Gate
+# 2) Luefterstufe: statt des Photo-Triacs AQH3223A ein Optotriac MOC3052S (U3), der den Triac ACST410-8B (Q1) zuendet.
+#    MOC3052S laut Datenblatt: 1 = Anode, 2 = Kathode, 3 = nicht belegt, 4 und 6 = Ausgang, 5 = Substrat (nicht anschliessen).
+#    Das Symbol des AQH3223A wird dazu umnummeriert; der Ausgang geht nicht mehr an L_F / L_FAN, sondern an
+#    TRIAC_G (Pin 6, Gate von Q1) und OPTO_R (Pin 4, ueber R16 an L_FAN). Q1, R16 und R17 kommen in Schritt 6 dazu.
 i=t.find('(symbol "Luefter:AQH3223A"'); j=t.find('\n    (symbol "Luefter:',i+5)
 if j<0: j=t.find('\n  )',i)
-blk=t[i:j]
-for num,name in (("1","K_INT"),("4","K_INT"),("5","GATE_OFFEN")):
-    blk=sub1(r'\(name "NC"([^\n]*?\(number "%s")'%num,r'(name "%s"\1'%name,blk)
-t=t[:i]+blk+t[j:]
+PINMAP = {("A","2"):("A","1"), ("K","3"):("K","2"), ("NC","1"):("NC","3"), ("NC","4"):None,
+          ("T2","8"):("MT_A","6"), ("T1","6"):("MT_B","4"), ("NC","5"):("SUB","5")}
+out=[]; n_=0
+for ln in t[i:j].split("\n"):
+    m=re.search(r'\(pin passive line .*\(name "([^"]*)".*\(number "([^"]*)"',ln)
+    if m:
+        neu=PINMAP[(m.group(1),m.group(2))]; n_+=1
+        if neu is None: continue
+        ln=ln.replace('(name "%s"'%m.group(1),'(name "%s"'%neu[0]).replace('(number "%s"'%m.group(2),'(number "%s"'%neu[1])
+    out.append(ln)
+assert n_==7
+t=t[:i]+"\n".join(out).replace("AQH3223A","MOC3052")+t[j:]
+i=t.find('(property "Reference" "U3"'); s=t.rfind("(symbol (lib_id",0,i); e=t.find("(instances",s)
+blk=t[s:e].replace('"Luefter:AQH3223A"','"Luefter:MOC3052"').replace('"Value" "AQH3223A"','"Value" "MOC3052S"')
+blk=sub1(r'    \(pin "4" \(uuid "[^"]+"\)\)\n','',blk)
+for old,new_ in (("2","@1"),("3","@2"),("1","@3"),("8","@6"),("6","@4")):
+    blk=sub1(r'\(pin "%s" '%old,'(pin "%s" '%new_,blk)
+blk=blk.replace('(pin "@','(pin "')
+t=t[:s]+blk+t[e:]
+t=sub1(r'  \(no_connect \(at 99\.06 140\.97\) \(uuid "[^"]+"\)\)\n','',t)
+# Die beiden Ausgangspins sind gleichwertig; fuer ein kreuzungsfreies Layout geht Pin 6 ans Gate und Pin 4 an R16.
+t=sub1(re.escape('(label "L_FAN" (at 127.00 133.35 0)'),'(label "TRIAC_G" (at 127.00 133.35 0)',t)
+t=sub1(re.escape('(label "L_F" (at 127.00 135.89 0)'),'(label "OPTO_R" (at 127.00 135.89 0)',t)
 # 2b) LTV-814: die beiden AC-Eingangspins sind gleichwertig; getauscht, damit das Layout ohne Kreuzung auskommt
 i=t.find('(symbol "Luefter:LTV-814S"'); j=t.find('\n    (symbol "Luefter:',i+5)
 if j<0: j=t.find('\n  )',i)
 blk=t[i:j]
 blk=re.sub(r'(\(number ")1(")', r'\g<1>@@\2', blk); blk=re.sub(r'(\(number ")2(")', r'\g<1>1\2', blk); blk=blk.replace('(number "@@"','(number "2"')
 t=t[:i]+blk+t[j:]
-# 3) R3 150R -> 100R (LED-Strom AQH3223A: IFT max 10 mA, empfohlen 15-25 mA)
+# 3) R3 150R -> 100R (LED-Strom des Optotriacs: IFT max 10 mA, hier rund 20 mA)
 i=t.find('(property "Reference" "R3"'); k=t.find('"150R"',i); assert 0<k-i<300
 t=t[:k]+'"100R"'+t[k+6:]
 # 4) Footprints: Projektbibliothek und SMD-Ersatz fuer alle bedrahteten Bauteile
 FP = {
  "RF_Module:ESP32-C3-MINI-1": "lueftersteuerung:ESP32-C3-MINI-1",
- "Package_DIP:SMDIP-8_W9.53mm": "lueftersteuerung:AQH3223A_SMD-8-N7",
+ "Package_DIP:SMDIP-8_W9.53mm": "lueftersteuerung:MOC3052S_SMDIP-6_W9.53mm",
  "Package_DIP:SMDIP-4_W9.53mm": "lueftersteuerung:LTV-814S_SMDIP-4_W9.53mm",
  "Converter_ACDC:Converter_ACDC_MeanWell_IRM-02-xx_THT": PS1_FP,
  "TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-4-5.08_1x04_P5.08mm_Horizontal": SMD["X1"][0],
@@ -117,8 +139,19 @@ ledsym = ('    (symbol "Luefter:LED_RGB" (pin_names (offset 1.016)) (exclude_fro
           '      (symbol "LED_RGB_1_1"\n' % (FONT, FONT)
           + pin("A", -10.16, 0, 0) + pin("RK", 10.16, 2.54, 180) + pin("GK", 10.16, 0, 180) + pin("BK", 10.16, -2.54, 180)
           + '      )\n    )\n')
+# Symbol des Triacs ACST410-8B (DPAK): 1 = COM, 2 = OUT (Kuehlfahne), 3 = G
+def tpin(name, num, x, y, rot): return ('        (pin passive line (at %.2f %.2f %d) (length 2.54) (name "%s" %s) (number "%s" %s))\n'
+                                        % (x, y, rot, name, FONT, num, FONT))
+triacsym = ('    (symbol "Luefter:ACST" (pin_names (offset 1.016)) (exclude_from_sim no) (in_bom yes) (on_board yes)\n'
+            '      (property "Reference" "Q" (at 0 8.89 0) %s)\n      (property "Value" "ACST" (at 0 6.35 0) %s)\n'
+            '      (property "Footprint" "" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes)))\n'
+            '      (property "Datasheet" "" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes)))\n'
+            '      (symbol "ACST_0_1" (rectangle (start -7.62 5.08) (end 7.62 -5.08) (stroke (width 0.254) (type default)) (fill (type background))))\n'
+            '      (symbol "ACST_1_1"\n' % (FONT, FONT)
+            + tpin("G", "3", -10.16, 0, 0) + tpin("OUT", "2", 10.16, 2.54, 180) + tpin("COM", "1", 10.16, -2.54, 180)
+            + '      )\n    )\n')
 i = t.find('\n    (symbol "Luefter:R"')
-t = t[:i + 1] + ledsym + t[i + 1:]
+t = t[:i + 1] + ledsym + triacsym + t[i + 1:]
 # freie Pins des Moduls: IO1 (y 191.77), IO4 (194.31), IO5 (196.85) bekommen statt des Kreuzes ein Netz
 neu_el = ""
 for y, name in ((194.31, "LED_R_IO4"), (196.85, "LED_G_IO5"), (191.77, "LED_B_IO1")):
@@ -136,6 +169,21 @@ neu_el += inst("LED_RGB", "D1", LED_VAL, LED_FP, XD, YL, (LED_PINS["A"], LED_PIN
 neu_el += wire(XD - 10.16, YL, XD - 12.70, YL, "d1a") + label("+3V3", XD - 12.70, YL, True, "d1a")
 for dy, k in ((-2.54, "LED_RK"), (0, "LED_GK"), (2.54, "LED_BK")):
     neu_el += wire(XD + 10.16, YL + dy, XD + 12.70, YL + dy, "d1" + k) + label(k, XD + 12.70, YL + dy, False, "d1" + k)
+# Triacstufe des Luefters: R16 begrenzt den Zuendstrom (Spitze 358 V / 390 Ohm = 0,92 A, Optotriac vertraegt 1 A),
+# R17 leitet Leckstrom am Gate ab. Q1: COM an L_F (hinter der Sicherung), OUT an L_FAN (zur Klemme).
+YT_ = 152.40
+neu_el += inst("R", "R16", "390R", "Resistor_SMD:R_1206_3216Metric", 172.72, YT_, ("1", "2"))
+neu_el += wire(166.37, YT_, 163.83, YT_, "r16a") + label("OPTO_R", 163.83, YT_, True, "r16a")
+neu_el += wire(179.07, YT_, 181.61, YT_, "r16b") + label("L_FAN", 181.61, YT_, False, "r16b")
+neu_el += inst("R", "R17", "390R", "Resistor_SMD:R_0603_1608Metric", 233.68, YT_, ("1", "2"))
+neu_el += wire(227.33, YT_, 224.79, YT_, "r17a") + label("TRIAC_G", 224.79, YT_, True, "r17a")
+neu_el += wire(240.03, YT_, 242.57, YT_, "r17b") + label("L_F", 242.57, YT_, False, "r17b")
+neu_el += inst("ACST", "Q1", "ACST410-8B", "lueftersteuerung:DPAK_ST_ACST4", 294.64, YT_, ("3", "2", "1"))
+neu_el += wire(284.48, YT_, 281.94, YT_, "q1g") + label("TRIAC_G", 281.94, YT_, True, "q1g")
+neu_el += wire(304.80, YT_ - 2.54, 307.34, YT_ - 2.54, "q1o") + label("L_FAN", 307.34, YT_ - 2.54, False, "q1o")
+neu_el += wire(304.80, YT_ + 2.54, 307.34, YT_ + 2.54, "q1c") + label("L_F", 307.34, YT_ + 2.54, False, "q1c")
+neu_el += ('  (text "Optotriac U3 zuendet Triac Q1; Snubber R5/C2 parallel zu Q1" (exclude_from_sim no) (at 157.48 144.78 0) '
+           '(effects (font (size 1.27 1.27)) (justify left bottom)) (uuid "%s"))\n' % uid("text2"))
 neu_el += ('  (text "Anzeige: RGB-LED (leuchtet bei Pegel 0)" (exclude_from_sim no) (at 96.52 205.74 0) '
            '(effects (font (size 1.27 1.27)) (justify left bottom)) (uuid "%s"))\n' % uid("text"))
 i = t.rfind("\n  (sheet_instances")
