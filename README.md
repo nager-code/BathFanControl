@@ -5,6 +5,8 @@ Platine 68 x 72,5 mm in einer Form für den Einbau im Lüfterkasten, 2 Lagen, nu
 
 ![3D-Ansicht der Platine](doku/platine_3d_oben_schraeg.png)
 
+![3D-Ansichten der Platine von allen Seiten](doku/platine_3d_ansichten.png)
+
 ![Lageplan: was sitzt wo auf der Platine](doku/lageplan.png)
 
 Der Lageplan zeigt, welches Bauteil wo sitzt und wozu es dient (auch als `doku/lageplan.svg`). Die Unterseite trägt keine Bauteile, dort stehen nur die Lötstifte von Netzteil und Klemme über. Sicherung, Varistor, X2-Kondensator, Triac, LED, USB-Buchse und Sensor sind in den Bildern vereinfachte Quader, weil es für sie kein fertiges 3D-Modell gibt. `doku/platine_3d.glb` lässt sich in jedem glTF-Betrachter drehen.

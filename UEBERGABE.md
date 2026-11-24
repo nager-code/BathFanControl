@@ -118,7 +118,7 @@ Die Platine ist so gezeichnet, wie sie eingebaut von vorn zu sehen ist: unten li
 
 - `kicad/` – Projekt für KiCad 10: Schaltplan, Platine, Regeln (`.kicad_dru`), Symbol- und Footprint-Bibliothek des Projekts
 - `bestellpaket/` – Gerber und Bohrdaten (auch als `gerber_lueftersteuerung.zip`), `BOM_JLCPCB.csv`, `CPL_JLCPCB.csv`, Bestückungspläne, `LIESMICH.md`
-- `doku/` – beschrifteter Lageplan der Platine (`lageplan.png`/`.svg`: was sitzt wo, wozu), Zeichnung der Einbaulage (`einbaulage.svg`), Schaltplan als PDF, Bilder der Platine (auch 3D-Ansichten und `platine_3d.glb` zum Drehen), DRC-Bericht
+- `doku/` – beschrifteter Lageplan der Platine (`lageplan.png`/`.svg`: was sitzt wo, wozu), Zeichnung der Einbaulage (`einbaulage.svg`), Schaltplan als PDF, Bilder der Platine (3D-Ansichten von allen Seiten in `platine_3d_ansichten.png`, `platine_3d.glb` zum Drehen), DRC-Bericht
 - `gehaeuse/` – Gehäuse für den 3D-Druck: OpenSCAD-Modell, STL für Wanne und Deckel, Bilder
 - `skripte/` – erzeugen Platine und Bestellpaket aus dem Schaltplan in `kicad/` neu (`alles.sh`, `bis_sauber.sh`, `export_fab.sh`); laufen in einem KiCad-10-Container
 
