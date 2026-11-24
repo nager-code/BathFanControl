@@ -18,8 +18,6 @@ for fp in sorted(b.GetFootprints(), key=lambda f: refkey(f.GetReference())):
     if fp.IsDNP():
         dnp.append((ref, bez, name, hinweis)); continue
     k = (bez, typ, name, lcsc, hinweis)
-    if ref == "X1":          # ein Footprint, aber zwei 2-polige Klemmen
-        rows.setdefault(k, []).extend(["X1A", "X1B"]); continue
     rows.setdefault(k, []).append(ref)
 with open(os.path.join(out, "BOM_JLCPCB.csv"), "w", newline="") as f:
     w = csv.writer(f)
@@ -33,12 +31,15 @@ n = 0
 with open(os.path.join(out, "pos_kicad.csv")) as f, open(os.path.join(out, "CPL_JLCPCB.csv"), "w", newline="") as g:
     w = csv.writer(g)
     w.writerow(["Designator", "Mid X", "Mid Y", "Layer", "Rotation"])
+    # Bedrahtete Bauteile haben ihren Ursprung in Pin 1; JLCPCB erwartet die Bauteilmitte (Mitte der Loetaugen)
+    mitte = {}
+    for fp in b.GetFootprints():
+        ps = [q.GetPosition() for q in fp.Pads() if q.GetAttribute() == pcbnew.PAD_ATTRIB_PTH]
+        if ps:
+            mitte[fp.GetReference()] = ((min(q.x for q in ps) + max(q.x for q in ps)) / 2e6, -(min(q.y for q in ps) + max(q.y for q in ps)) / 2e6)
     for r in csv.DictReader(f):
-        if r["Ref"] == "X1":
-            for suffix, dy in (("A", 6.0), ("B", -6.0)):   # Mitten der beiden Klemmen, 12 mm auseinander
-                w.writerow(["X1" + suffix, "%.4fmm" % float(r["PosX"]), "%.4fmm" % (float(r["PosY"]) + dy), "Top", "%g" % float(r["Rot"])])
-                n += 1
-            continue
+        if r["Ref"] in mitte:
+            r["PosX"], r["PosY"] = mitte[r["Ref"]]
         w.writerow([r["Ref"], "%.4fmm" % float(r["PosX"]), "%.4fmm" % float(r["PosY"]),
                     "Top" if r["Side"].lower().startswith("top") else "Bottom", "%g" % float(r["Rot"])])
         n += 1

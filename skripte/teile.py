@@ -2,10 +2,10 @@
 # LCSC/JLCPCB-Nummern und Lagerbestand am 23.11.2026 in der Bauteilsuche von jlcpcb.com nachgeschlagen; vor der Bestellung erneut pruefen.
 R10K = ("10k 1% 0603", "0603WAF1002T5E", "C25804", "JLCPCB Basic")
 TEILE = {
-    "X1":  ("WAGO 2061-602/998-404 SMD-Klemme 2-polig (2 Stueck)", "2061-602/998-404", "C2765058", "JLCPCB Extended; 2 Stueck nebeneinander, in der Bestueckungsdatei als X1A und X1B"),
+    "X1":  ("Schraubklemme 4-polig 5,08 mm, bedrahtet", "Phoenix Contact MKDS 1,5/4-5,08 (1715747)", "C5443561", "JLCPCB Extended, bedrahtet (Wellenloeten); 250 V / 17,5 A, 0,14-1,5 mm2"),
     "F1":  ("Sicherung T1A 250VAC SMD 10x3", "Littelfuse 0443001.DR", "C95352", "JLCPCB Extended; alternativ Schurter UMT 250 1A T (3403.0166.11)"),
     "RV1": ("Varistor 275VAC SMD", "TDK CU3225K275G2 (B72650M0271K072)", "C211106", "JLCPCB Extended; Bauform 8,0 x 6,3 mm"),
-    "PS1": ("Netzteil 230V -> 3,3V 0,6A SMD", "Mean Well IRM-02-3.3S", "C6062464", "JLCPCB Extended, am 23.11.2026 Bestand 0: ueber die Teilebestellung von JLCPCB vorbestellen oder beistellen. Kein anderes SMD-Netzmodul bei JLCPCB am Lager"),
+    "PS1": ("Netzteil 230V -> 3,3V 1A, bedrahtet", "Hi-Link HLK-PM03", "C209904", "JLCPCB Extended, bedrahtet (Wellenloeten); Ausweichtyp mit fast gleichem Stiftbild: YLPTEC HAW3-220S03T2 (C19724490), vor dem Tausch Masse pruefen"),
     "U1":  ("ESP32-C3-MINI-1-H4X", "Espressif ESP32-C3-MINI-1-H4X", "C41349510", "JLCPCB Extended; N4 (C2838502) ist abgekuendigt (NRND)"),
     "U2":  ("LTV-814S AC-Optokoppler", "Lite-On LTV-814S-TA1", "C125118", "JLCPCB Extended"),
     "U3":  ("AQH3223A Photo-Triac 1,2A", "Panasonic AQH3223A", "C719698", "JLCPCB Extended, am 23.11.2026 nur 7 Stueck am Lager. Ausweichtyp gleicher Reihe mit Nullspannungsschalter: AQH3213A (C91557, 91 Stueck), vor dem Tausch Pinbelegung im Datenblatt pruefen"),

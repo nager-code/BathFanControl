@@ -1,11 +1,11 @@
 # BathFanControl
 
 Feuchteabhängige Steuerung für einen Badlüfter (KN2 UP, ca. 50 W) an 230 V mit ESP32-C3, SHT40 und WLAN.
-Platine 76 x 63 mm in einer Form für den Einbau im Lüfterkasten, 2 Lagen, ausschließlich SMD-Bauteile, nur auf der Oberseite bestückt, entworfen mit KiCad 10.
+Platine 76 x 63 mm in einer Form für den Einbau im Lüfterkasten, 2 Lagen, nur von oben bestückt: SMD-Bauteile, dazu bedrahtet das Netzteil und die Netzklemme. Entworfen mit KiCad 10; alle Bauteile sind bei JLCPCB gelistet und waren am 24.11.2026 dort am Lager.
 
 ![3D-Ansicht der Platine](doku/platine_3d_oben_schraeg.png)
 
-Die Unterseite trägt keine Bauteile. Klemme, Sicherung, Varistor, X2-Kondensator, LED und Sensor sind in den Bildern vereinfachte Quader, weil es für sie kein fertiges 3D-Modell gibt. `doku/platine_3d.glb` lässt sich in jedem glTF-Betrachter drehen.
+Die Unterseite trägt keine Bauteile, dort stehen nur die Lötstifte von Netzteil und Klemme über. Sicherung, Varistor, X2-Kondensator, LED und Sensor sind in den Bildern vereinfachte Quader, weil es für sie kein fertiges 3D-Modell gibt. `doku/platine_3d.glb` lässt sich in jedem glTF-Betrachter drehen.
 
 ## Funktion
 
@@ -13,7 +13,7 @@ Die Unterseite trägt keine Bauteile. Klemme, Sicherung, Varistor, X2-Kondensato
 - Luftfeuchte messen (SHT40 mit Membran, nahe am Lüfter-Einlass) und den Lüfter danach schalten, mit Fortschrittskontrolle und Pausen
 - Lüfter über Photo-Triac (AQH3223A), Lichteingang über AC-Optokoppler (LTV-814S)
 - RGB-LED als Anzeige (drei GPIOs, im Gehäusedeckel ein Lichtschacht)
-- Netzteil Mean Well IRM-02-3.3S, Eigenverbrauch erwartet 0,2 bis 0,3 W
+- Netzteil Hi-Link HLK-PM03 (3,3 V, 1 A), Anschluss über eine 4-polige Schraubklemme Phoenix MKDS 1,5/4-5,08
 
 ## Inhalt
 
@@ -25,7 +25,7 @@ Die Unterseite trägt keine Bauteile. Klemme, Sicherung, Varistor, X2-Kondensato
 | [`doku/`](doku) | Schaltplan als PDF, Bilder, DRC-Bericht |
 | [`gehaeuse/`](gehaeuse) | Gehäuse für den 3D-Druck (OpenSCAD, STL), Entwurf für den Einbau im Lüfterkasten |
 | [`skripte/`](skripte) | Skripte, die Platine und Bestellpaket neu erzeugen |
-| [`eingang/`](eingang) | ursprünglich übergebene Dateien (bedrahtete Fassung) |
+| [`eingang/`](eingang) | ursprünglich übergebene Dateien (erste, ganz bedrahtete Fassung) |
 
 ![Gehäuse geschlossen und geöffnet](gehaeuse/bilder/gehaeuse_beide.png)
 

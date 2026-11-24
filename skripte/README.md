@@ -24,7 +24,7 @@ mkdir -p tools && curl -L -o tools/freerouting-1.9.0.jar https://github.com/free
 | `render.sh` | Bilder der Lagen |
 | `update_sch.py` | Änderungen am übergebenen Schaltplan (Datenblattkorrekturen, SMD-Bauteile) |
 | `build_board.py` | Platzierung, Umriss, Sperrflächen, handverlegte Netzseite |
-| `x1_param.py`, `make_footprints.py` | Projekt-Footprints (Klemme, Sicherung, Varistor, X2-Kondensator, Optokoppler) |
+| `make_footprints.py` | Projekt-Footprints (Klemme, Sicherung, Varistor, X2-Kondensator, RGB-LED, Optokoppler) |
 | `teile.py` | Bauteildaten und LCSC-Nummern für die Stückliste |
 
 Der Autorouter arbeitet nicht deterministisch: ein Neuaufbau ergibt auf der 3,3-V-Seite andere Leiterbahnen

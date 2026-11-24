@@ -8,7 +8,6 @@ SYSLIB = "/usr/share/kicad/footprints/"
 PRJLIB = os.path.join(PRJ, "lueftersteuerung.pretty")
 os.makedirs(PRJLIB, exist_ok=True)
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from x1_param import X1
 
 if MODE == "aqh":
     import pcbnew
@@ -103,20 +102,17 @@ def make_led():
     save(name, L)
 make_led()
 
+# Netzklemme X1, bedrahtet: 4-polige Schraubklemme im Raster 5,08 mm, Leitereinfuehrung parallel zur Platine.
+# Abgeleitet vom KiCad-Footprint der Phoenix MKDS 1,5/4-5,08 (Stifte 1,0 mm, Bohrung 1,3 mm); die Loetaugen sind
+# von 2,6 auf 2,4 mm verkleinert, damit zwischen benachbarten Netzpotentialen 2,68 mm Kupferabstand bleiben.
 def make_x1():
-    n = len(X1["order"]); p = X1["pitch"]
-    y0 = -p * (n - 1) / 2.0
-    bx1, bx2 = X1["body"]; hy = p * n / 2.0 - 0.15
-    L = header(X1["name"], X1["descr"], hy + 1.2)
-    for yc in (-p, p):      # zwei 2-polige Klemmen
-        L.append(rect("F.Fab", bx1, yc - 5.85, bx2, yc + 5.85, 0.1))
-    L.append(rect("F.CrtYd", min(bx1, X1["pads"][0][0] - X1["pads"][0][2] / 2) - 0.25, -hy - 0.25,
-                  max(bx2, X1["pads"][1][0] + X1["pads"][1][2] / 2) + 0.25, hy + 0.25, 0.05))
-    for i, num in enumerate(X1["order"]):
-        yc = y0 + i * p
-        L.append('  (fp_line (start %.3f %.3f) (end %.3f %.3f) (stroke (width 0.1) (type solid)) (layer "F.Fab"))' % (bx1 - 1.0, yc, bx1 + 1.5, yc))
-        for dx, dy, w, h in X1["pads"]:
-            L.append(smdpad(num, dx, yc + dy, w, h))
-    save(X1["name"], L)
+    src = SYSLIB + "TerminalBlock_Phoenix.pretty/TerminalBlock_Phoenix_MKDS-1,5-4-5.08_1x04_P5.08mm_Horizontal.kicad_mod"
+    name = "Klemme_4pol_P5.08mm_Horizontal_THT"
+    dst = os.path.join(PRJLIB, name + ".kicad_mod")
+    strip_silk(src, dst, name)          # ohne Bestueckungsdruck: die Klemme schliesst mit der Platinenkante ab
+    t = open(dst, encoding="utf-8").read()
+    assert t.count("(size 2.6 2.6)") == 4 and name in t
+    t = t.replace("(size 2.6 2.6)", "(size 2.4 2.4)").replace("(roundrect_rratio 0.096154)", "(roundrect_rratio 0.104167)")
+    open(dst, "w", encoding="utf-8").write(t)
 make_x1()
 print("Footprints ok")

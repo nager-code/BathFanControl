@@ -6,12 +6,15 @@ for n, m in (("Wanne", wanne), ("Deckel", deckel)):
     print("%-7s geschlossen: %s, Volumen %.1f cm3, Aussenmasse %s mm" % (n, m.is_watertight, m.volume / 1000, np.round(m.extents, 1).tolist()))
 # Bauteile ohne 3D-Modell als Huellquader (x0, y0, z0, x1, y1, z1) in den Koordinaten des 3D-Exports
 HUELLEN = {
-    "X1 Klemmen":    (44.4, 3.15, 1.6, 60.2, 26.85, 7.2),
     "F1 Sicherung":  (59.15, 32.65, 1.6, 69.25, 35.75, 4.7),
     "RV1 Varistor":  (45.95, 29.95, 1.6, 53.95, 36.25, 6.1),
     "C2 X2":         (36.1, 31.45, 1.6, 41.1, 37.15, 3.6),
     "U4 Sensor":     (62.45, 50.25, 1.6, 63.95, 51.75, 2.5),
     "D1 LED":        (35.45, 57.55, 1.6, 37.55, 59.65, 2.6),
+    # Stifte der bedrahteten Teile unter der Platine (ungekuerzt): Netzteil 3,4 mm, Klemme 1,9 mm
+    "PS1 Stifte AC": (41.3, 11.9, -3.4, 42.5, 18.1, 0.0),
+    "PS1 Stifte DC": (12.2, 6.9, -3.4, 13.4, 23.1, 0.0),
+    "X1 Stifte":     (57.3, 6.7, -1.9, 58.7, 23.3, 0.0),
 }
 # Punkte: alle Ecken und Dreiecksmitten der Platine, dazu ein Raster auf den Huellquadern
 pts = [platine.vertices, platine.triangles_center]

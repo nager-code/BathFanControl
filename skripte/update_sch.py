@@ -1,9 +1,11 @@
 # Passt den uebergebenen Schaltplan an die Datenblattpruefung an und erzeugt die Symbolbibliothek.
 import re,sys
 src,dst,symlib=sys.argv[1:4]
-# SMD-Ersatztypen: Referenz -> (Footprint, neuer Wert oder None)
+# Ersatztypen: Referenz -> (Footprint, neuer Wert oder None). Alles SMD ausser Netzklemme X1 und Netzteil PS1 (bedrahtet).
+X1_FP, X1_VAL = "lueftersteuerung:Klemme_4pol_P5.08mm_Horizontal_THT", "Schraubklemme 4-pol 5,08"
+PS1_FP, PS1_VAL = "Converter_ACDC:Converter_ACDC_Hi-Link_HLK-PMxx", "HLK-PM03"
 SMD = {
- "X1":  ("lueftersteuerung:WAGO_2061-602_2x_SMD", "2x WAGO 2061-602"),
+ "X1":  (X1_FP, X1_VAL),
  "F1":  ("lueftersteuerung:Fuse_SMD_10x3mm_Littelfuse443_UMT250", "T1A 250V 0443001.DR"),
  "RV1": ("lueftersteuerung:Varistor_TDK_CU3225", "CU3225K275G2"),
  "C1":  ("Capacitor_SMD:CP_Elec_6.3x5.4", "100u 16V"),
@@ -17,18 +19,23 @@ def sub1(pat,rep,s,flags=0):
     s2,n=re.subn(pat,rep,s,flags=flags)
     assert n>=1,pat
     return s2
-# 1) Netzteil als SMD-Ausfuehrung IRM-02-3.3S: Pins laut Datenblatt 1 = AC/L, 24 = AC/N, 12 = +Vo, 13 = -Vo
+# 1) Netzteil bedrahtet, Hi-Link HLK-PM03: Pins laut Datenblatt 1 und 2 = AC (gleichwertig), 3 = -Vo, 4 = +Vo.
+#    Im Layout liegt Pin 2 oben (L hinter der Sicherung) und Pin 1 unten (N): deshalb AC/L = 2, AC/N = 1.
 i=t.find('(symbol "Luefter:IRM-02-3.3"'); j=t.find('\n    (symbol "Luefter:',i+5)
 blk=t[i:j]
-for name,old,new_ in (("AC/L","1","1"),("AC/N","2","24"),("+Vo","4","12"),("-Vo","3","13")):
+for name,old,new_ in (("AC/L","1","2"),("AC/N","2","1")):
     blk=sub1(r'(\(name "%s"[^\n]*?\(number ")%s(")'%(re.escape(name),old),r'\g<1>%s\2'%new_,blk)
 t=t[:i]+blk+t[j:]
 i=t.find('(property "Reference" "PS1"'); s=t.rfind("(symbol (lib_id",0,i); e=t.find("(instances",s)
-blk=t[s:e]
-for old,new_ in (("2","24"),("4","12"),("3","13")):
-    blk=sub1(r'\(pin "%s" '%old,'(pin "%s" '%new_,blk)
-blk=blk.replace('"Value" "IRM-02-3.3"','"Value" "IRM-02-3.3S"')
+blk=t[s:e].replace('"Value" "IRM-02-3.3"','"Value" "%s"'%PS1_VAL)
 t=t[:s]+blk+t[e:]
+# 1b) Klemme X1: die Pins liegen bei Leitereinfuehrung nach rechts von unten nach oben 1..4.
+#     Gewuenschte Reihenfolge von oben: L, Licht, N, Luefter -> L = 4, L_LICHT = 3, N = 2, L_LUEFTER = 1
+i=t.find('(symbol "Luefter:KLEMME_4"'); j=t.find('\n    (symbol "Luefter:',i+5)
+blk=t[i:j]
+for name,old,new_ in (("L","1","4"),("L_LUEFTER","4","1")):
+    blk=sub1(r'(\(name "%s"[^\n]*?\(number ")%s(")'%(re.escape(name),old),r'\g<1>%s\2'%new_,blk)
+t=t[:i]+blk+t[j:]
 # 2) AQH3223A: Pins 1/4 intern an Kathode, Pin 5 = Gate
 i=t.find('(symbol "Luefter:AQH3223A"'); j=t.find('\n    (symbol "Luefter:',i+5)
 if j<0: j=t.find('\n  )',i)
@@ -50,7 +57,7 @@ FP = {
  "RF_Module:ESP32-C3-MINI-1": "lueftersteuerung:ESP32-C3-MINI-1",
  "Package_DIP:SMDIP-8_W9.53mm": "lueftersteuerung:AQH3223A_SMD-8-N7",
  "Package_DIP:SMDIP-4_W9.53mm": "lueftersteuerung:LTV-814S_SMDIP-4_W9.53mm",
- "Converter_ACDC:Converter_ACDC_MeanWell_IRM-02-xx_THT": "Converter_ACDC:Converter_ACDC_MeanWell_IRM-02-xx_SMD",
+ "Converter_ACDC:Converter_ACDC_MeanWell_IRM-02-xx_THT": PS1_FP,
  "TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-4-5.08_1x04_P5.08mm_Horizontal": SMD["X1"][0],
  "Fuse:Fuse_Littelfuse_395Series": SMD["F1"][0],
  "Varistor:RV_Disc_D7mm_W3.4mm_P5mm": SMD["RV1"][0],

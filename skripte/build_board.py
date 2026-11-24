@@ -1,6 +1,7 @@
-# Erzeugt die Platine der Lueftersteuerung (v1.3, 76 x 63 mm, 2 Lagen, nur oben bestueckt) aus der Netzliste.
+# Erzeugt die Platine der Lueftersteuerung (v1.4, 76 x 63 mm, 2 Lagen, nur von oben bestueckt) aus der Netzliste.
+# SMD-Bauteile, dazu bedrahtet das Netzteil (Hi-Link HLK-PM03) und die Netzklemme (Phoenix MKDS 1,5/4-5,08).
 # Die Platine ist so gezeichnet, wie sie eingebaut von vorn zu sehen ist. Von unten nach oben:
-#   Riegel 62 x 30 mm: links 3,3 V, dann Netzteil und Klemmen (Leitungen von rechts in den Ausschnitt)
+#   Riegel 62,6 x 30 mm: links 3,3 V, dann Netzteil und Klemme (Leiter von rechts in den Ausschnitt)
 #   Netzreihe bis y = 43,2 mm (76 mm breit): Sicherung, Varistor, Snubber, Teilerwiderstaende, Optokoppler-Netzseite
 #   Isolationsschlitz 2 mm (nach rechts offen), die Optokoppler sitzen darueber
 #   Arm 68 x 18 mm: WLAN-Modul links, RGB-LED, Feuchtesensor ganz rechts hinter einem Thermoschlitz
@@ -18,7 +19,9 @@ OX, OY = 100.0, 100.0          # linke obere Platinenecke im KiCad-Koordinatensy
 W, H = 68.0, 63.0               # Arm oben: Breite, und Hoehe der ganzen Platine
 SX = 8.0                        # um so viel ist der Netzteil gegenueber dem Arm nach rechts gerueckt (breiter 3,3-V-Teil links)
 WU = W + SX                     # Breite des unteren Teils (Riegel + Netzreihe)
-BW, BH = 54.0 + SX, 30.0        # Riegel unten (Netzteil, Klemmen)
+XT = 50.0                       # Stiftreihe der Klemme X1 (im Rahmen des Netzteils, ohne SX)
+TP = 5.08                       # Raster der Klemme
+BW, BH = XT + 4.6 + SX, 30.0    # Riegel unten (Netzteil, Klemmen); die Klemme schliesst rechts mit der Platine ab
 SLITZ0, SLITZ1 = 43.2, 45.2     # Isolationsschlitz zwischen Netzreihe und Arm (Hoehe ueber der Unterkante)
 NETZ_OBEN, KS_UNTEN = 41.05, 47.35   # bis hier Netzkupfer / ab hier 3,3-V-Kupfer im Arm
 BRIDGE = 14.0 + SX              # Breite der Verbindung links
@@ -30,8 +33,6 @@ LOCH = [(4.8, 5.5), (46.5, 56.0)]   # Loecher fuer die beiden Schraubdome des Ge
 mm = pcbnew.FromMM
 F, B = pcbnew.F_Cu, pcbnew.B_Cu
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from x1_param import X1, X1X
-X1LABELX = X1X + X1["body"][1] + 0.2
 
 def P(x, y):
     return pcbnew.VECTOR2I(mm(OX + x), mm(OY + y))
@@ -101,14 +102,14 @@ def net(name):
 # ---------------------------------------------------------------- Platzierung
 # ref: (x, y, Drehung, Unterseite) - x/y ist der Footprint-Ursprung in Platinenkoordinaten
 # ref: (x, y nach oben, Pad-Nr., Soll-Lage dieses Pads) - die Drehung wird daraus bestimmt. Alles auf der Oberseite.
-XK = BW - X1X                   # Mitte der Klemmen
+YT = [15.0 + TP * (k_ - 1.5) for k_ in range(4)]   # Pole der Klemme von unten nach oben: Pin 1..4 = Luefter, N, Licht, L
 LED_PAD1 = (37.35, 58.05)           # Soll-Lage von Pad 1 der LED (legt die Drehung fest)
 def N(x, y, n, tg):             # Bauteil der Netzseite: mit dem ganzen Netzteil um SX nach rechts
     return (x + SX, y, n, (tg[0] + SX, tg[1]))
 OBEN = {
     # Riegel
-    "X1":  (XK, 15.0, "2", (XK + 5.25, 6.0)),                # von oben: L, Luefter, Licht, N
-    "PS1": N(18.4, 15.0, "24", (32.37, 1.765)),              # 3,3 V links, AC rechts (L oben, N unten)
+    "X1":  N(XT, YT[0], "4", (XT, YT[3])),                   # bedrahtet; von oben: L, Licht, N, Luefter; Leiter von rechts
+    "PS1": N(33.9, 12.5, "2", (33.9, 17.5)),                 # bedrahtet; 3,3 V links, AC rechts (Pin 2 oben = L, Pin 1 unten = N)
     # Netzreihe
     "F1":  N(56.2, 34.2, "1", (60.875, 34.2)),
     "RV1": N(41.95, 33.1, "2", (45.6, 33.1)),
@@ -304,47 +305,42 @@ def padu(ref, num):
     x_, y_ = pad(ref, num); return (x_ - SX, H - y_)
 def tr(netname, pts, w, layer): track(netname, [U(q[0] + SX, q[1]) for q in pts], w, layer)
 def vi(netname, xy, dia=1.2, drill=0.6): via(netname, U(xy[0] + SX, xy[1]), dia, drill)
-def pol(num):                         # hintere (links) und vordere (rechts) Loetflaeche eines Klemmenpols
-    ps = sorted((pcbnew.ToMM(p_.GetPosition().x) - OX - SX, H - (pcbnew.ToMM(p_.GetPosition().y) - OY)) for p_ in fps["X1"].Pads() if p_.GetNumber() == num)
-    return ps[0], ps[1]
-(NR, NF), (LLR, LLF), (LFR, LFF), (LR_, LF_) = pol("2"), pol("3"), pol("4"), pol("1")
-for n_, a_, b_ in (("/N", NR, NF), ("/L_LICHT", LLR, LLF), ("/L_FAN", LFR, LFF), ("/L", LR_, LF_)):
-    tr(n_, [a_, b_], 1.0, F)          # beide Loetflaechen jedes Pols verbinden
-psn, psl = padu("PS1", "24"), padu("PS1", "1")
-# N: Klemme -> Netzteil AC/N (oben); unten hoch zur Netzreihe -> Varistor, Optokoppler U2, R12
-tr("/N", [NR, (35.0, NR[1]), (33.2, 4.2), (psn[0], 2.7), psn], 1.0, F)
-vi("/N", (41.9, NR[1])); vi("/N", (41.9, 37.6))
-tr("/N", [(41.9, NR[1]), (41.9, 37.6)], 1.0, B)
+PL, PLI, PN, PF = padu("X1", "4"), padu("X1", "3"), padu("X1", "2"), padu("X1", "1")   # L, Licht, N, Luefter
+psn, psl = padu("PS1", "1"), padu("PS1", "2")
+# Die bedrahteten Stifte verbinden beide Lagen. Von der Klemme laufen die Bahnen auf der Unterseite erst nach links
+# und dann nebeneinander nach oben in die Netzreihe: Licht bei x = 45,6, N bei 41,9, Luefter bei 38,3.
+# N: oben direkt zum Netzteil (AC unten), unten hoch zur Netzreihe -> Varistor, Optokoppler U2, R12
+tr("/N", [PN, psn], 1.0, F)
+vi("/N", (41.9, 37.6))
+tr("/N", [PN, (41.9, PN[1]), (41.9, 37.6)], 1.0, B)
 u21, rv2, r122 = padu("U2", "1"), padu("RV1", "2"), padu("R12", "2")
 tr("/N", [(41.9, 37.6), (u21[0], 37.6), u21], 1.0, F)
 tr("/N", [(u21[0], 37.6), (rv2[0], 36.4), rv2], 1.0, F)
 tr("/N", [r122, (u21[0], 37.6)], 0.5, F)
 # Lichteingang: Klemme -> unten hoch -> R1 -> R2 -> Optokoppler U2
-vi("/L_LICHT", (45.7, LLR[1])); vi("/L_LICHT", (59.8, 39.9))
-tr("/L_LICHT", [(45.7, LLR[1]), (45.7, 37.3), (59.8, 37.3), (59.8, 39.9)], 1.0, B)
+vi("/L_LICHT", (59.8, 39.9))
+tr("/L_LICHT", [PLI, (45.6, PLI[1]), (45.6, 37.3), (59.8, 37.3), (59.8, 39.9)], 1.0, B)
 tr("/L_LICHT", [(59.8, 39.9), padu("R1", "1")], 1.0, F)
 tr("/LICHT_A", [padu("R1", "2"), padu("R2", "1")], 1.0, F)
 u22 = padu("U2", "2")
 tr("/LICHT_B", [padu("R2", "2"), (u22[0] + 0.6, 39.9), u22], 0.4, F)
 tr("/LICHT_B", [padu("R12", "1"), (u22[0], 38.4), u22], 0.4, F)
-# L_FAN: Klemme -> unter dem Netzteil nach links, unten hoch -> Snubber-Kondensator -> Triac U3
-vi("/L_FAN", (33.9, LFR[1])); vi("/L_FAN", (33.9, 37.0))
-tr("/L_FAN", [LFR, (33.9, LFR[1])], 1.0, F)
-tr("/L_FAN", [(33.9, LFR[1]), (33.9, 37.0)], 1.0, B)
+# L_FAN: Klemme -> unten nach links und hoch -> Snubber-Kondensator -> Triac U3
+vi("/L_FAN", (33.9, 37.0))
+tr("/L_FAN", [PF, (38.3, PF[1]), (38.3, 33.5), (34.8, 37.0), (33.9, 37.0)], 1.0, B)
 tr("/L_FAN", [(33.9, 37.0), padu("C2", "2")], 1.0, F)
 tr("/L_FAN", [(padu("U3", "8")[0], padu("C2", "2")[1]), padu("U3", "8")], 1.0, F)
-# L: Durchkontaktierung in der vorderen Klemmenflaeche -> unten zur Sicherung
+# L: vom obersten Pol unten zur Sicherung
 f11, f12 = padu("F1", "1"), padu("F1", "2")
-vi("/L", (51.5, LF_[1])); vi("/L", (f11[0], 31.2))
-tr("/L", [(51.5, LF_[1]), (51.5, 29.9), (52.8, 31.2), (f11[0], 31.2)], 1.0, B)
+vi("/L", (f11[0], 31.2))
+tr("/L", [PL, (51.5, PL[1] + 1.5), (51.5, 29.9), (52.8, 31.2), (f11[0], 31.2)], 1.0, B)
 tr("/L", [(f11[0], 31.2), f11], 1.0, F)
-# L_F: Sicherung -> Varistor -> Netzteil AC/L, weiter unter dem Netzteilrand nach links zu R5 und Triac U3
+# L_F: Sicherung -> Varistor -> Netzteil (AC oben), weiter ueber dem Netzteil nach links zu R5 und Triac U3
 rv1 = padu("RV1", "1")
-tr("/L_F", [f12, (50.6, 32.0), (50.6, 28.3), (34.5, 28.3), psl], 1.0, F)
-tr("/L_F", [(rv1[0], 28.3), rv1], 1.0, F)
 r51, u36 = padu("R5", "1"), padu("U3", "6")
-tr("/L_F", [psl, (psl[0], 26.0), (23.9, 26.0)], 1.0, F)
-tr("/L_F", [(23.9, 26.0), (23.9, 30.9), r51], 0.6, F)          # schmal zwischen zwei freien Netzteil-Pads hindurch
+tr("/L_F", [f12, (50.6, 32.0), (50.6, 28.3), (r51[0], 28.3), r51], 1.0, F)
+tr("/L_F", [(34.5, 28.3), (psl[0], 26.7), psl], 1.0, F)
+tr("/L_F", [(rv1[0], 28.3), rv1], 1.0, F)
 tr("/L_F", [r51, (24.2, 32.6), (24.2, 38.4), u36], 1.0, F)
 # Snubber: R5 -> C2
 tr("/SNUB", [padu("R5", "2"), padu("C2", "1")], 1.0, F)
@@ -381,12 +377,12 @@ for fp in board.GetFootprints():
         if f_.GetName() not in ("Reference", "Value"):
             f_.SetVisible(False)
 
-# Klemmenbelegung: auf der Oberseite verdeckt das Klemmengehaeuse alles, deshalb auf der Unterseite
-for lab, num in (("L", "1"), ("Luefter", "4"), ("Licht", "3"), ("N", "2")):
-    text(lab, BW - 4.6, pad("X1", num)[1], pcbnew.B_SilkS, 1.0, 0, True)
+# Klemmenbelegung: auf der Oberseite verdeckt das Klemmengehaeuse alles, deshalb auf der Unterseite neben den Stiften
+for lab, num in (("L", "4"), ("Licht", "3"), ("N", "2"), ("Luefter", "1")):
+    text(lab, XT + SX - 4.6, pad("X1", num)[1], pcbnew.B_SilkS, 1.0, 0, True)
 text("230 V~", 12.0 + SX, U(0, 15.0)[1], pcbnew.F_SilkS, 1.5, 0, False, 0.25)
 text("230 V~", 30.0 + SX, U(0, 15.0)[1], pcbnew.B_SilkS, 1.2, 0, True, 0.2)
-text("Lueftersteuerung Bad v1.3", 40.0, U(0, 50.3)[1], pcbnew.B_SilkS, 0.8, 0, True, 0.12)
+text("Lueftersteuerung Bad v1.4", 40.0, U(0, 50.3)[1], pcbnew.B_SilkS, 0.8, 0, True, 0.12)
 text("Sensor", W - 4.5, 16.0, pcbnew.F_SilkS, 0.8, 0, False, 0.12)
 
 pcbnew.SaveBoard(PCB, board)

@@ -4,6 +4,7 @@
 // kommen von rechts in den Anschlussraum (Ausschnitt der Platine unten rechts), der Feuchtesensor sitzt oben
 // rechts hinter der abgeschraegten Ecke zum Luefter-Einlass. Alle Bauteile sitzen auf der Platinenoberseite.
 // Der untere Teil (Netzteil, Klemmen, Anschlussraum) ist 8 mm breiter als der Arm mit dem Sensor.
+// Netzteil und Klemme sind bedrahtet: unter der Platine bleiben 4 mm Platz fuer ihre Loetstifte.
 //
 // Koordinaten wie im 3D-Export der Platine und wie in der Einbaulage von vorn gesehen:
 // X nach rechts (linke Kastenwand bei X = 0), Y nach oben (Kastenboden bei Y = 0), Z zum Betrachter
@@ -19,12 +20,13 @@ mit_platine = true;      // Platine in den Ansichten einblenden
 /* [Platine v1.3] */
 pw = 68;  ph = 63;  pd = 1.6;    // Breite des Arms oben, Hoehe, Dicke
 pu = 76;                         // Breite des unteren Teils (bis zum Isolationsschlitz)
-bw = 62;  bh = 30;               // Riegel unten (Netzteil, Klemmen); rechts daneben der Ausschnitt fuer die Leitungen
+bw = 62.6; bh = 30;              // Riegel unten (Netzteil, Klemmen); rechts daneben der Ausschnitt fuer die Leitungen
 iso_y0 = 43.2; iso_y1 = 45.2;    // Isolationsschlitz zwischen Netzteil (unten) und 3,3-V-Teil (oben)
 steg = 22;                       // Breite der Verbindung links
 fase = 6;                        // abgeschraegte Ecke oben rechts
 schlitz_x = pw - 9.5;            // Thermoschlitz vor der Sensorinsel
-h_oben  = 16.1;                  // hoechstes Bauteil oben (Netzteil)
+h_oben  = 15.3;                  // hoechstes Bauteil oben (Netzteil 15,1 mm)
+h_unten = 3.4;                   // Stifte des bedrahteten Netzteils unter der Platine (Klemme 1,9 mm)
 loch    = [[4.8, 5.5], [46.5, 56.0]];   // Bohrungen 6,6 mm in der Platine fuer die Schraubdome
 // Abschnitte des Isolationsschlitzes, in denen keine Optokoppler sitzen: dort steht ein Steg im Schlitz
 iso_frei = [[22.6, 28.2], [40.4, 50.4], [58.0, 68.4]];
@@ -35,18 +37,18 @@ spiel   = 0.3;           // Luft rund um die Platine
 wand    = 2.0;
 boden   = 2.0;
 decke   = 2.0;
-luft_u  = 1.0;           // Luft unter der Platine (unten sitzen keine Bauteile)
+luft_u  = 0.6;           // Luft unter den Stiften der bedrahteten Bauteile
 luft_o  = 0.8;           // Luft ueber dem Netzteil
 auflage = 1.2;           // Breite der Auflageleisten
-z_teil  = pd + 2.7;      // Trennebene = Hoehe der Leitereinfuehrung der Klemmen
+z_teil  = pd + 3.6;      // Trennebene = Mitte der Leitereinfuehrung der Klemme (aus dem 3D-Modell der MKDS 1,5 gemessen)
 falz    = 1.5;           // Hoehe der Ueberlappung zwischen Wanne und Deckel
 fuge    = 0.2;
 zw      = 1.6;           // Staerke der Zwischenwaende
 
 /* [Leitungen: von rechts in den Anschlussraum] */
-ader_y   = [24, 18, 12, 6];                // Klemmen von oben nach unten
-ader_txt = ["L", "Lüfter", "Licht", "N"];
-ader_d   = 4.5;
+ader_y   = [22.62, 17.54, 12.46, 7.38];    // Pole der Klemme von oben nach unten (Raster 5,08 mm)
+ader_txt = ["L", "Licht", "N", "Lüfter"];
+ader_d   = 4.0;
 
 /* [Verschraubung: zwei Dome der Wanne gehen durch die Bohrungen der Platine] */
 dom_r     = 3.0;         // Dom in der Wanne
@@ -70,7 +72,7 @@ xa0 = -t; xa1 = pw + t; ya0 = -t; ya1 = ph + t;
 xi0 = -spiel; xi1 = pw + spiel; yi0 = -spiel; yi1 = ph + spiel;
 xu1 = pu + spiel; xb1 = pu + t;          // unterer Teil: Innen- und Aussenkante rechts
 ys  = iso_y0 + t;                        // Oberkante der Stufe rechts (Aussenwand ueber dem unteren Teil)
-zi0 = -luft_u; zi1 = pd + h_oben + luft_o;
+zi0 = -h_unten - luft_u; zi1 = pd + h_oben + luft_o;
 za0 = zi0 - boden; za1 = zi1 + decke;
 z_falz = z_teil - falz;
 fa  = fase + t * (2 - sqrt(2));          // Fase der Aussenkontur, parallel zur Platinenfase
@@ -186,7 +188,6 @@ module platine() {
     if (mit_platine) {
         color([0.1, 0.45, 0.2]) import("platine_bestueckt.stl");
         // Bauteile ohne 3D-Modell als Quader in den Datenblattmassen
-        color([0.6, 0.62, 0.65]) for (y = [3.15, 15.15]) quader(45.0, y, pd, 60.2, y + 11.7, pd + 5.6);   // 2 x WAGO 2061-602
         color([0.9, 0.88, 0.8]) quader(59.15, 32.65, pd, 69.25, 35.75, pd + 3.1);                        // Sicherung
         color([0.1, 0.25, 0.5]) quader(45.95, 29.95, pd, 53.95, 36.25, pd + 4.5);                        // Varistor
         color([0.55, 0.4, 0.25]) quader(36.1, 31.45, pd, 41.1, 37.15, pd + 2.0);                         // X2-Kondensator

@@ -7,7 +7,7 @@ Comment,Designator,Footprint,LCSC Part #,Manufacturer Part,Quantity,Note
 1u 50V X5R 0603,C6,C_0603_1608Metric,C15849,CL10A105KB8NNNC,1,JLCPCB Basic
 RGB-LED 2020 gemeinsame Anode,D1,LED_RGB_NationStar_FM-B2020,C42421005,Foshan NationStar FM-B2020RGBA-HG,1,"JLCPCB Extended; Drehlage in der JLC-Vorschau pruefen (Eckmarke = Pin 1 = rot, unten rechts)"
 Sicherung T1A 250VAC SMD 10x3,F1,Fuse_SMD_10x3mm_Littelfuse443_UMT250,C95352,Littelfuse 0443001.DR,1,JLCPCB Extended; alternativ Schurter UMT 250 1A T (3403.0166.11)
-"Netzteil 230V -> 3,3V 0,6A SMD",PS1,Converter_ACDC_MeanWell_IRM-02-xx_SMD,C6062464,Mean Well IRM-02-3.3S,1,"JLCPCB Extended, am 23.11.2026 Bestand 0: ueber die Teilebestellung von JLCPCB vorbestellen oder beistellen. Kein anderes SMD-Netzmodul bei JLCPCB am Lager"
+"Netzteil 230V -> 3,3V 1A, bedrahtet",PS1,Converter_ACDC_Hi-Link_HLK-PMxx,C209904,Hi-Link HLK-PM03,1,"JLCPCB Extended, bedrahtet (Wellenloeten); Ausweichtyp mit fast gleichem Stiftbild: YLPTEC HAW3-220S03T2 (C19724490), vor dem Tausch Masse pruefen"
 100k 1% 1206 200V,"R1,R2",R_1206_3216Metric,C17900,1206W4F1003T5E,2,JLCPCB Basic
 100R 1% 0603,R3,R_0603_1608Metric,C22775,0603WAF1000T5E,1,JLCPCB Basic
 220k 1% 0603,R4,R_0603_1608Metric,C22961,0603WAF2203T5E,1,JLCPCB Basic
@@ -21,4 +21,4 @@ ESP32-C3-MINI-1-H4X,U1,ESP32-C3-MINI-1,C41349510,Espressif ESP32-C3-MINI-1-H4X,1
 LTV-814S AC-Optokoppler,U2,LTV-814S_SMDIP-4_W9.53mm,C125118,Lite-On LTV-814S-TA1,1,JLCPCB Extended
 "AQH3223A Photo-Triac 1,2A",U3,AQH3223A_SMD-8-N7,C719698,Panasonic AQH3223A,1,"JLCPCB Extended, am 23.11.2026 nur 7 Stueck am Lager. Ausweichtyp gleicher Reihe mit Nullspannungsschalter: AQH3213A (C91557, 91 Stueck), vor dem Tausch Pinbelegung im Datenblatt pruefen"
 SHT40 Feuchte/Temperatur mit Membran,U4,Sensirion_DFN-4_1.5x1.5mm_P0.8mm_SHT4x_NoCentralPad,C7461846,Sensirion SHT40-AD1F-R2,1,JLCPCB Extended; mit Polyimid-Membran (Endung F). Nicht die Fremdmarke C54823945 nehmen. Nicht ueberlackieren
-WAGO 2061-602/998-404 SMD-Klemme 2-polig (2 Stueck),"X1A,X1B",WAGO_2061-602_2x_SMD,C2765058,2061-602/998-404,2,"JLCPCB Extended; 2 Stueck nebeneinander, in der Bestueckungsdatei als X1A und X1B"
+"Schraubklemme 4-polig 5,08 mm, bedrahtet",X1,Klemme_4pol_P5.08mm_Horizontal_THT,C5443561,"Phoenix Contact MKDS 1,5/4-5,08 (1715747)",1,"JLCPCB Extended, bedrahtet (Wellenloeten); 250 V / 17,5 A, 0,14-1,5 mm2"
