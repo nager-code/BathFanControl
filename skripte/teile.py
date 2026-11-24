@@ -31,7 +31,7 @@ TEILE = {
     "R13": ("680R 1% 0603", "0603WAF6800T5E", "C23228", "JLCPCB Basic; LED rot"),
     "R14": ("220R 1% 0603", "0603WAF2200T5E", "C22962", "JLCPCB Basic; LED gruen"),
     "R15": ("150R 1% 0603", "0603WAF1500T5E", "C22808", "JLCPCB Basic; LED blau"),
-    "J2":  ("USB-C-Buchse stehend, 16-polig, 6,4 mm hoch", "HRO TYPE-C-31-D-06", "C2689964", "JLCPCB Extended (SMT); gleiches Loetbild und rund 52.000 am Lager: SHOU HAN TYPE-C 16P LTH6.8 (C5187468)"),
+    "J2":  ("USB-C-Buchse stehend, 16-polig, 7,5 mm hoch, Zapfen 2,3 mm", "GCT USB4145-03-0230-C", "C5291559", "JLCPCB Extended; die vier Gehaeusezapfen gehen durch die Platine und werden unten verloetet. Gleiches Loetbild mit kuerzeren Zapfen: USB4145-03-0170-C (C5181332), -0070-C (C5815189)"),
     "U5":  ("Spannungsregler 3,3 V 500 mA SOT-23-5", "Richtek RT9013-33GB", "C47773", "JLCPCB Extended; versorgt die Platine beim Programmieren aus USB"),
     "D2":  ("Schottky-Diode 1 A 40 V SOD-123", "B5819W", "C8598", "JLCPCB Basic; Rueckstromschutz zur USB-Buchse"),
     "C8":  ("1u 50V X5R 0603", "CL10A105KB8NNNC", "C15849", "JLCPCB Basic"),

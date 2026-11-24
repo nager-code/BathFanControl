@@ -1,4 +1,4 @@
-// Gehaeuse fuer die Lueftersteuerung Bad, Platine v1.6 (68 x 72,5 mm, von oben bestueckt) - Wanne und Deckel fuer den 3D-Druck
+// Gehaeuse fuer die Lueftersteuerung Bad, Platine v1.7 (68 x 72,5 mm, von oben bestueckt) - Wanne und Deckel fuer den 3D-Druck
 //
 // Einbau unten links im Luefterkasten, vor dem Lueftergehaeuse: Netzteil und Klemme unten, die Leitungen
 // kommen von rechts in den Anschlussraum (Ausschnitt der Platine unten rechts), der Feuchtesensor sitzt oben
@@ -17,7 +17,7 @@
 teil = "zusammen";
 mit_platine = true;      // Platine in den Ansichten einblenden
 
-/* [Platine v1.6] */
+/* [Platine v1.7] */
 pw = 68;  ph = 68;  pd = 1.6;    // Breite, Oberkante ueber Y = 0, Dicke
 yu = -4.5;                       // Unterkante der Platine (Streifen fuer den Schraubdom unter dem Netzteil)
 pu = 68;                         // Breite des unteren Teils (gleich dem Arm, keine Stufe mehr)
@@ -214,7 +214,7 @@ module platine() {
         color([0.55, 0.4, 0.25]) quader(38.3, 17.65, pd, 43.3, 23.35, pd + 2.0);                         // X2-Kondensator
         color([0.15, 0.15, 0.15]) quader(25.95, 28.4, pd, 33.05, 35.0, pd + 2.3);                        // Triac (DPAK)
         color([0.95, 0.95, 0.95]) quader(pw - 5.55, ph - 12.75, pd, pw - 4.05, ph - 11.25, pd + 0.9);    // Feuchtesensor
-        color([0.75, 0.75, 0.78]) quader(39.53, 62.42, pd, 48.47, 65.58, pd + 6.4);                      // USB-C-Buchse, stehend
+        color([0.75, 0.75, 0.78]) quader(39.53, 62.42, pd, 48.47, 65.58, pd + 7.46);                     // USB-C-Buchse, stehend
     }
 }
 

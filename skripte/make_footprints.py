@@ -98,26 +98,27 @@ def make_dpak():
     save(name, L)
 make_dpak()
 
-# Stehende USB-C-Buchse HRO TYPE-C-31-D-06 (16-polig, 8,94 x 3,16 x 6,4 mm); gleiches Loetbild: SHOU HAN TYPE-C 16P LTH6.8.
-# Loetbild nach HRO-Datenblatt (Recommended PCB layout, top view): 2 x 8 Flaechen 0,30 x 0,87 mm, Aussenkante 1,30 mm
-# von der Mitte (Flaechenmitte +-0,865), x = +-0,25 / 0,75 / 1,25 / 2,75; vier Gehaeusezapfen bei (+-2,40 / +-2,15)
-# in metallisierten Langloechern 0,85 x 0,60 (Auge 1,35 x 1,10); zwei Fuehrungsloecher ohne Kupfer bei x = +-3,75:
-# links rund 0,52, rechts Langloch 0,72 x 0,52. Reihe A liegt oben (y negativ), A1 links.
+# Stehende USB-C-Buchse GCT USB4145-03-0230-C (16-polig, 8,94 x 3,16 x 7,46 mm, Gehaeusezapfen 2,3 mm lang: sie gehen
+# durch die 1,6-mm-Platine und werden unten verloetet). Loetbild nach GCT-Datenblatt USB4145, Blatt 2 (Recommended PCB
+# Layout): 2 x 8 Flaechen 0,30 x 1,15 mm im Raster 0,5 mm, Innenkanten der Reihen 1,82 mm auseinander (Mitten +-1,485),
+# x = +-0,25 / 0,75 / 1,25 / 2,75; vier Zapfen bei (+-4,00 / +-1,43) in metallisierten Langloechern 1,10 x 0,60
+# (Auge 1,60 x 1,10); zwei Fuehrungsloecher ohne Kupfer bei x = +-4,00: links rund 0,71, rechts Langloch 1,01 x 0,71.
+# Reihe A liegt oben (y negativ), A1 links.
 def make_usb():
-    name = "USB_C_HRO_TYPE-C-31-D-06_stehend"
-    L = header(name, "USB-C-Buchse stehend, 16-polig, HRO TYPE-C-31-D-06 / SHOU HAN TYPE-C 16P LTH6.8, Hoehe 6,4 mm", 4.0)
+    name = "USB_C_GCT_USB4145_stehend"
+    L = header(name, "USB-C-Buchse stehend, 16-polig, GCT USB4145-03-0230-C, Hoehe 7,46 mm, Zapfen 2,3 mm", 3.4)
     L.append(rect("F.Fab", -4.47, -1.58, 4.47, 1.58, 0.1))
-    L.append(rect("F.CrtYd", -4.9, -3.0, 4.9, 3.0, 0.05))
-    L.append('  (fp_circle (center -4.3 -2.4) (end -4.2 -2.4) (stroke (width 0.2) (type solid)) (fill solid) (layer "F.SilkS"))')      # A1
+    L.append(rect("F.CrtYd", -5.05, -2.35, 5.05, 2.35, 0.05))
+    L.append('  (fp_circle (center -3.3 -2.75) (end -3.2 -2.75) (stroke (width 0.2) (type solid)) (fill solid) (layer "F.SilkS"))')    # A1
     XS = (-2.75, -1.25, -0.75, -0.25, 0.25, 0.75, 1.25, 2.75)
     for x, a, b_ in zip(XS, ("A1", "A4", "A5", "A6", "A7", "A8", "A9", "A12"), ("B12", "B9", "B8", "B7", "B6", "B5", "B4", "B1")):
-        L.append('  (pad "%s" smd rect (at %.3f -0.865) (size 0.3 0.87) (layers "F.Cu" "F.Paste" "F.Mask"))' % (a, x))
-        L.append('  (pad "%s" smd rect (at %.3f 0.865) (size 0.3 0.87) (layers "F.Cu" "F.Paste" "F.Mask"))' % (b_, x))
-    for x in (-2.4, 2.4):
-        for y in (-2.15, 2.15):
-            L.append('  (pad "SH" thru_hole oval (at %.2f %.2f) (size 1.35 1.1) (drill oval 0.85 0.6) (layers "*.Cu" "*.Mask"))' % (x, y))
-    L.append('  (pad "" np_thru_hole circle (at -3.75 0) (size 0.52 0.52) (drill 0.52) (layers "*.Cu" "*.Mask"))')
-    L.append('  (pad "" np_thru_hole oval (at 3.75 0) (size 0.72 0.52) (drill oval 0.72 0.52) (layers "*.Cu" "*.Mask"))')
+        L.append('  (pad "%s" smd rect (at %.3f -1.485) (size 0.3 1.15) (layers "F.Cu" "F.Paste" "F.Mask"))' % (a, x))
+        L.append('  (pad "%s" smd rect (at %.3f 1.485) (size 0.3 1.15) (layers "F.Cu" "F.Paste" "F.Mask"))' % (b_, x))
+    for x in (-4.0, 4.0):
+        for y in (-1.43, 1.43):
+            L.append('  (pad "SH" thru_hole oval (at %.2f %.2f) (size 1.6 1.1) (drill oval 1.1 0.6) (layers "*.Cu" "*.Mask"))' % (x, y))
+    L.append('  (pad "" np_thru_hole circle (at -4 0) (size 0.71 0.71) (drill 0.71) (layers "*.Cu" "*.Mask"))')
+    L.append('  (pad "" np_thru_hole oval (at 4 0) (size 1.01 0.71) (drill oval 1.01 0.71) (layers "*.Cu" "*.Mask"))')
     save(name, L)
 make_usb()
 

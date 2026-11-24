@@ -25,7 +25,7 @@ def dseg(px, py, x1, y1, x2, y2):
     u = 0 if l2 == 0 else max(0, min(1, ((px - x1) * dx + (py - y1) * dy) / l2))
     return math.hypot(px - x1 - u * dx, py - y1 - u * dy)
 def ok(x, y):
-    # 3,3-V-Bereiche der Platine v1.6 (y hier wie in KiCad nach unten: Oberkante 0, y = 0 des Riegels bei HH, Unterkante HH + YB)
+    # 3,3-V-Bereiche der Platine (y hier wie in KiCad nach unten: Oberkante 0, y = 0 des Riegels bei HH, Unterkante HH + YB)
     HH, YB = 68.0, 4.5
     arm = 0.8 <= x <= 57.2 and 0.8 <= y <= HH - 48.2
     links = 0.8 <= x <= 13.0 and y <= HH + YB - 0.8

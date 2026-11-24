@@ -1,10 +1,10 @@
-# Bestellpaket Lüftersteuerung Bad v1.6
+# Bestellpaket Lüftersteuerung Bad v1.7
 
 ## Leiterplatte
 - `gerber_lueftersteuerung.zip` hochladen (Inhalt liegt auch entpackt in `gerber/`)
 - 2 Lagen, Umriss 68 x 72,5 mm (keine Rechteckform: unten rechts ein Ausschnitt 13,4 x 34,5 mm, darüber ein nach rechts offener Schlitz, oben rechts eine abgeschrägte Ecke), FR4 1,6 mm, 35 µm Kupfer
 - Kleinste Leiterbahn 0,2 mm, kleinster Abstand 0,2 mm, kleinste Bohrung 0,3 mm (Durchkontaktierung 0,6 mm)
-- Bohrungen für bedrahtete Bauteile: 4 x 1,3 mm (Klemme) und 4 x 1,0 mm (Netzteil), durchkontaktiert; an der USB-Buchse vier metallisierte Langlöcher 0,85 x 0,60 mm und zwei Führungslöcher ohne Kupfer (rund 0,52 mm, Langloch 0,72 x 0,52 mm)
+- Bohrungen für bedrahtete Bauteile: 4 x 1,3 mm (Klemme) und 4 x 1,0 mm (Netzteil), durchkontaktiert; an der USB-Buchse vier metallisierte Langlöcher 1,10 x 0,60 mm und zwei Führungslöcher ohne Kupfer (rund 0,71 mm, Langloch 1,01 x 0,71 mm)
 - Bestückungsdruck auf beiden Seiten, kleinste Schrift 1,0 mm hoch mit 0,15 mm Strichstärke
 - Fräsungen: Isolationsschlitz 2 x 20 mm unter dem Netzteil und zwei Bohrungen 6,6 mm (ohne Kupfer) innerhalb der Kontur; der 2 mm breite Isolationsschlitz unter den Optokopplern und der Thermoschlitz 1 mm sind Teil der Außenkontur
 
@@ -25,4 +25,4 @@
 - U4 ist der Sensirion SHT40-AD1F-R2 mit Membran (C7461846). Nicht mit C54823945 verwechseln: das ist eine Fremdmarke, deren Datenblatt keine Membran nennt.
 - Lüfterstufe: Optotriac U3 (Lite-On MOC3052S-TA1, C115471) zündet den Triac Q1 (ST ACST410-8BTR, C221462). Q1 liegt mit der Kühlfahne nach links, Pin 1 (COM) unten; U3 sitzt über dem Isolationsschlitz mit den Pins 1 bis 3 oben (3,3-V-Seite).
 - C1 ist ein Hybrid-Polymer-Elko Panasonic EEHZK1E101UP (C454668), für feuchte Wärme spezifiziert. Beim Lackieren der Platine halogenfreien Lack nehmen und die Dichtung am Boden des Kondensators nicht ganz verschließen.
-- J2 ist eine stehende USB-C-Buchse HRO TYPE-C-31-D-06 (C2689964), Reihe A zeigt zur Oberkante der Platine, A1 liegt links. Gleiches Lötbild und größerer Bestand: SHOU HAN TYPE-C 16P LTH6.8 (C5187468). Lötflächen im Raster 0,5 mm: Bestückungsvorschau und Lötstellen an dieser Buchse genau ansehen.
+- J2 ist eine stehende USB-C-Buchse GCT USB4145-03-0230-C (C5291559), Reihe A zeigt zur Oberkante der Platine, A1 liegt links. Ihre vier Gehäusezapfen (2,3 mm) gehen durch die Platine und sollen auf der Unterseite verlötet werden: bei der Bestellung als Hinweis angeben. Lötflächen im Raster 0,5 mm: Bestückungsvorschau und Lötstellen an dieser Buchse genau ansehen. Gleiches Lötbild mit kürzeren Zapfen: USB4145-03-0170-C (C5181332) und -0070-C (C5815189).

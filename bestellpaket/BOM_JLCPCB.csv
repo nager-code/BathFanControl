@@ -8,7 +8,7 @@ Comment,Designator,Footprint,LCSC Part #,Manufacturer Part,Quantity,Note
 RGB-LED 2020 gemeinsame Anode,D1,LED_RGB_NationStar_FM-B2020,C42421005,Foshan NationStar FM-B2020RGBA-HG,1,"JLCPCB Extended; Drehlage in der JLC-Vorschau pruefen (Eckmarke = Pin 1 = rot, unten rechts)"
 Schottky-Diode 1 A 40 V SOD-123,D2,D_SOD-123,C8598,B5819W,1,JLCPCB Basic; Rueckstromschutz zur USB-Buchse
 Sicherung T1A 250VAC SMD 10x3,F1,Fuse_SMD_10x3mm_Littelfuse443_UMT250,C95352,Littelfuse 0443001.DR,1,JLCPCB Extended; alternativ Schurter UMT 250 1A T (3403.0166.11)
-"USB-C-Buchse stehend, 16-polig, 6,4 mm hoch",J2,USB_C_HRO_TYPE-C-31-D-06_stehend,C2689964,HRO TYPE-C-31-D-06,1,JLCPCB Extended (SMT); gleiches Loetbild und rund 52.000 am Lager: SHOU HAN TYPE-C 16P LTH6.8 (C5187468)
+"USB-C-Buchse stehend, 16-polig, 7,5 mm hoch, Zapfen 2,3 mm",J2,USB_C_GCT_USB4145_stehend,C5291559,GCT USB4145-03-0230-C,1,"JLCPCB Extended; die vier Gehaeusezapfen gehen durch die Platine und werden unten verloetet. Gleiches Loetbild mit kuerzeren Zapfen: USB4145-03-0170-C (C5181332), -0070-C (C5815189)"
 "Netzteil 230V -> 3,3V 1A, bedrahtet",PS1,Converter_ACDC_Hi-Link_HLK-PMxx,C209904,Hi-Link HLK-PM03,1,"JLCPCB Extended, bedrahtet (Wellenloeten); Ausweichtyp mit fast gleichem Stiftbild: YLPTEC HAW3-220S03T2 (C19724490), vor dem Tausch Masse pruefen"
 "ACST410-8B Triac 800V 4A DPAK, ueberspannungsfest",Q1,DPAK_ST_ACST4,C221462,STMicroelectronics ACST410-8BTR,1,JLCPCB Extended; IGT max. 10 mA
 100k 1% 1206 200V,"R1,R2",R_1206_3216Metric,C17900,1206W4F1003T5E,2,JLCPCB Basic

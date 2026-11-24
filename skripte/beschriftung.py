@@ -13,7 +13,7 @@ def text(s, x, y, unten=False, size=1.0, rot=0):
     NEU.append((s, x, y, unten, size, rot))
 # ---- Oberseite (x, Hoehe y ueber der Unterkante des Riegels)
 text("X1 von oben: L  Licht  N  Lüfter", 31.0, -1.5)
-text("Lüftersteuerung Bad v1.6", 31.0, -3.3)
+text("Lüftersteuerung Bad v1.7", 31.0, -3.3)
 text("BOOT", 21.5, 50.3); text("RST", 25.6, 50.3)
 text("USB", 37.9, 64.0, rot=90)
 text("LED", 35.3, 61.2)

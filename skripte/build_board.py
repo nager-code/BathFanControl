@@ -1,4 +1,4 @@
-# Erzeugt die Platine der Lueftersteuerung (v1.6, 68 x 72,5 mm, 2 Lagen, nur von oben bestueckt) aus der Netzliste.
+# Erzeugt die Platine der Lueftersteuerung (v1.7, 68 x 72,5 mm, 2 Lagen, nur von oben bestueckt) aus der Netzliste.
 # SMD-Bauteile, dazu bedrahtet das Netzteil (Hi-Link HLK-PM03) und die Netzklemme (Phoenix MKDS 1,5/4-5,08).
 # Die Platine ist so gezeichnet, wie sie eingebaut von vorn zu sehen ist. Hoehen y zaehlen ab der Unterkante des
 # Netzteil-Riegels (y = 0); darunter haengt ein 4,5 mm hoher Streifen fuer den Schraubdom. Von unten nach oben:
@@ -107,7 +107,7 @@ def net(name):
 # ref: (x, y nach oben, Pad-Nr., Soll-Lage dieses Pads) - die Drehung wird daraus bestimmt. Alles auf der Oberseite.
 YT = [15.0 + TP * (k_ - 1.5) for k_ in range(4)]   # Pole der Klemme von unten nach oben: Pin 1..4 = Luefter, N, Licht, L
 LED_PAD1 = (36.15, 63.05)           # Soll-Lage von Pad 1 der LED (legt die Drehung fest)
-USB_POS = (44.0, 64.0, "A12", (46.75, 64.865))   # stehende USB-C-Buchse (wird mit dem Footprint festgelegt)
+USB_POS = (44.0, 64.0, "A12", (46.75, 65.485))   # stehende USB-C-Buchse (wird mit dem Footprint festgelegt)
 def N(x, y, n, tg):             # Bauteil der Netzseite: mit dem ganzen Netzteil um SX nach rechts
     return (x + SX, y, n, (tg[0] + SX, tg[1]))
 OBEN = {
@@ -411,7 +411,7 @@ for lab, num in (("L", "4"), ("Licht", "3"), ("N", "2"), ("Lüfter", "1")):
     text(lab, XT + SX - 4.6, pad("X1", num)[1], pcbnew.B_SilkS, 1.0, 0, True)
 text("230 V~", 38.0 + SX, U(0, 1.6)[1], pcbnew.F_SilkS, 1.3, 0, False, 0.2)
 text("230 V~", 31.0 + SX, U(0, -2.3)[1], pcbnew.B_SilkS, 1.2, 0, True, 0.2)
-text("Lüftersteuerung Bad v1.6", 40.0, U(0, 50.3)[1], pcbnew.B_SilkS, 1.0, 0, True, 0.15)
+text("Lüftersteuerung Bad v1.7", 40.0, U(0, 50.3)[1], pcbnew.B_SilkS, 1.0, 0, True, 0.15)
 text("Sensor", W - 4.5, 16.0, pcbnew.F_SilkS, 1.0, 0, False, 0.15)
 
 pcbnew.SaveBoard(PCB, board)

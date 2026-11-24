@@ -6232,7 +6232,7 @@
 				)
 			)
 		)
-		(property "Footprint" "lueftersteuerung:USB_C_HRO_TYPE-C-31-D-06_stehend"
+		(property "Footprint" "lueftersteuerung:USB_C_GCT_USB4145_stehend"
 			(at 50.8 276.86 0)
 			(hide yes)
 			(show_name no)

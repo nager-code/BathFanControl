@@ -1,4 +1,4 @@
-# Gehäuse (Entwurf v7 für Platine v1.6, noch nicht gedruckt)
+# Gehäuse (Entwurf v7 für Platine v1.7, noch nicht gedruckt)
 
 Zweiteiliges Gehäuse aus Wanne und Deckel für den Einbau unten links im Lüfterkasten, vor dem Lüftergehäuse. Netzteil und Klemmen liegen unten, die Leitungen kommen von rechts, der Feuchtesensor sitzt oben rechts hinter der abgeschrägten Ecke zum Lüfter-Einlass. Parametrisches OpenSCAD-Modell, druckbar ohne Stützmaterial.
 
@@ -24,7 +24,7 @@ Zweiteiliges Gehäuse aus Wanne und Deckel für den Einbau unten links im Lüfte
 - **Abschottung der Kammer:** links vom Thermoschlitz reicht eine Wand des Deckels bis 0,1 mm an die Platine, darunter steht eine Wand der Wanne bis an die Platinenunterseite; nach unten schließt der Steg im Isolationsschlitz ab. Über den schmalen Platinensteg oben laufen die vier Leiterbahnen zum Sensor unter der Wand hindurch. Wer den Restspalt schließen will, legt dort beim Zusammenbau eine dünne Raupe neutral vernetzendes Silikon auf die Platine.
 - **Anschlussraum unten rechts**, 11,9 mm tief, im Ausschnitt der Platine vor der Schraubklemme. Die vier Adern kommen gerade von rechts durch je eine Öffnung (3,4 mm, Raster 5,08 mm) in der Außenwand und durch eine zweite in der Innenwand direkt vor der Klemme; beide liegen in der Trennfuge und umfassen die Adern beim Schließen. Der Anschlussraum ist damit eine eigene Kammer vor dem Geräteraum. Die Schrauben der Klemme sind nur bei abgenommenem Deckel erreichbar. Klemmenbelegung im Deckel eingeprägt, von oben nach unten: L, Licht, N, Lüfter.
 - **Trennung Netz / 3,3 V:** im 2 mm breiten Isolationsschlitz der Platine steht ein Steg der Wanne, den eine Rippe des Deckels bis zur Decke fortsetzt – überall außer unter den beiden Optokopplern.
-- **USB-C-Buchse:** sie steht 6,4 mm hoch auf der Platine und liegt unter dem geschlossenen Deckel. Zum Programmieren den Deckel abnehmen (Netzspannung vorher abschalten); eine Öffnung im Gehäuse gibt es dafür nicht.
+- **USB-C-Buchse:** sie steht 7,5 mm hoch auf der Platine und liegt unter dem geschlossenen Deckel. Zum Programmieren den Deckel abnehmen (Netzspannung vorher abschalten); eine Öffnung im Gehäuse gibt es dafür nicht.
 - **Lichtschacht der RGB-LED:** ein Rohr im Deckel (innen 3,6 mm) reicht bis 2 mm über die LED. In der Deckelfläche bleibt ein 0,6 mm dünnes Fenster stehen; das Licht ist nur mit hellem oder transparentem Filament zu sehen. Mit `led_fenster = 0` wird daraus ein offenes Loch.
 - **Verschluss:** zwei Kunststoffschrauben 3 x 10 mm von vorn in die Dome (Kernloch 2,5 mm, 10 mm tief), dazu rundum ein Falz mit 1,5 mm Überlappung. Öffnen nur mit Werkzeug. Beide Schrauben sitzen im 3,3-V-Bereich, mehr als 10 mm vom Netzkupfer entfernt.
 

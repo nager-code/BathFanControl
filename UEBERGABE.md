@@ -1,4 +1,4 @@
-# Übergabe: Lüftersteuerung Bad (KN2 UP) – Stand 24.11.2026, Platine v1.6 (von oben bestückt, SMD mit bedrahtetem Netzteil und bedrahteter Klemme, Form für den Lüfterkasten)
+# Übergabe: Lüftersteuerung Bad (KN2 UP) – Stand 24.11.2026, Platine v1.7 (von oben bestückt, SMD mit bedrahtetem Netzteil und bedrahteter Klemme, Form für den Lüfterkasten)
 
 Stand nach der Überarbeitung des ersten Entwurfs (der ursprüngliche Schaltplan und seine Übergabe liegen in der Git-Historie). Neu: Pinbelegungen gegen Datenblätter geprüft, Umstellung auf KiCad 10 und auf SMD-Bauteile, Platinenform und Gehäuse für den Einbau unten links im Lüfterkasten, einseitige Bestückung, RGB-LED, USB-C-Buchse zum Programmieren, geroutetes Layout, Bestellpaket. Netzteil und Netzklemme sind bedrahtet, weil es bei JLCPCB kein lagerndes SMD-Netzteil gibt; alle Bauteile der Stückliste waren am 24.11.2026 dort am Lager.
 
@@ -68,7 +68,7 @@ Nichts davon ist gebaut oder elektrisch getestet. Geprüft wurde nur in KiCad un
 | MOC3052S, LED-Strom | Zündstrom max. 10 mA, UF typ. 1,15 V / max. 1,5 V | R3 = 100 Ω (statt 150 Ω): rechnerisch 18 bis 21 mA an 3,3 V |
 | ACST410-8B (Triac, DPAK) | 1 = COM, Kühlfahne = OUT, 3 = G; 800 V, 4 A (1 A bei 60 °C mit 0,5 cm² Kupfer), IGT max. 10 mA in den Quadranten I bis III, IH max. 20 mA, überspannungsfest (klemmt bei 850 V) | COM an L hinter der Sicherung, OUT zur Klemme „Lüfter“. Footprint nach ST-Datenblatt (Fahne 6,7 x 6,7 mm, 3,0 mm Abstand zu den Anschlussflächen) |
 | RT9013-33GB (Regler für USB, SOT-23-5) | 1 = VIN, 2 = GND, 3 = EN, 4 = frei, 5 = VOUT; Eingang max. 5,5 V, 500 mA, Dropout typ. 0,25 V | EN an VIN; Eingang über Schottky-Diode D2 an VBUS, Ausgang direkt an 3,3 V |
-| TYPE-C-31-D-06 (USB-C stehend, 16-polig) | A1/A12/B1/B12 = GND, A4/A9/B4/B9 = VBUS, A5 = CC1, B5 = CC2, A6/B6 = D+, A7/B7 = D−, A8/B8 = SBU; Lötflächen 0,30 x 0,87 mm im Raster 0,5 mm, vier Gehäusezapfen in Langlöchern | eigener Footprint nach dem Lötbild im Datenblatt. D+ an GPIO19, D− an GPIO18 (im ESP32-C3 fest so belegt) |
+| GCT USB4145-03-0230-C (USB-C stehend, 16-polig) | A1/A12/B1/B12 = GND, A4/A9/B4/B9 = VBUS, A5 = CC1, B5 = CC2, A6/B6 = D+, A7/B7 = D−, A8/B8 = SBU; Lötflächen 0,30 x 1,15 mm im Raster 0,5 mm; vier Gehäusezapfen 2,3 mm lang in metallisierten Langlöchern 1,10 x 0,60 mm | eigener Footprint nach dem Lötbild im Datenblatt. D+ an GPIO19, D− an GPIO18 (im ESP32-C3 fest so belegt) |
 | Zündkreis | Spitzenstrom des Optotriacs max. 1 A | R16 = 390 Ω (1206): höchstens 0,92 A bei 253 V Netzspannung. R17 = 390 Ω vom Gate nach COM |
 | HLK-PM03 (Netzteil, bedrahtet) | 1 und 2 = AC (gleichwertig), 3 = −Vo, 4 = +Vo; AC-Stifte 5,0 mm, Ausgangsstifte 15,0 mm auseinander, Reihenabstand 29,08 mm, Stifte 0,8 mm | KiCad-Footprint `Converter_ACDC_Hi-Link_HLK-PMxx` stimmt damit überein. Im Schaltplan AC/N = 1, AC/L = 2 |
 | HLK-PM03, Beschaltung | Datenblatt verlangt Sicherung 1 A träge und Varistor am Eingang; X-Kondensator und Drossel nur für die EMV-Zulassung | F1 (T1A) und RV1 sind vorhanden. RV1 ist ein 275-VAC-Typ, das Datenblatt nennt 10D561K (350 VAC) |
@@ -89,7 +89,7 @@ Hinweis zum Snubber: ST gibt an, dass der ACST4 induktive Lasten bis 4 A ohne Sn
 | C1 | Elko radial | Panasonic EEHZK1E101UP, Hybrid-Polymer-Elko 100 µF 25 V, 6,3 x 5,8 mm; laut Datenblatt auf feuchte Wärme geprüft (85 °C, 85–90 % r. F., 2000 h unter Spannung), 4000 h bei 125 °C, AEC-Q200 | C454668 |
 | C2 | X2 Folie 10 nF | Murata GA355QR7GB103KW01L, 10 nF X2 250 VAC, Bauform 2220 | C237426 |
 | J1 | Lochreihe 1,27 mm | entfällt; programmiert wird über USB | – |
-| J2, U5, D2, C8, C9, R18, R19 | – | neu: stehende USB-C-Buchse HRO TYPE-C-31-D-06 (6,4 mm hoch), Regler Richtek RT9013-33GB, Schottky-Diode B5819W, 2 x 1 µF, 2 x 5,1 kΩ an den CC-Leitungen | C2689964, C47773, C8598, C15849, C23186 |
+| J2, U5, D2, C8, C9, R18, R19 | – | neu: stehende USB-C-Buchse GCT USB4145-03-0230-C (7,5 mm hoch, Zapfen 2,3 mm), Regler Richtek RT9013-33GB, Schottky-Diode B5819W, 2 x 1 µF, 2 x 5,1 kΩ an den CC-Leitungen | C5291559, C47773, C8598, C15849, C23186 |
 | JP1, JP2 | – | neu: Lötflächen zum Überbrücken, Boot (GPIO9 nach Masse) und Reset (EN nach Masse); kein Bauteil | – |
 | U4 | SHT40-AD1B | SHT40-AD1F-R2 mit Polyimid-Membran (IP68), gleiche Pins, gleicher Footprint, Adresse 0x44 | C7461846 |
 | U3, Q1, R16, R17 | Photo-Triac AQH3223A (ein Bauteil) | Optotriac Lite-On MOC3052S-TA1 plus Triac ST ACST410-8BTR mit Zündwiderstand 390 Ω (1206) und Gate-Widerstand 390 Ω (0603). Grund: vom AQH3223A lagen bei JLCPCB nur 7 Stück, und die Markenbauteile sind robuster | C115471, C221462, C4491, C23151 |
@@ -127,8 +127,8 @@ Die Platine ist so gezeichnet, wie sie eingebaut von vorn zu sehen ist: unten li
 1. **Bedrahtete Teile.** Beim Bestellen die Bestückung bedrahteter Bauteile mit auswählen (JLCPCB führt Klemme und Netzteil unter Wellenlöten). Die Stifte des Netzteils sind 5 mm lang und stehen unten bis 3,4 mm über; das Gehäuse lässt 4 mm Platz.
 2. **Drehlage in der JLCPCB-Vorschau.** Die Winkel in `CPL_JLCPCB.csv` sind KiCad-Winkel; JLCPCB dreht einzelne Gehäuse anders. In der Bestückungsvorschau jedes gepolte Bauteil ansehen (U1–U5, Q1, C1, D1, D2, J2, PS1, X1).
 3. **Sensor.** U4 ist der Sensirion SHT40-AD1F-R2 mit Polyimid-Membran, bei JLCPCB unter C7461846 am Lager. Unter C54823945 gibt es eine Fremdmarke (Tokmas), deren Datenblatt keine Membran nennt: nicht verwenden. Die Membran nicht überlackieren.
-4. **Lagerbestand bei JLCPCB** (Bauteilsuche am 23. und 24.11.2026): alle Teile der Stückliste waren am Lager. Die kleinsten Bestände: X2-Kondensator C2 448 Stück, Triac Q1 rund 1.200, Sensor rund 2.100, USB-Buchse rund 2.500 (baugleich mit gleichem Lötbild: SHOU HAN TYPE-C 16P LTH6.8, C5187468, rund 52.000), Netzteil rund 3.200. Ausweichtyp für das Netzteil: YLPTEC HAW3-220S03T2 (C19724490), Reihenabstand 29,4 statt 29,08 mm.
-5. **USB-Buchse.** Das Datenblatt empfiehlt 0,8 mm Platinendicke; auf der 1,6-mm-Platine stehen die 0,95 mm langen Gehäusezapfen unten nicht über. Sie sitzen in metallisierten Langlöchern und werden von oben mitgelötet; ob das mechanisch genügt, zeigt erst der Aufbau. Den Stecker deshalb gerade ziehen und nicht hebeln. USB nur anstecken, wenn die Platine vom Netz getrennt ist.
+4. **Lagerbestand bei JLCPCB** (Bauteilsuche am 23. und 24.11.2026): alle Teile der Stückliste waren am Lager. Die kleinsten Bestände: USB-Buchse J2 355 Stück (gleiches Lötbild mit kürzeren Zapfen: USB4145-03-0170-C, C5181332, 363 Stück; -0070-C, C5815189, rund 2.200), X2-Kondensator C2 448, Triac Q1 rund 1.200, Sensor rund 2.100, Netzteil rund 3.200. Ausweichtyp für das Netzteil: YLPTEC HAW3-220S03T2 (C19724490), Reihenabstand 29,4 statt 29,08 mm.
+5. **USB-Buchse.** Die vier Gehäusezapfen sind 2,3 mm lang, gehen durch die 1,6-mm-Platine und stehen unten 0,7 mm über; sie müssen dort mitverlötet werden (in der Bestellung als Hinweis angeben und am gelieferten Muster prüfen). Den Stecker trotzdem gerade ziehen. USB nur anstecken, wenn die Platine vom Netz getrennt ist.
 6. **Netzteil.** Das HLK-PM03 nennt im Datenblatt 3000 VAC (an anderer Stelle 2500 VAC) Isolation und „Entwurf entspricht UL/CE“; eine Zertifizierung des Moduls weist es nicht aus. Wer ein zertifiziertes Netzteil will, braucht ein anderes Modul und einen neuen Footprint.
 7. **Sicherung.** Die 0443001.DR schaltet 50 A bei 250 VAC ab. Wer mehr will: Schurter UMT 250 (200 A) passt auf dieselben Pads.
 8. **Antenne.** Die Antenne sitzt an der Oberkante des Arms, gut 25 mm über dem Netzteil; links liegt die Kastenwand, dahinter das Lüftergehäuse. Wie gut das WLAN im Kasten ist, zeigt erst ein Versuch.
@@ -139,7 +139,7 @@ Die Platine ist so gezeichnet, wie sie eingebaut von vorn zu sehen ist: unten li
 
 - Firmware (Regellogik und GPIO-Belegung siehe Abschnitt 0). Erstes Aufspielen über die USB-C-Buchse, danach Updates über WLAN.
 - Home Assistant vorhanden? (entscheidet über ESPHome oder eigene Firmware)
-- Gehäuse: Entwurf für den 3D-Druck in `gehaeuse/`, passend zur Platine v1.6 und zum Einbau unten links vor dem Lüftergehäuse. Dort sind nachgemessen höchstens 85 mm Breite, 40 mm Tiefe und 140 mm Höhe frei; das Gehäuse braucht 72,6 x 25,7 x 77,1 mm. Noch nicht gedruckt. Details in `gehaeuse/README.md`
+- Gehäuse: Entwurf für den 3D-Druck in `gehaeuse/`, passend zur Platine v1.7 und zum Einbau unten links vor dem Lüftergehäuse. Dort sind nachgemessen höchstens 85 mm Breite, 40 mm Tiefe und 140 mm Höhe frei; das Gehäuse braucht 72,6 x 25,7 x 77,1 mm. Noch nicht gedruckt. Details in `gehaeuse/README.md`
 
 ## 8. Sicherheit
 
