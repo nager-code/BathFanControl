@@ -90,4 +90,6 @@ Nachbau und Betrieb auf eigene Verantwortung.
 
 ## Lizenz
 
+© 2026 [nager-code](https://github.com/nager-code)
+
 [CC BY-SA 4.0](LICENSE) – Weitergabe und Bearbeitung erlaubt, mit Namensnennung und unter gleichen Bedingungen.
