@@ -48,7 +48,7 @@ zw      = 1.6;           // Staerke der Zwischenwaende
 /* [Leitungen: von rechts in den Anschlussraum] */
 ader_y   = [22.62, 17.54, 12.46, 7.38];    // Pole der Klemme von oben nach unten (Raster 5,08 mm)
 ader_txt = ["L", "Licht", "N", "Lüfter"];
-ader_d   = 4.0;
+ader_d   = 3.4;                            // an den Aussendurchmesser der Adern anpassen (moeglichst knapp)
 
 /* [Verschraubung: zwei Dome der Wanne gehen durch die Bohrungen der Platine] */
 dom_r     = 3.0;         // Dom in der Wanne
@@ -61,10 +61,9 @@ schr_kopf = 5.8;
 ls_da = 6.0;  ls_di = 3.6;       // Aussen- und Innendurchmesser
 led_fenster = 0.6;               // Reststaerke der Deckelflaeche ueber dem Schacht (helles/transparentes Filament); 0 = offen
 
-/* [Lueftung der Sensorkammer] */
-ls_b  = 2.0;             // Schlitzbreite
+/* [Oeffnungen der Sensorkammer] */
 ls_z0 = pd + 0.8;        // Unterkante der Schlitze: knapp ueber der Platine, damit die Luft ueber den Sensor streicht
-ls_z1 = 16.0;            // Oberkante der Schlitze in den Waenden
+ls_z1 = 17.0;            // Oberkante der Oeffnungen in den Waenden (knapp unter der Deckelflaeche)
 
 // ---- abgeleitete Masse
 t   = spiel + wand;
@@ -86,17 +85,32 @@ module innen2d() { offset(delta = -wand) aussen2d(); }
 module prisma(z0, z1) { translate([0, 0, z0]) linear_extrude(z1 - z0) children(); }
 module im_innenraum(z0, z1) { intersection() { prisma(z0, z1) offset(delta = 0.02) innen2d(); children(); } }
 
-module aderloecher() {
-    for (y = ader_y) translate([xu1 - 1, y, z_teil]) rotate([0, 90, 0]) cylinder(d = ader_d, h = wand + 2);
+module aderloecher() {       // in der Aussenwand und in der Innenwand vor der Klemme
+    for (y = ader_y) {
+        translate([xu1 - 1, y, z_teil]) rotate([0, 90, 0]) cylinder(d = ader_d, h = wand + 2);
+        translate([bw, y, z_teil]) rotate([0, 90, 0]) cylinder(d = ader_d, h = 2);
+    }
 }
-// Lueftungsschlitze in den Waenden der Sensorkammer: in der Fase zum Einlass, rechts und oben.
-// Sie laufen durch Wanne und Deckel, von knapp ueber der Platine bis ls_z1.
+// Oeffnungen der Sensorkammer: grosse Fenster in der Fase zum Einlass, in der rechten und der oberen Wand.
+// Sie laufen durch Wanne und Deckel, von knapp ueber der Platine bis ls_z1. Der Rest des Gehaeuses hat keine Oeffnung.
 module wandschlitze() {
     translate([xa1 - fa / 2, ya1 - fa / 2, 0]) rotate([0, 0, -45])
-        for (d = [-3.2, 0, 3.2]) quader(d - ls_b / 2, -3, ls_z0, d + ls_b / 2, 3, ls_z1);
-    for (y = [47.4, 50.6, 55.4]) quader(xi1 - 0.15, y - ls_b / 2, ls_z0, xa1 + 1, y + ls_b / 2, ls_z1);
-    for (x = [59.6, 61.9]) quader(x - 0.8, yi1 - 0.15, ls_z0, x + 0.8, ya1 + 1, ls_z1);
+        for (d = [-2.4, 2.4]) quader(d - 1.8, -3, ls_z0, d + 1.8, 3, ls_z1);                               // Fase: 2 x 3,6 mm
+    for (y = [47.5, 51.7, 55.9]) quader(xi1 - 0.15, y - 1.5, ls_z0, xa1 + 1, y + 1.5, ls_z1);             // rechts: 3 x 3,0 mm
+    quader(58.9, yi1 - 0.15, ls_z0, 62.3, ya1 + 1, ls_z1);                                                // oben: 3,4 mm
 }
+// Fenster in der Deckelflaeche ueber der Sensorkammer: drei Oeffnungen 2,2 mm mit 1 mm breiten Stegen
+module dachfenster() {
+    intersection() {
+        prisma(zi1 - 1, za1 + 1) offset(delta = -(wand + 0.7)) aussen2d();
+        for (x0 = [58.9, 62.1, 65.3]) quader(x0, 46.0, zi1 - 1, x0 + 2.2, ya1, za1 + 1);
+    }
+}
+// Abschottung der Sensorkammer gegen den Rest des Gehaeuses: Wand links vom Thermoschlitz, im Deckel bis auf die
+// Platine herunter, in der Wanne von unten bis an die Platine. Nach unten schliesst der Steg im Isolationsschlitz ab.
+kw0 = schlitz_x - 1.1; kw1 = schlitz_x - 0.3;
+// Innenwand vor der Klemme: der Anschlussraum ist vom Geraeteraum getrennt, die Adern gehen durch zwei Waende
+module klemmenwand(z0, z1) { quader(bw + 0.6, yi0 - 0.1, z0, bw + 1.8, ar0 + 0.1, z1); }
 // Trennung Netzspannung / Kleinspannung: Steg im Isolationsschlitz (ausser unter den Optokopplern)
 module isosteg(z0, z1) { for (a = iso_frei) quader(a[0], st0, z0, a[1], st1, z1); }
 // Wand zwischen dem Anschlussraum (Platinenausschnitt unten rechts) und dem Platinenteil darueber
@@ -125,6 +139,8 @@ module wanne() {
                 quader(steg + 0.6, iso_y1, zi0, schlitz_x - 0.3, iso_y1 + auflage, 0);// ueber dem Schlitz
                 isosteg(zi0, z_teil);
                 raumwand(zi0, z_teil);
+                klemmenwand(zi0, z_teil);
+                quader(kw0, st1 - 0.05, zi0, kw1, yi1 + 0.1, 0);                      // Sensorkammer: Wand unter der Platine
                 for (p = loch) translate([p[0], p[1], zi0]) {
                     cylinder(r = dom_r + 1.5, h = -zi0);                              // Auflage rund um die Bohrung
                     cylinder(r = dom_r, h = z_teil - zi0);
@@ -154,18 +170,19 @@ module deckel() {
             im_innenraum(pd, zi1 + 0.1) union() {
                 isosteg(z_teil, zi1 + 0.1);
                 raumwand(z_teil, zi1 + 0.1);
+                klemmenwand(z_teil, zi1 + 0.1);
                 for (p = loch) translate([p[0], p[1], z_teil]) cylinder(r = rohr_r, h = zi1 + 0.1 - z_teil);
                 // Niederhalter an den Aussenwaenden, oberhalb der Trennebene an die Wand angebunden
                 for (x = [14, 46]) { nh(x, yi0 + 0.2, x + 2, 1.0); quader(x, yi0 - 0.1, z_teil, x + 2, 1.0, zi1); }                 // unten
                 for (y = [16, 41]) { nh(xi0 + 0.2, y, 1.0, y + 2); quader(xi0 - 0.1, y, z_teil, 1.0, y + 2, zi1); }                 // links
                 for (x = [30, 54]) { nh(x, ph - 1.0, x + 2, yi1 - 0.2); quader(x, ph - 1.0, z_teil, x + 2, yi1 + 0.1, zi1); }       // oben
-                nh(pw - 1.0, 52.2, xi1 - 0.2, 53.8); quader(pw - 1.0, 52.2, z_teil, xi1 + 0.1, 53.8, zi1);                          // rechts, Sensorarm
+                nh(pw - 1.0, 49.0, xi1 - 0.2, 50.2); quader(pw - 1.0, 49.0, z_teil, xi1 + 0.1, 50.2, zi1);                          // rechts, Sensorarm
                 nh(pu - 1.0, 36, xu1 - 0.2, 38); quader(pu - 1.0, 36, z_teil, xu1 + 0.1, 38, zi1);                                  // rechts, Netzteil
                 // Lichtschacht ueber der RGB-LED (endet 2 mm ueber der Platine)
                 translate([led[0], led[1], pd + 2.0]) cylinder(d = ls_da, h = zi1 + 0.1 - pd - 2.0);
-                // Trennwand der Sensorkammer links vom Thermoschlitz (0,5 mm ueber der Platine)
-                quader(schlitz_x - 1.1, iso_y1 + 0.2, pd + 0.5, schlitz_x - 0.3, yi1 - 0.2, zi1 + 0.1);
-                quader(schlitz_x - 1.1, st0, z_teil, schlitz_x - 0.3, yi1 + 0.1, zi1 + 0.1);
+                // Trennwand der Sensorkammer links vom Thermoschlitz: reicht bis 0,1 mm an die Platine
+                quader(kw0, iso_y1 + 0.05, pd + 0.1, kw1, yi1 - 0.1, zi1 + 0.1);
+                quader(kw0, st0, z_teil, kw1, yi1 + 0.1, zi1 + 0.1);
             }
         }
         aderloecher();
@@ -173,9 +190,9 @@ module deckel() {
         for (p = loch) translate([p[0], p[1], 0]) { cylinder(d = schr_durch, h = za1 + 1); translate([0, 0, z_teil + 2.5]) cylinder(d = schr_kopf, h = za1); }
         // Lichtschacht: innen hohl, in der Deckelflaeche bleibt ein duennes Fenster stehen (led_fenster = 0: offenes Loch)
         translate([led[0], led[1], pd + 1.9]) cylinder(d = ls_di, h = za1 - led_fenster - pd - 1.9);
-        // Lueftungsschlitze der Sensorkammer: in den Waenden und drei lange Schlitze in der Deckelflaeche
+        // Oeffnungen der Sensorkammer: in den Waenden und in der Deckelflaeche
         wandschlitze();
-        for (x = [60.0, 63.0, 66.0]) quader(x - ls_b / 2, 46.5, zi1 - 1, x + ls_b / 2, 58.0, za1 + 1);
+        dachfenster();
         // Beschriftung (vertieft): Klemmenbelegung, Warnhinweis, Sensor
         for (i = [0 : 3]) translate([xu1 - 0.5, ader_y[i], za1 - 0.6]) linear_extrude(1)
             text(ader_txt[i], size = 3.4, font = "DejaVu Sans:style=Bold", valign = "center", halign = "right");
