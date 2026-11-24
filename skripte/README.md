@@ -24,6 +24,7 @@ mkdir -p tools && curl -L -o tools/freerouting-1.9.0.jar https://github.com/free
 | `render.sh` | Bilder der Lagen |
 | `update_sch.py` | Änderungen am übergebenen Schaltplan (Datenblattkorrekturen, SMD-Bauteile) |
 | `build_board.py` | Platzierung, Umriss, Sperrflächen, handverlegte Netzseite |
+| `lageplan.py` | beschrifteter Lageplan der Platine für die Doku (läuft in `export_fab.sh` mit) |
 | `make_footprints.py` | Projekt-Footprints (Klemme, Sicherung, Varistor, X2-Kondensator, RGB-LED, Optokoppler) |
 | `teile.py` | Bauteildaten und LCSC-Nummern für die Stückliste |
 

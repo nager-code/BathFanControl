@@ -16,7 +16,10 @@ docker exec -w /w/kicad kc kicad-cli pcb export pdf --layers "F.Fab,F.SilkS,Edge
    -o /w/bestellpaket/bestueckung_oben.pdf lueftersteuerung.kicad_pcb >/dev/null 2>&1 || true
 docker exec -w /w/kicad kc kicad-cli pcb export pdf --layers "B.Fab,B.SilkS,Edge.Cuts" --mirror --mode-single --black-and-white \
    -o /w/bestellpaket/bestueckung_unten.pdf lueftersteuerung.kicad_pcb >/dev/null 2>&1 || true
-docker exec kc chmod -R a+rwX /w/bestellpaket
+# beschrifteter Lageplan (was sitzt wo) fuer die Doku
+docker exec kc python3 /w/skripte/lageplan.py /w/kicad/lueftersteuerung.kicad_pcb /w/doku/lageplan.svg 2>&1 | grep -E "Lageplan" || true
+docker exec kc chmod -R a+rwX /w/bestellpaket /w/doku
+rsvg-convert -w 3000 -b white $W/doku/lageplan.svg -o $W/doku/lageplan.png 2>/dev/null || python3 -I -c "import cairosvg,sys; cairosvg.svg2png(url=sys.argv[1],write_to=sys.argv[2],output_width=3000,background_color='white')" $W/doku/lageplan.svg $W/doku/lageplan.png
 rm -f $OUT/pos_kicad.csv
 (cd $OUT/gerber && zip -q ../gerber_lueftersteuerung.zip *)
 ls -la $OUT $OUT/gerber
