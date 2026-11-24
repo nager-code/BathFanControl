@@ -39,7 +39,11 @@ KLEIN = [
     ("R7, R8, R9", "Pull-ups 10 kΩ an GPIO9 (Boot), GPIO8, GPIO2"),
     ("C1", "Stützkondensator 100 µF (Panasonic Hybrid)"),
     ("C4, C5", "Abblockkondensatoren 10 µF und 100 nF"),
-    ("J1", "Programmierflächen: 3V3, GND, TX, RX, IO9, EN (nicht bestückt)"),
+    ("J2", "USB-C-Buchse, stehend: Programmieren (nur ohne Netzspannung)"),
+    ("U5, D2", "Regler 5 V auf 3,3 V und Schutzdiode für USB"),
+    ("C8, C9", "1 µF am Regler"),
+    ("R18, R19", "5,1 kΩ an den CC-Leitungen der USB-Buchse"),
+    ("JP1, JP2", "Lötflächen zum Überbrücken: Boot (JP1) und Reset (JP2)"),
 ]
 netz_refs = set(r.strip() for k, _ in NETZ for r in k.split(","))
 
@@ -62,8 +66,9 @@ S.append('<rect width="100%" height="100%" fill="#ffffff"/>')
 S.append('<text x="%.1f" y="7.5" font-size="3.4" font-weight="bold" fill="#222">Lüftersteuerung Bad – Lageplan der Platine (Ansicht von vorn, wie eingebaut)</text>' % M)
 S.append('<g transform="translate(%.1f %.1f) scale(%.2f)">' % (M, M + 7.0, K))
 S.append('<clipPath id="pl"><path d="%s" clip-rule="evenodd"/></clipPath>' % path)
-def yb(y_up): return H - y_up                   # Hoehe ueber der Unterkante -> Zeichnung
-ISO0, ISO1, NETZ_OBEN, KS_UNTEN = 21.95, 28.25, 41.05, 47.35
+YB = 4.5                                        # Streifen unter dem Riegel
+def yb(y_up): return H - YB - y_up              # Hoehe ueber y = 0 (Unterkante des Riegels) -> Zeichnung
+ISO0, ISO1, NETZ_OBEN, KS_UNTEN = 13.95, 20.25, 41.05, 47.35
 S.append('<g clip-path="url(#pl)">')
 S.append('<rect x="-5" y="-5" width="300" height="300" fill="#e3ecfa"/>')                                                 # 3,3 V
 S.append('<rect x="%.2f" y="%.2f" width="200" height="200" fill="#fbe3df"/>' % (ISO1, yb(NETZ_OBEN)))                        # Netz
@@ -105,14 +110,14 @@ for p in x1.Pads():
     px, py = X(p.GetPosition().x), Y(p.GetPosition().y)
     S.append('<line x1="%.2f" y1="%.2f" x2="%.2f" y2="%.2f" stroke="#b3261e" stroke-width="0.15"/>' % (px + 5.0, py, px + 7.6, py))
     note(px + 8.2, py + 0.6, namen[p.GetNumber()], size=1.7, col="#b3261e", bold=True)
-note(63.3, yb(27.3), "Adern von rechts", size=1.25, col="#b3261e")
-note(37.0, yb(0.9), "230 V~", "middle", 1.7, "#b3261e", True)
-note(1.5, yb(20.0), "3,3 V", "start", 1.7, "#1f4e9c", True)
-note(51.0, yb(60.3), "3,3 V", "start", 1.7, "#1f4e9c", True)
-note(57.3, yb(43.8), "Isolationsschlitz", "start", 1.1, "#666")
-note(W - 7.9, yb(54.3), "Sensor", "start", 1.1, "#1f4e9c")
-note(8.3, yb(61.0), "Antenne", "middle", 1.1, "#1f4e9c")
-note(4.8, yb(5.1), "Dom", "middle", 1.1, "#666"); note(46.5, yb(55.6), "Dom", "middle", 1.1, "#666")
+note(55.2, yb(27.3), "Adern von rechts", size=1.25, col="#b3261e")
+note(40.8, yb(-3.3), "230 V~", "middle", 1.7, "#b3261e", True)
+note(1.0, yb(34.0), "3,3 V", "start", 1.7, "#1f4e9c", True)
+note(15.5, yb(48.6), "3,3 V", "start", 1.7, "#1f4e9c", True)
+note(49.3, yb(43.8), "Isolationsschlitz", "start", 1.1, "#666")
+note(W - 7.9, yb(59.3), "Sensor", "start", 1.1, "#1f4e9c")
+note(8.3, yb(66.0), "Antenne", "middle", 1.1, "#1f4e9c")
+note(6.0, yb(-0.6), "Dom", "middle", 1.1, "#666"); note(52.0, yb(53.6), "Dom", "middle", 1.1, "#666")
 S.append('</g>')
 
 # ---- Legende
@@ -133,8 +138,9 @@ y += 1.8
 kopf("Kleinspannung 3,3 V (blau)", "#e3ecfa")
 for r, t in KLEIN: zeile(r, t, "#1f4e9c")
 y += 1.8
-S.append('<text x="%.1f" y="%.2f" font-size="1.9" fill="#555">Grau: kupferfreier Isolationsstreifen mit Schlitz. Gestrichelt: nicht bestückt.</text>' % (LX, y))
-S.append('<text x="%.1f" y="%.2f" font-size="1.9" fill="#555">Alle Bauteile sitzen auf dieser Seite; „Dom“ = Bohrung für die Gehäuseschraube.</text>' % (LX, y + 3.0))
+S.append('<text x="%.1f" y="%.2f" font-size="1.9" fill="#555">Grau: kupferfreier Isolationsstreifen mit Schlitz.</text>' % (LX, y))
+S.append('<text x="%.1f" y="%.2f" font-size="1.9" fill="#555">Gestrichelt: Lötflächen ohne Bauteil oder nicht bestückt.</text>' % (LX, y + 3.0))
+S.append('<text x="%.1f" y="%.2f" font-size="1.9" fill="#555">Alle Bauteile sitzen auf dieser Seite; „Dom“ = Bohrung für die Gehäuseschraube.</text>' % (LX, y + 6.0))
 S.append("</svg>")
 open(out, "w", encoding="utf-8").write("\n".join(S) + "\n")
 print("Lageplan:", out)

@@ -1,6 +1,6 @@
 # Skripte
 
-Die Skripte bauen Schaltplan, Platine und Bestellpaket aus `eingang/lueftersteuerung.kicad_sch` neu auf.
+Die Skripte bauen Platine und Bestellpaket aus dem Schaltplan `kicad/lueftersteuerung.kicad_sch` neu auf. Der Schaltplan selbst wird in KiCad bearbeitet.
 Sie erwarten einen laufenden KiCad-10-Container namens `kc`, in dem dieser Ordner unter `/w` liegt:
 
 ```bash
@@ -18,14 +18,15 @@ mkdir -p tools && curl -L -o tools/freerouting-1.9.0.jar https://github.com/free
 | Skript | Zweck |
 |---|---|
 | `bis_sauber.sh` | kompletter Neuaufbau, wiederholt das Autorouting, bis die Regelprüfung ohne Befund ist |
-| `alles.sh` | ein Durchlauf: Schaltplan anpassen, Footprints, Platine, Autorouting, Masseflächen |
+| `alles.sh` | ein Durchlauf: Netzliste aus dem Schaltplan, Footprints, Platine, Autorouting, Masseflächen, Beschriftung |
 | `drc.sh` | Regelprüfung mit Schaltplanabgleich, Kurzfassung |
 | `export_fab.sh` | Gerber, Bohrdaten, Stückliste und Bestückungsdatei nach `bestellpaket/` |
 | `render.sh` | Bilder der Lagen |
-| `update_sch.py` | Änderungen am übergebenen Schaltplan (Datenblattkorrekturen, SMD-Bauteile) |
 | `build_board.py` | Platzierung, Umriss, Sperrflächen, handverlegte Netzseite |
+| `beschriftung.py` | Bestückungsdruck: Beschriftungen ergänzen, Mindestschrift 1,0 mm / 0,15 mm sicherstellen |
 | `lageplan.py` | beschrifteter Lageplan der Platine für die Doku (läuft in `export_fab.sh` mit) |
-| `make_footprints.py` | Projekt-Footprints (Klemme, Sicherung, Varistor, X2-Kondensator, RGB-LED, Optokoppler) |
+| `einbaulage.py` | Zeichnung der Einbaulage im Lüfterkasten (`doku/einbaulage.svg`) |
+| `make_footprints.py` | Projekt-Footprints (Klemme, Sicherung, Varistor, X2-Kondensator, RGB-LED, Triac, USB-C-Buchse, Optokoppler) |
 | `teile.py` | Bauteildaten und LCSC-Nummern für die Stückliste |
 
 Der Autorouter arbeitet nicht deterministisch: ein Neuaufbau ergibt auf der 3,3-V-Seite andere Leiterbahnen

@@ -16,6 +16,6 @@ ns["netclass_patterns"] = [{"netclass": "Netz", "pattern": n} for n in mains] + 
 r = d["board"]["design_settings"]["rules"]
 r.update(min_clearance=0.15, min_copper_edge_clearance=0.3, min_hole_clearance=0.2, min_hole_to_hole=0.25,
          min_track_width=0.15, min_via_diameter=0.5, min_through_hole_diameter=0.3, min_via_annular_width=0.1,
-         min_text_height=0.7, min_text_thickness=0.1)
+         min_text_height=1.0, min_text_thickness=0.15)
 json.dump(d, open(p, "w"), indent=2)
 print("Projektdatei aktualisiert")

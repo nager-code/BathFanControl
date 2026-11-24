@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 378 296" width="378mm" height="296mm" font-family="DejaVu Sans, Arial, sans-serif">
+<defs><marker id="pf" markerUnits="userSpaceOnUse" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto"><path d="M0,0.3 L4.6,2.5 L0,4.7 z" fill="#2a7fbf"/></marker><pattern id="sch" width="3" height="3" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="3" height="3" fill="#d9f2df"/><line x1="0" y1="0" x2="0" y2="3" stroke="#1b7a3d" stroke-width="0.7"/></pattern></defs>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="8.0" y="10.0" font-size="4.6" text-anchor="start" fill="#222" font-weight="bold">Einbaulage im Lüfterkasten: wo der Feuchtesensor sitzt</text>
+<text x="8.0" y="16.0" font-size="3.0" text-anchor="start" fill="#555">Blick von vorn in den geöffneten Kasten (Frontabdeckung abgenommen), unten links die Steuerung</text>
+<rect x="26.0" y="24.0" width="255.8" height="248.0" fill="#f3efe6"/>
+<path d="M26.0 24.0 L26.0 272.0 L281.8 272.0" fill="none" stroke="#6b5f4f" stroke-width="2.4" stroke-linejoin="miter"/>
+<text x="23.5" y="148.0" font-size="2.7" text-anchor="middle" fill="#6b5f4f" transform="rotate(-90 23.5 148.0)">linke Kastenwand</text>
+<text x="280.8" y="277.2" font-size="2.7" text-anchor="end" fill="#6b5f4f">Kastenboden</text>
+<clipPath id="kasten"><rect x="26.0" y="24.0" width="255.8" height="248.0"/></clipPath><g clip-path="url(#kasten)">
+<circle cx="196.5" cy="115.5" r="82.2" fill="#e9e3d6" stroke="#b9ae99" stroke-width="0.6"/>
+<circle cx="196.5" cy="115.5" r="62.0" fill="#3b3b3b"/>
+<line x1="240.9" y1="133.8" x2="259.5" y2="141.5" stroke="#d8d0c0" stroke-width="1.6"/>
+<line x1="214.9" y1="159.8" x2="222.6" y2="178.5" stroke="#d8d0c0" stroke-width="1.6"/>
+<line x1="178.1" y1="159.8" x2="170.4" y2="178.5" stroke="#d8d0c0" stroke-width="1.6"/>
+<line x1="152.1" y1="133.8" x2="133.5" y2="141.5" stroke="#d8d0c0" stroke-width="1.6"/>
+<line x1="152.1" y1="97.1" x2="133.5" y2="89.4" stroke="#d8d0c0" stroke-width="1.6"/>
+<line x1="178.1" y1="71.1" x2="170.4" y2="52.4" stroke="#d8d0c0" stroke-width="1.6"/>
+<line x1="214.9" y1="71.1" x2="222.6" y2="52.4" stroke="#d8d0c0" stroke-width="1.6"/>
+<line x1="240.9" y1="97.1" x2="259.5" y2="89.4" stroke="#d8d0c0" stroke-width="1.6"/>
+<circle cx="196.5" cy="115.5" r="48.1" fill="#4f79c7"/>
+</g>
+<text x="196.5" y="113.5" font-size="3.4" text-anchor="middle" fill="#fff" font-weight="bold">Lüfter</text>
+<text x="196.5" y="118.7" font-size="2.8" text-anchor="middle" fill="#fff">Ansaugöffnung</text>
+<rect x="103.5" y="109.2" width="29.4" height="45.0" rx="5" fill="#ece6d8" stroke="#a89c86" stroke-width="0.6"/>
+<text x="118.2" y="132.7" font-size="2.3" text-anchor="middle" fill="#7a6e5a" transform="rotate(-90 118.2 132.7)">Wartungsöffnung</text>
+<rect x="146.9" y="194.5" width="111.6" height="74.4" rx="6" fill="#e6dfd0" stroke="#a89c86" stroke-width="0.6" stroke-dasharray="2.5 1.6"/>
+<text x="255.5" y="265.9" font-size="2.6" text-anchor="end" fill="#7a6e5a">Kabeltasche mit den Leitungen</text>
+<rect x="26.0" y="55.0" width="131.8" height="217.0" fill="none" stroke="#d07000" stroke-width="0.7" stroke-dasharray="3 2"/>
+<text x="29.1" y="60.0" font-size="2.7" text-anchor="start" fill="#d07000">freier Raum laut Messung: 85 x 140 mm, 40 mm tief</text>
+<polygon points="26.0,272.0 138.5,272.0 138.5,163.9 127.1,152.5 26.0,152.5" fill="#cfd6dc" stroke="#2b3238" stroke-width="1.0"/>
+<polygon points="119.8,195.6 138.5,195.6 138.5,163.9 127.1,152.5 119.8,152.5" fill="url(#sch)" stroke="#1b7a3d" stroke-width="0.8"/>
+<text x="73.0" y="225.5" font-size="3.6" text-anchor="middle" fill="#2b3238" font-weight="bold">Lüftersteuerung</text>
+<text x="73.0" y="230.1" font-size="2.6" text-anchor="middle" fill="#2b3238">Gehäuse 72,6 x 77,1 x 25,7 mm</text>
+<text x="73.0" y="234.1" font-size="2.6" text-anchor="middle" fill="#2b3238">geschlossen bis auf die Sensorkammer</text>
+<line x1="138.5" y1="226.4" x2="152.5" y2="226.4" stroke="#b3261e" stroke-width="1.0"/>
+<line x1="138.5" y1="234.3" x2="152.5" y2="234.3" stroke="#b3261e" stroke-width="1.0"/>
+<line x1="138.5" y1="242.1" x2="152.5" y2="242.1" stroke="#b3261e" stroke-width="1.0"/>
+<line x1="138.5" y1="250.0" x2="152.5" y2="250.0" stroke="#b3261e" stroke-width="1.0"/>
+<text x="140.9" y="219.5" font-size="2.6" text-anchor="start" fill="#b3261e">Adern: L, Licht, N, Lüfter</text>
+<circle cx="127.5" cy="174.7" r="2.4" fill="#1b7a3d" stroke="#fff" stroke-width="0.7"/>
+<path d="M82.4 140.0 L124.9 173.1" stroke="#1b7a3d" stroke-width="0.7" fill="none"/>
+<rect x="36.4" y="133.0" width="48" height="12.5" rx="1.5" fill="#fff" stroke="#1b7a3d" stroke-width="0.7"/>
+<text x="38.4" y="138.5" font-size="3.2" text-anchor="start" fill="#1b7a3d" font-weight="bold">Feuchtesensor (SHT40)</text>
+<text x="38.4" y="142.9" font-size="2.6" text-anchor="start" fill="#1b7a3d">in der offenen Sensorkammer</text>
+<line x1="129.5" y1="173.0" x2="149.5" y2="155.8" stroke="#1b7a3d" stroke-width="0.6" stroke-dasharray="1.6 1.2"/>
+<text x="141.5" y="170.2" font-size="2.6" text-anchor="start" fill="#1b7a3d">ca. 19 mm</text>
+<path d="M88.0 79.8 Q119.0 84.5 146.9 101.5" fill="none" stroke="#2a7fbf" stroke-width="1.1" marker-end="url(#pf)" opacity="0.9"/>
+<path d="M156.2 191.4 Q150.0 172.8 162.4 157.3" fill="none" stroke="#2a7fbf" stroke-width="1.1" marker-end="url(#pf)" opacity="0.9"/>
+<path d="M261.6 39.5 Q249.2 58.1 233.7 76.7" fill="none" stroke="#2a7fbf" stroke-width="1.1" marker-end="url(#pf)" opacity="0.9"/>
+<path d="M266.2 175.9 Q258.5 157.3 243.0 144.9" fill="none" stroke="#2a7fbf" stroke-width="1.1" marker-end="url(#pf)" opacity="0.9"/>
+<text x="57.0" y="76.7" font-size="2.7" text-anchor="start" fill="#2a7fbf">Badluft strömt zur Ansaugöffnung</text>
+<line x1="26.0" y1="281.5" x2="138.5" y2="281.5" stroke="#222" stroke-width="0.4"/>
+<line x1="26.0" y1="279.7" x2="26.0" y2="283.3" stroke="#222" stroke-width="0.4"/>
+<line x1="138.5" y1="279.7" x2="138.5" y2="283.3" stroke="#222" stroke-width="0.4"/>
+<text x="82.3" y="286.1" font-size="2.8" text-anchor="middle" fill="#222" font-weight="bold">72,6 mm</text>
+<line x1="17.0" y1="272.0" x2="17.0" y2="152.5" stroke="#222" stroke-width="0.4"/>
+<line x1="15.2" y1="272.0" x2="18.8" y2="272.0" stroke="#222" stroke-width="0.4"/>
+<line x1="15.2" y1="152.5" x2="18.8" y2="152.5" stroke="#222" stroke-width="0.4"/>
+<text x="15.0" y="212.2" font-size="2.8" text-anchor="middle" fill="#222" font-weight="bold" transform="rotate(-90 15.0 212.2)">77,1 mm</text>
+<text x="289.8" y="30.0" font-size="3.5" text-anchor="start" fill="#222" font-weight="bold">Warum dort</text>
+<text x="289.8" y="36.6" font-size="2.9" text-anchor="start" fill="#222">Der Sensor sitzt in der oberen rechten</text>
+<text x="289.8" y="41.2" font-size="2.9" text-anchor="start" fill="#222">Ecke des Gehäuses, der Ansaugöffnung</text>
+<text x="289.8" y="45.9" font-size="2.9" text-anchor="start" fill="#222">zugewandt. Die Badluft streicht auf dem</text>
+<text x="289.8" y="50.5" font-size="2.9" text-anchor="start" fill="#222">Weg zum Lüfter an ihm vorbei.</text>
+<text x="289.8" y="58.2" font-size="3.5" text-anchor="start" fill="#1b7a3d" font-weight="bold">Sensorkammer</text>
+<text x="289.8" y="64.8" font-size="2.9" text-anchor="start" fill="#222">Schraffiert: der einzige offene Teil</text>
+<text x="289.8" y="69.4" font-size="2.9" text-anchor="start" fill="#222">des Gehäuses. Sie ist vom Raum mit</text>
+<text x="289.8" y="74.0" font-size="2.9" text-anchor="start" fill="#222">Netzteil und Elektronik abgeschottet.</text>
+<text x="289.8" y="81.7" font-size="3.5" text-anchor="start" fill="#d07000" font-weight="bold">Genauigkeit</text>
+<text x="289.8" y="88.3" font-size="2.9" text-anchor="start" fill="#222">Gehäuse und freier Raum: gemessen.</text>
+<text x="289.8" y="92.9" font-size="2.9" text-anchor="start" fill="#222">Ansaugöffnung, Wartungsöffnung und</text>
+<text x="289.8" y="97.6" font-size="2.9" text-anchor="start" fill="#222">Kabeltasche: aus einem Foto geschätzt,</text>
+<text x="289.8" y="102.2" font-size="2.9" text-anchor="start" fill="#222">etwa ±10 %.</text>
+</svg>

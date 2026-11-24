@@ -1,14 +1,14 @@
-// Gehaeuse fuer die Lueftersteuerung Bad, Platine v1.3 (76 x 63 mm, einseitig bestueckt) - Wanne und Deckel fuer den 3D-Druck
+// Gehaeuse fuer die Lueftersteuerung Bad, Platine v1.6 (68 x 72,5 mm, von oben bestueckt) - Wanne und Deckel fuer den 3D-Druck
 //
-// Einbau unten links im Luefterkasten, vor dem Lueftergehaeuse: Netzteil und Klemmen unten, die Leitungen
+// Einbau unten links im Luefterkasten, vor dem Lueftergehaeuse: Netzteil und Klemme unten, die Leitungen
 // kommen von rechts in den Anschlussraum (Ausschnitt der Platine unten rechts), der Feuchtesensor sitzt oben
-// rechts hinter der abgeschraegten Ecke zum Luefter-Einlass. Alle Bauteile sitzen auf der Platinenoberseite.
-// Der untere Teil (Netzteil, Klemmen, Anschlussraum) ist 8 mm breiter als der Arm mit dem Sensor.
+// rechts hinter der abgeschraegten Ecke zum Luefter-Einlass. Oeffnungen hat nur die Sensorkammer.
 // Netzteil und Klemme sind bedrahtet: unter der Platine bleiben 4 mm Platz fuer ihre Loetstifte.
+// Die stehende USB-C-Buchse ist nur bei abgenommenem Deckel erreichbar.
 //
 // Koordinaten wie im 3D-Export der Platine und wie in der Einbaulage von vorn gesehen:
 // X nach rechts (linke Kastenwand bei X = 0), Y nach oben (Kastenboden bei Y = 0), Z zum Betrachter
-// (Platinenunterseite Z = 0, Deckel vorn).
+// (Platinenunterseite Z = 0, Deckel vorn). Y = 0 ist die Unterkante des Netzteil-Riegels; die Platine reicht bis Y = yu.
 //
 // Aufruf:  openscad -D 'teil="wanne"'  -o wanne.stl  gehaeuse.scad
 //          openscad -D 'teil="deckel"' -o deckel.stl gehaeuse.scad
@@ -17,20 +17,21 @@
 teil = "zusammen";
 mit_platine = true;      // Platine in den Ansichten einblenden
 
-/* [Platine v1.3] */
-pw = 68;  ph = 63;  pd = 1.6;    // Breite des Arms oben, Hoehe, Dicke
-pu = 76;                         // Breite des unteren Teils (bis zum Isolationsschlitz)
-bw = 62.6; bh = 30;              // Riegel unten (Netzteil, Klemmen); rechts daneben der Ausschnitt fuer die Leitungen
+/* [Platine v1.6] */
+pw = 68;  ph = 68;  pd = 1.6;    // Breite, Oberkante ueber Y = 0, Dicke
+yu = -4.5;                       // Unterkante der Platine (Streifen fuer den Schraubdom unter dem Netzteil)
+pu = 68;                         // Breite des unteren Teils (gleich dem Arm, keine Stufe mehr)
+bw = 54.6; bh = 30;              // Riegel unten (Netzteil, Klemme); rechts daneben der Ausschnitt fuer die Leitungen
 iso_y0 = 43.2; iso_y1 = 45.2;    // Isolationsschlitz zwischen Netzteil (unten) und 3,3-V-Teil (oben)
-steg = 22;                       // Breite der Verbindung links
+steg = 14;                       // Breite der Verbindung links
 fase = 6;                        // abgeschraegte Ecke oben rechts
 schlitz_x = pw - 9.5;            // Thermoschlitz vor der Sensorinsel
 h_oben  = 15.3;                  // hoechstes Bauteil oben (Netzteil 15,1 mm)
 h_unten = 3.4;                   // Stifte des bedrahteten Netzteils unter der Platine (Klemme 1,9 mm)
-loch    = [[4.8, 5.5], [46.5, 56.0]];   // Bohrungen 6,6 mm in der Platine fuer die Schraubdome
+loch    = [[6.0, -0.2], [52.0, 54.0]];   // Bohrungen 6,6 mm in der Platine fuer die Schraubdome
 // Abschnitte des Isolationsschlitzes, in denen keine Optokoppler sitzen: dort steht ein Steg im Schlitz
-iso_frei = [[22.6, 34.6], [44.4, 50.4], [58.0, 68.4]];
-led     = [36.5, 58.6];          // Lage der RGB-LED: darueber sitzt der Lichtschacht im Deckel
+iso_frei = [[14.6, 26.6], [36.4, 42.6], [50.0, 68.4]];
+led     = [35.3, 63.6];          // Lage der RGB-LED: darueber sitzt der Lichtschacht im Deckel
 
 /* [Gehaeuse] */
 spiel   = 0.3;           // Luft rund um die Platine
@@ -67,8 +68,8 @@ ls_z1 = 17.0;            // Oberkante der Oeffnungen in den Waenden (knapp unter
 
 // ---- abgeleitete Masse
 t   = spiel + wand;
-xa0 = -t; xa1 = pw + t; ya0 = -t; ya1 = ph + t;
-xi0 = -spiel; xi1 = pw + spiel; yi0 = -spiel; yi1 = ph + spiel;
+xa0 = -t; xa1 = pw + t; ya0 = yu - t; ya1 = ph + t;
+xi0 = -spiel; xi1 = pw + spiel; yi0 = yu - spiel; yi1 = ph + spiel;
 xu1 = pu + spiel; xb1 = pu + t;          // unterer Teil: Innen- und Aussenkante rechts
 ys  = iso_y0 + t;                        // Oberkante der Stufe rechts (Aussenwand ueber dem unteren Teil)
 zi0 = -h_unten - luft_u; zi1 = pd + h_oben + luft_o;
@@ -80,7 +81,10 @@ st0 = iso_y0 + 0.4; st1 = iso_y1 - 0.4;  // Steg im Isolationsschlitz
 $fn = 48;
 
 module quader(x0, y0, z0, x1, y1, z1) { translate([x0, y0, z0]) cube([x1 - x0, y1 - y0, z1 - z0]); }
-module aussen2d() { polygon([[xa0, ya0], [xb1, ya0], [xb1, ys], [xa1, ys], [xa1, ya1 - fa], [xa1 - fa, ya1], [xa0, ya1]]); }
+module aussen2d() {
+    if (pu > pw) polygon([[xa0, ya0], [xb1, ya0], [xb1, ys], [xa1, ys], [xa1, ya1 - fa], [xa1 - fa, ya1], [xa0, ya1]]);
+    else polygon([[xa0, ya0], [xa1, ya0], [xa1, ya1 - fa], [xa1 - fa, ya1], [xa0, ya1]]);
+}
 module innen2d() { offset(delta = -wand) aussen2d(); }
 module prisma(z0, z1) { translate([0, 0, z0]) linear_extrude(z1 - z0) children(); }
 module im_innenraum(z0, z1) { intersection() { prisma(z0, z1) offset(delta = 0.02) innen2d(); children(); } }
@@ -96,7 +100,7 @@ module aderloecher() {       // in der Aussenwand und in der Innenwand vor der K
 module wandschlitze() {
     translate([xa1 - fa / 2, ya1 - fa / 2, 0]) rotate([0, 0, -45])
         for (d = [-2.4, 2.4]) quader(d - 1.8, -3, ls_z0, d + 1.8, 3, ls_z1);                               // Fase: 2 x 3,6 mm
-    for (y = [47.5, 51.7, 55.9]) quader(xi1 - 0.15, y - 1.5, ls_z0, xa1 + 1, y + 1.5, ls_z1);             // rechts: 3 x 3,0 mm
+    for (y = [47.5, 51.7, 55.9, 60.1]) quader(xi1 - 0.15, y - 1.5, ls_z0, xa1 + 1, y + 1.5, ls_z1);       // rechts: 4 x 3,0 mm
     quader(58.9, yi1 - 0.15, ls_z0, 62.3, ya1 + 1, ls_z1);                                                // oben: 3,4 mm
 }
 // Fenster in der Deckelflaeche ueber der Sensorkammer: drei Oeffnungen 2,2 mm mit 1 mm breiten Stegen
@@ -130,7 +134,7 @@ module wanne() {
                 // Auflageleisten unter den Platinenkanten
                 quader(xi0, yi0, zi0, xi0 + auflage, yi1, 0);                         // links
                 quader(xi0, yi0, zi0, bw, yi0 + auflage, 0);                          // Riegel unten
-                quader(bw - auflage, yi0, zi0, bw, bh, 0);                            // Riegel rechts (am Anschlussraum)
+                quader(bw - auflage, yi0, zi0, bw, bh + 0.2, 0);                      // Riegel rechts (am Anschlussraum)
                 quader(bw - auflage, bh, zi0, xu1, bh + auflage, 0);                  // ueber dem Anschlussraum
                 quader(xu1 - auflage, bh, zi0, xu1, iso_y0, 0);                       // rechts, Netzteil
                 quader(xi1 - auflage, iso_y1, zi0, xi1, ph - fase, 0);                // rechts, Sensorarm
@@ -173,7 +177,7 @@ module deckel() {
                 klemmenwand(z_teil, zi1 + 0.1);
                 for (p = loch) translate([p[0], p[1], z_teil]) cylinder(r = rohr_r, h = zi1 + 0.1 - z_teil);
                 // Niederhalter an den Aussenwaenden, oberhalb der Trennebene an die Wand angebunden
-                for (x = [14, 46]) { nh(x, yi0 + 0.2, x + 2, 1.0); quader(x, yi0 - 0.1, z_teil, x + 2, 1.0, zi1); }                 // unten
+                for (x = [14, 46]) { nh(x, yi0 + 0.2, x + 2, yu + 1.0); quader(x, yi0 - 0.1, z_teil, x + 2, yu + 1.0, zi1); }                 // unten
                 for (y = [16, 41]) { nh(xi0 + 0.2, y, 1.0, y + 2); quader(xi0 - 0.1, y, z_teil, 1.0, y + 2, zi1); }                 // links
                 for (x = [30, 54]) { nh(x, ph - 1.0, x + 2, yi1 - 0.2); quader(x, ph - 1.0, z_teil, x + 2, yi1 + 0.1, zi1); }       // oben
                 nh(pw - 1.0, 49.0, xi1 - 0.2, 50.2); quader(pw - 1.0, 49.0, z_teil, xi1 + 0.1, 50.2, zi1);                          // rechts, Sensorarm
@@ -196,8 +200,8 @@ module deckel() {
         // Beschriftung (vertieft): Klemmenbelegung, Warnhinweis, Sensor
         for (i = [0 : 3]) translate([xu1 - 0.5, ader_y[i], za1 - 0.6]) linear_extrude(1)
             text(ader_txt[i], size = 3.4, font = "DejaVu Sans:style=Bold", valign = "center", halign = "right");
-        translate([14, 15, za1 - 0.6]) linear_extrude(1) text("230 V~", size = 6, font = "DejaVu Sans:style=Bold", valign = "center");
-        translate([26, 50.5, za1 - 0.6]) linear_extrude(1) text("Sensor >", size = 3.6, font = "DejaVu Sans:style=Bold", valign = "center");
+        translate([6, 15, za1 - 0.6]) linear_extrude(1) text("230 V~", size = 6, font = "DejaVu Sans:style=Bold", valign = "center");
+        translate([22, 49.5, za1 - 0.6]) linear_extrude(1) text("Sensor >", size = 3.6, font = "DejaVu Sans:style=Bold", valign = "center");
     }
 }
 
@@ -205,11 +209,12 @@ module platine() {
     if (mit_platine) {
         color([0.1, 0.45, 0.2]) import("platine_bestueckt.stl");
         // Bauteile ohne 3D-Modell als Quader in den Datenblattmassen
-        color([0.9, 0.88, 0.8]) quader(59.15, 32.65, pd, 69.25, 35.75, pd + 3.1);                        // Sicherung
-        color([0.1, 0.25, 0.5]) quader(45.95, 29.95, pd, 53.95, 36.25, pd + 4.5);                        // Varistor
-        color([0.55, 0.4, 0.25]) quader(46.3, 17.65, pd, 51.3, 23.35, pd + 2.0);                         // X2-Kondensator
-        color([0.15, 0.15, 0.15]) quader(33.95, 28.4, pd, 41.05, 35.0, pd + 2.3);                        // Triac (DPAK)
+        color([0.9, 0.88, 0.8]) quader(51.15, 32.65, pd, 61.25, 35.75, pd + 3.1);                        // Sicherung
+        color([0.1, 0.25, 0.5]) quader(37.95, 29.95, pd, 45.95, 36.25, pd + 4.5);                        // Varistor
+        color([0.55, 0.4, 0.25]) quader(38.3, 17.65, pd, 43.3, 23.35, pd + 2.0);                         // X2-Kondensator
+        color([0.15, 0.15, 0.15]) quader(25.95, 28.4, pd, 33.05, 35.0, pd + 2.3);                        // Triac (DPAK)
         color([0.95, 0.95, 0.95]) quader(pw - 5.55, ph - 12.75, pd, pw - 4.05, ph - 11.25, pd + 0.9);    // Feuchtesensor
+        color([0.75, 0.75, 0.78]) quader(39.53, 62.42, pd, 48.47, 65.58, pd + 6.4);                      // USB-C-Buchse, stehend
     }
 }
 

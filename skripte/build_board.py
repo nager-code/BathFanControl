@@ -1,10 +1,12 @@
-# Erzeugt die Platine der Lueftersteuerung (v1.5, 76 x 63 mm, 2 Lagen, nur von oben bestueckt) aus der Netzliste.
+# Erzeugt die Platine der Lueftersteuerung (v1.6, 68 x 72,5 mm, 2 Lagen, nur von oben bestueckt) aus der Netzliste.
 # SMD-Bauteile, dazu bedrahtet das Netzteil (Hi-Link HLK-PM03) und die Netzklemme (Phoenix MKDS 1,5/4-5,08).
-# Die Platine ist so gezeichnet, wie sie eingebaut von vorn zu sehen ist. Von unten nach oben:
-#   Riegel 62,6 x 30 mm: links 3,3 V, dann Netzteil und Klemme (Leiter von rechts in den Ausschnitt)
-#   Netzreihe bis y = 43,2 mm (76 mm breit): Triac Q1, Varistor, Sicherung, Teilerwiderstaende, Netzseite von U2 und U3
+# Die Platine ist so gezeichnet, wie sie eingebaut von vorn zu sehen ist. Hoehen y zaehlen ab der Unterkante des
+# Netzteil-Riegels (y = 0); darunter haengt ein 4,5 mm hoher Streifen fuer den Schraubdom. Von unten nach oben:
+#   Streifen y = -4,5..0: Bohrung fuer den Schraubdom unter dem Netzteil
+#   Riegel 54,6 x 30 mm: Netzteil (3,3 V links, Netz rechts) und Klemme (Leiter von rechts in den Ausschnitt)
+#   Netzreihe bis y = 43,2 mm (68 mm breit): Triac Q1, Varistor, Sicherung, Teilerwiderstaende, Netzseite von U2 und U3
 #   Isolationsschlitz 2 mm (nach rechts offen), die Optokoppler sitzen darueber
-#   Arm 68 x 18 mm: WLAN-Modul links, RGB-LED, Feuchtesensor ganz rechts hinter einem Thermoschlitz
+#   Arm 68 x 23 mm: WLAN-Modul links, RGB-LED, stehende USB-C-Buchse, Feuchtesensor ganz rechts hinter einem Thermoschlitz
 # Aufruf im KiCad-10-Python:  python3 build_board.py <netzliste.net> <projektordner>
 # Ergebnis: <projektordner>/lueftersteuerung.kicad_pcb  (Bauteile platziert, Netzseite geroutet,
 # Sperrflaechen, Masseflaechen; die 3,3-V-Seite wird danach vom Autorouter verlegt)
@@ -16,8 +18,9 @@ PCB = os.path.join(PRJ, "lueftersteuerung.kicad_pcb")
 SYSLIB = "/usr/share/kicad/footprints/"
 PRJLIB = os.path.join(PRJ, "lueftersteuerung.pretty")
 OX, OY = 100.0, 100.0          # linke obere Platinenecke im KiCad-Koordinatensystem
-W, H = 68.0, 63.0               # Arm oben: Breite, und Hoehe der ganzen Platine
-SX = 8.0                        # um so viel ist der Netzteil gegenueber dem Arm nach rechts gerueckt (breiter 3,3-V-Teil links)
+W, H = 68.0, 68.0               # Breite, und Hoehe der Oberkante ueber y = 0
+YB = 4.5                        # Streifen unter dem Riegel (Unterkante der Platine bei y = -YB)
+SX = 0.0                        # moegliche Verschiebung des Netzteils nach rechts (frueher 8 mm, jetzt 0)
 WU = W + SX                     # Breite des unteren Teils (Riegel + Netzreihe)
 XT = 50.0                       # Stiftreihe der Klemme X1 (im Rahmen des Netzteils, ohne SX)
 TP = 5.08                       # Raster der Klemme
@@ -29,7 +32,7 @@ FASE = 6.0                      # abgeschraegte Ecke oben rechts (zeigt zum Luef
 SLOT_X = W - 9.5                # Thermoschlitz vor der Sensorinsel (1 mm breit)
 DXS = W - 72.0                  # Lage der Sensorinsel
 ISO0, ISO1 = 13.95 + SX, 20.25 + SX   # kupferfreier Streifen im Riegel zwischen 3,3 V (links) und Netz (rechts)
-LOCH = [(4.8, 5.5), (46.5, 56.0)]   # Loecher fuer die beiden Schraubdome des Gehaeuses (6,6 mm)
+LOCH = [(6.0, -0.2), (52.0, 54.0)]   # Loecher fuer die beiden Schraubdome des Gehaeuses (6,6 mm)
 mm = pcbnew.FromMM
 F, B = pcbnew.F_Cu, pcbnew.B_Cu
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -51,7 +54,7 @@ padnet = {}
 for m in re.finditer(r'\(net\s+\(code\s+"\d+"\)\s+\(name\s+"([^"]*)"\)(.*?)(?=\(net\s+\(code|\Z)', txt, re.S):
     for r, p in re.findall(r'\(node\s+\(ref\s+"([^"]+)"\)\s+\(pin\s+"([^"]+)"\)', m.group(2)):
         padnet[(r, p)] = m.group(1)
-assert len(comps) == 35, len(comps)
+assert len(comps) == 43, len(comps)
 
 # ---------------------------------------------------------------- Platine anlegen
 if os.path.exists(PCB):
@@ -69,7 +72,7 @@ bds.m_CopperEdgeClearance = mm(0.3)
 bds.m_HoleClearance = mm(0.2)
 bds.m_HoleToHoleMin = mm(0.25)
 bds.m_SolderMaskMinWidth = 0
-bds.SetAuxOrigin(P(0, H))
+bds.SetAuxOrigin(P(0, H))        # Bezugspunkt fuer Fertigungsdaten und 3D-Export: x = 0, y = 0 (Unterkante des Riegels)
 bds.SetGridOrigin(P(0, 0))
 
 MAINS = ["/L", "/L_F", "/N", "/L_LICHT", "/LICHT_A", "/LICHT_B", "/L_FAN", "/SNUB",
@@ -103,7 +106,8 @@ def net(name):
 # ref: (x, y, Drehung, Unterseite) - x/y ist der Footprint-Ursprung in Platinenkoordinaten
 # ref: (x, y nach oben, Pad-Nr., Soll-Lage dieses Pads) - die Drehung wird daraus bestimmt. Alles auf der Oberseite.
 YT = [15.0 + TP * (k_ - 1.5) for k_ in range(4)]   # Pole der Klemme von unten nach oben: Pin 1..4 = Luefter, N, Licht, L
-LED_PAD1 = (37.35, 58.05)           # Soll-Lage von Pad 1 der LED (legt die Drehung fest)
+LED_PAD1 = (36.15, 63.05)           # Soll-Lage von Pad 1 der LED (legt die Drehung fest)
+USB_POS = (44.0, 64.0, "A12", (46.75, 64.865))   # stehende USB-C-Buchse (wird mit dem Footprint festgelegt)
 def N(x, y, n, tg):             # Bauteil der Netzseite: mit dem ganzen Netzteil um SX nach rechts
     return (x + SX, y, n, (tg[0] + SX, tg[1]))
 OBEN = {
@@ -130,23 +134,32 @@ OBEN = {
     "R4":  N(44.9, 52.2, "2", (44.9, 51.375)),
     "C3":  N(47.0, 52.2, "1", (47.0, 51.425)),
     # Arm und Verbindung (3,3 V)
-    "U1":  (8.0, 54.0, "3", (2.1, 53.7)),                    # Antenne an der Oberkante
-    "C1":  (24.0, 57.5, "1", (21.3, 57.5)),
-    "R9":  (17.0, 60.7, "2", (16.175, 60.7)),
-    "R6":  (17.0, 58.8, "2", (16.175, 58.8)),
-    "C6":  (17.0, 56.9, "1", (16.225, 56.9)),
-    "R7":  (17.0, 55.0, "2", (16.175, 55.0)),
-    "R8":  (17.0, 53.1, "2", (16.175, 53.1)),
+    "U1":  (8.0, H - 9.0, "3", (2.1, H - 9.3)),              # Antenne an der Oberkante
+    "C1":  (24.0, 62.5, "1", (21.3, 62.5)),
+    "R9":  (17.0, 65.7, "2", (16.175, 65.7)),
+    "R6":  (17.0, 63.8, "2", (16.175, 63.8)),
+    "C6":  (17.0, 61.9, "1", (16.225, 61.9)),
+    "R7":  (17.0, 60.0, "2", (16.175, 60.0)),
+    "R8":  (17.0, 58.1, "2", (16.175, 58.1)),
     "C5":  (11.5, 43.6, "1", (10.725, 43.6)),
     "R10": (11.5, 41.6, "2", (10.675, 41.6)),
     "R11": (11.5, 39.7, "2", (10.675, 39.7)),
-    "C4":  (16.0, 33.0, "1", (15.05, 33.0)),
-    "J1":  (6.0, 35.0, "1", (4.5, 38.175)),                  # Programmierflaechen (nicht bestueckt)
+    "C4":  (8.5, 28.2, "1", (7.55, 28.2)),
+    "JP1": (21.5, 52.5, "1", (20.85, 52.5)),                 # Loetflaechen Boot (GPIO9 nach Masse)
+    "JP2": (25.6, 52.5, "1", (24.95, 52.5)),                 # Loetflaechen Reset (EN nach Masse)
     # RGB-LED mit Vorwiderstaenden
-    "D1":  (36.5, 58.6, "1", LED_PAD1),
-    "R13": (31.5, 60.5, "1", (30.675, 60.5)),
-    "R14": (31.5, 58.6, "1", (30.675, 58.6)),
-    "R15": (31.5, 56.7, "1", (30.675, 56.7)),
+    "D1":  (35.3, 63.6, "1", LED_PAD1),
+    "R13": (30.5, 65.5, "1", (29.675, 65.5)),
+    "R14": (30.5, 63.6, "1", (29.675, 63.6)),
+    "R15": (30.5, 61.7, "1", (29.675, 61.7)),
+    # USB zum Programmieren: stehende Buchse, Diode, Regler 3,3 V
+    "J2":  USB_POS,
+    "D2":  (40.2, 59.8, "1", (38.55, 59.8)),                 # Kathode links (zum Regler)
+    "U5":  (40.2, 56.6, "1", (39.0625, 57.55)),              # 1 = VIN oben links, 5 = VOUT oben rechts
+    "C8":  (37.2, 56.6, "1", (37.2, 57.375)),
+    "C9":  (43.2, 56.6, "1", (43.2, 57.375)),
+    "R18": (45.9, 59.8, "1", (45.075, 59.8)),
+    "R19": (45.9, 57.9, "1", (45.075, 57.9)),
     "U4":  (W - 4.8, H - 12.0, "1", (W - 5.5, H - 11.6)),    # Sensor ganz rechts auf der Insel
     "C7":  (W - 2.8, H - 12.0, "1", (W - 2.8, H - 12.775)),
 }
@@ -194,10 +207,11 @@ for ref, c in comps.items():
 fps["R12"].SetDNP(True)
 fps["R12"].SetExcludedFromPosFiles(True)
 fps["R12"].SetExcludedFromBOM(True)
-# J1 sind unbestueckte Programmierpads
-fps["J1"].SetExcludedFromPosFiles(True)
-fps["J1"].SetExcludedFromBOM(True)
-fps["J1"].SetDNP(True)
+# JP1/JP2 sind Loetflaechen zum Ueberbruecken (Boot, Reset), kein Bauteil
+for r_ in ("JP1", "JP2"):
+    fps[r_].SetExcludedFromPosFiles(True)
+    fps[r_].SetExcludedFromBOM(True)
+    fps[r_].SetDNP(True)
 
 def pad(ref, num):
     for p in fps[ref].Pads():
@@ -219,7 +233,7 @@ def edge_poly(pts, closed=True):
 
 # Aussenkontur (y nach oben): Riegel, Netzreihe (rechts ueber dem Anschlussraum laenger), Isolationsschlitz
 # nach rechts offen, Arm mit Thermoschlitz vor der Sensorinsel und abgeschraegter Ecke.
-edge_poly([U(*q) for q in [(0, 0), (BW, 0), (BW, BH), (WU, BH), (WU, SLITZ0), (BRIDGE, SLITZ0), (BRIDGE, SLITZ1),
+edge_poly([U(*q) for q in [(0, -YB), (BW, -YB), (BW, BH), (WU, BH), (WU, SLITZ0), (BRIDGE, SLITZ0), (BRIDGE, SLITZ1),
                            (SLOT_X, SLITZ1), (SLOT_X, H - 6.0), (SLOT_X + 1.0, H - 6.0), (SLOT_X + 1.0, SLITZ1),
                            (W, SLITZ1), (W, H - FASE), (W - FASE, H), (0, H)]])
 for x_, y_ in LOCH:
@@ -274,17 +288,17 @@ def rect(x1, y1, x2, y2):
 
 def urect(x1, y1, x2, y2):          # Rechteck in Koordinaten mit y nach oben
     return rect(x1, H - y2, x2, H - y1)
-zone(urect(ISO0, 0, ISO1, SLITZ0), [F, B], rule=("tracks", "vias", "fill"), name="Isolation im Riegel")
+zone(urect(ISO0, -YB, ISO1, SLITZ0), [F, B], rule=("tracks", "vias", "fill"), name="Isolation im Riegel")
 zone(urect(ISO0, NETZ_OBEN, WU, KS_UNTEN), [F, B], rule=("tracks", "vias", "fill"), name="Isolation Netzreihe / Arm")
 zone(rect(0, 0, 15.2, 6.3), [F, B], rule=("tracks", "vias", "fill"), name="Antenne U1")
 zone(rect(SLOT_X, 0, W, H - SLITZ1), [F, B], rule=("fill",), name="Sensorinsel ohne Flaeche")
 # Randstreifen fuer den Autorouter: keine Bahnen/Durchkontaktierungen dicht an Kanten und Loechern
-RAND = [rect(15.2, 0, SLOT_X - 1.5, 0.45), rect(0, 6.3, 0.45, H), urect(0, 0, ISO0, 0.45),
+RAND = [rect(15.2, 0, SLOT_X - 1.5, 0.45), rect(0, 6.3, 0.45, H + YB), urect(0, -YB, ISO0, -YB + 0.45),
         rect(SLOT_X - 0.45, 5.4, SLOT_X, H - SLITZ1), rect(SLOT_X - 0.45, 5.4, SLOT_X + 1.45, 6.0)]
 RAND += [urect(x_ - 3.75, y_ - 3.75, x_ + 3.75, y_ + 3.75) for x_, y_ in LOCH]
 for i_, r_ in enumerate(RAND):
     zone(r_, [F, B], rule=("tracks", "vias"), name="Rand %d" % (i_ + 1))
-zone([U(*q) for q in [(0, 0), (ISO0 - 0.05, 0), (ISO0 - 0.05, SLITZ1), (W, SLITZ1), (W, H), (0, H)]],
+zone([U(*q) for q in [(0, -YB), (ISO0 - 0.05, -YB), (ISO0 - 0.05, SLITZ1), (W, SLITZ1), (W, H), (0, H)]],
      [F, B], netname="/GND", name="GND")
 
 # ---------------------------------------------------------------- Leiterbahnen
@@ -393,12 +407,12 @@ for fp in board.GetFootprints():
             f_.SetVisible(False)
 
 # Klemmenbelegung: auf der Oberseite verdeckt das Klemmengehaeuse alles, deshalb auf der Unterseite neben den Stiften
-for lab, num in (("L", "4"), ("Licht", "3"), ("N", "2"), ("Luefter", "1")):
+for lab, num in (("L", "4"), ("Licht", "3"), ("N", "2"), ("Lüfter", "1")):
     text(lab, XT + SX - 4.6, pad("X1", num)[1], pcbnew.B_SilkS, 1.0, 0, True)
-text("230 V~", 12.0 + SX, U(0, 15.0)[1], pcbnew.F_SilkS, 1.5, 0, False, 0.25)
-text("230 V~", 30.0 + SX, U(0, 15.0)[1], pcbnew.B_SilkS, 1.2, 0, True, 0.2)
-text("Lueftersteuerung Bad v1.5", 40.0, U(0, 50.3)[1], pcbnew.B_SilkS, 0.8, 0, True, 0.12)
-text("Sensor", W - 4.5, 16.0, pcbnew.F_SilkS, 0.8, 0, False, 0.12)
+text("230 V~", 38.0 + SX, U(0, 1.6)[1], pcbnew.F_SilkS, 1.3, 0, False, 0.2)
+text("230 V~", 31.0 + SX, U(0, -2.3)[1], pcbnew.B_SilkS, 1.2, 0, True, 0.2)
+text("Lüftersteuerung Bad v1.6", 40.0, U(0, 50.3)[1], pcbnew.B_SilkS, 1.0, 0, True, 0.15)
+text("Sensor", W - 4.5, 16.0, pcbnew.F_SilkS, 1.0, 0, False, 0.15)
 
 pcbnew.SaveBoard(PCB, board)
 print("gespeichert:", PCB)

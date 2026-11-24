@@ -1,10 +1,10 @@
 #!/bin/bash
 W=$(cd "$(dirname "$0")/.." && pwd)   # Projektordner (im Container unter /w eingebunden)
-# Kompletter Durchlauf: Schaltplan anpassen -> Netzliste -> Footprints -> Platine -> Autorouting 3,3 V -> Masse -> DRC
+# Kompletter Durchlauf: Schaltplan -> Netzliste -> Footprints -> Platine -> Autorouting 3,3 V -> Masse -> Beschriftung
 set -e
 
 cd $W
-python3 -I skripte/update_sch.py eingang/lueftersteuerung.kicad_sch kicad/lueftersteuerung.kicad_sch kicad/Luefter.kicad_sym
+# Quelle ist der Schaltplan kicad/lueftersteuerung.kicad_sch (in KiCad bearbeiten); daraus entsteht die Netzliste.
 docker exec -w /w/kicad kc bash -c 'kicad-cli sym upgrade Luefter.kicad_sym >/dev/null 2>&1; kicad-cli sch upgrade lueftersteuerung.kicad_sch >/dev/null 2>&1; kicad-cli sch export netlist -o /w/work/sch/neu.net lueftersteuerung.kicad_sch >/dev/null 2>&1'
 docker exec kc python3 /w/skripte/make_footprints.py /w/kicad text 2>&1 | grep -v -E "Debug|leak" | tail -1
 docker exec kc python3 /w/skripte/build_board.py /w/work/sch/neu.net /w/kicad 2>&1 | grep -v -E "Debug|leak" | head -1
@@ -16,4 +16,5 @@ docker exec kc python3 /w/skripte/route_lv_export.py /w/kicad/lueftersteuerung.k
 test -s work/route/lv.ses
 docker exec kc python3 /w/skripte/route_lv_import.py /w/kicad/lueftersteuerung.kicad_pcb /w/work/route/tmp.kicad_pcb /w/work/route/lv.ses 2>&1 | grep -E "SES|uebernommen"
 docker exec kc python3 /w/skripte/stitch.py /w/kicad/lueftersteuerung.kicad_pcb 2>&1 | grep -E "Masse"
+docker exec kc python3 /w/skripte/beschriftung.py /w/kicad/lueftersteuerung.kicad_pcb 2>&1 | grep -E "Beschriftung"
 python3 -I skripte/patch_pro.py kicad/lueftersteuerung.kicad_pro
