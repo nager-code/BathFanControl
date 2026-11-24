@@ -13,7 +13,7 @@
 - `BOM_JLCPCB.csv` – Stückliste mit LCSC-Nummern
 - `CPL_JLCPCB.csv` – Bestückungsdatei (Koordinaten passend zu den Gerberdaten)
 - `bestueckung_oben.pdf` – Bestückungsplan; `bestueckung_unten.pdf` zeigt nur die Beschriftung der Unterseite
-- Eine beschriftete Übersicht der Bauteile liegt in `../doku/lageplan.png` (auf der Platine selbst stehen keine Bauteilnamen)
+- Eine beschriftete Übersicht der Bauteile liegt in `../doku/lageplan.png` (auf der Platine selbst stehen nur die Namen der größeren Bauteile und die Klemmenbelegung)
 - `nicht_bestueckt.csv` – R12 (nur bei Fehlauslösung durch Glimmlampe/LED-Leuchte) sowie JP1 und JP2 (Lötflächen für Boot und Reset, kein Bauteil)
 
 ## Besonderheiten

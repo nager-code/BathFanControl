@@ -3,11 +3,11 @@
 Feuchteabhängige Steuerung für einen Badlüfter (KN2 UP, ca. 50 W) an 230 V mit ESP32-C3, SHT40 und WLAN. Stand: **V1.0**, die Planung ist abgeschlossen.
 Platine 68 x 72,5 mm in einer Form für den Einbau im Lüfterkasten, 2 Lagen, nur von oben bestückt: SMD-Bauteile, dazu bedrahtet das Netzteil und die Netzklemme. Entworfen mit KiCad 10; alle Bauteile sind bei JLCPCB gelistet und waren am 24.11.2026 dort am Lager.
 
-![3D-Ansicht der Platine](doku/platine_3d_oben_schraeg.png)
+![3D-Ansicht der Platine](doku/platine_3d_oben_schraeg.png?v=1.0)
 
-![3D-Ansichten der Platine von allen Seiten](doku/platine_3d_ansichten.png)
+![3D-Ansichten der Platine von allen Seiten](doku/platine_3d_ansichten.png?v=1.0)
 
-![Lageplan: was sitzt wo auf der Platine](doku/lageplan.png)
+![Lageplan: was sitzt wo auf der Platine](doku/lageplan.png?v=1.0)
 
 Der Lageplan zeigt, welches Bauteil wo sitzt und wozu es dient (auch als `doku/lageplan.svg`). Die Unterseite trägt keine Bauteile, dort stehen nur die Lötstifte von Netzteil und Klemme über. Sicherung, Varistor, X2-Kondensator, Triac, LED, USB-Buchse und Sensor sind in den Bildern vereinfachte Quader, weil es für sie kein fertiges 3D-Modell gibt. `doku/platine_3d.glb` lässt sich in jedem glTF-Betrachter drehen.
 
@@ -31,9 +31,9 @@ Der Lageplan zeigt, welches Bauteil wo sitzt und wozu es dient (auch als `doku/l
 | [`gehaeuse/`](gehaeuse) | Gehäuse für den 3D-Druck (OpenSCAD, STL), Entwurf für den Einbau im Lüfterkasten |
 | [`skripte/`](skripte) | Skripte, die Platine und Bestellpaket neu erzeugen |
 
-![Einbaulage im Lüfterkasten: wo der Feuchtesensor sitzt](doku/einbaulage.svg)
+![Einbaulage im Lüfterkasten: wo der Feuchtesensor sitzt](doku/einbaulage.svg?v=1.0)
 
-![Gehäuse geschlossen und geöffnet](gehaeuse/bilder/gehaeuse_beide.png)
+![Gehäuse geschlossen und geöffnet](gehaeuse/bilder/gehaeuse_beide.png?v=1.0)
 
 ## Stand
 

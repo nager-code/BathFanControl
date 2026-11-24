@@ -2,10 +2,10 @@
 
 Zweiteiliges Gehäuse aus Wanne und Deckel für den Einbau unten links im Lüfterkasten, vor dem Lüftergehäuse. Netzteil und Klemmen liegen unten, die Leitungen kommen von rechts, der Feuchtesensor sitzt oben rechts hinter der abgeschrägten Ecke zum Lüfter-Einlass. Parametrisches OpenSCAD-Modell, druckbar ohne Stützmaterial.
 
-![Gehäuse geschlossen und geöffnet](bilder/gehaeuse_beide.png)
-![Wanne mit Platine von vorn](bilder/gehaeuse_offen_von_vorn.png)
-![Seite mit Leitungsöffnungen und Lüftungsschlitzen](bilder/gehaeuse_leitungsseite.png)
-![Wanne und Deckel von innen: Sensorkammer oben rechts, Anschlussraum mit Innenwand unten rechts](bilder/gehaeuse_kammern.png)
+![Gehäuse geschlossen und geöffnet](bilder/gehaeuse_beide.png?v=1.0)
+![Wanne mit Platine von vorn](bilder/gehaeuse_offen_von_vorn.png?v=1.0)
+![Seite mit Leitungsöffnungen und Lüftungsschlitzen](bilder/gehaeuse_leitungsseite.png?v=1.0)
+![Wanne und Deckel von innen: Sensorkammer oben rechts, Anschlussraum mit Innenwand unten rechts](bilder/gehaeuse_kammern.png?v=1.0)
 
 ## Maße
 
