@@ -53,8 +53,9 @@ Von oben nach unten (Raster 5,08 mm):
 Die Reihenfolge ergibt sich aus der kreuzungsfreien Verdrahtung. Sie steht:
 
 - auf der Oberseite direkt hinter der Klemme, je Pol ein Name auf Höhe der Schraube – lesbar, wenn die Platine in der Wanne liegt und der Deckel ab ist,
-- auf der Unterseite neben den Stiften,
-- außen auf dem Gehäusedeckel.
+- auf der Unterseite neben den Stiften.
+
+Außen auf dem Gehäuse sind die Anschlüsse nicht beschriftet.
 
 ## Isolation
 
