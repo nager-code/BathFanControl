@@ -12,7 +12,8 @@
 //
 // Aufruf:  openscad -D 'teil="wanne"'  -o wanne.stl  gehaeuse.scad
 //          openscad -D 'teil="deckel"' -o deckel.stl gehaeuse.scad
-// teil = "wanne" | "deckel" | "zusammen" | "offen" | "schnitt"
+//          openscad -D 'teil="schrift"' -o deckel_schrift.stl gehaeuse.scad   (Einlage fuer zweifarbige Schrift)
+// teil = "wanne" | "deckel" | "schrift" | "zusammen" | "offen" | "schnitt"
 
 teil = "zusammen";
 mit_platine = true;      // Platine in den Ansichten einblenden
@@ -48,7 +49,7 @@ zw      = 1.6;           // Staerke der Zwischenwaende
 
 /* [Leitungen: von rechts in den Anschlussraum] */
 ader_y   = [22.62, 17.54, 12.46, 7.38];    // Pole der Klemme von oben nach unten (Raster 5,08 mm)
-ader_txt = ["L", "Licht", "N", "Lüfter"];
+ader_txt = ["L", "LICHT", "N", "LÜFTER"];        // Grossbuchstaben: keine kleinen Innenformen, die beim Druck zulaufen
 ader_d   = 3.4;                            // an den Aussendurchmesser der Adern anpassen (moeglichst knapp)
 
 /* [Verschraubung: zwei Dome der Wanne gehen durch die Bohrungen der Platine] */
@@ -62,6 +63,16 @@ z_sitz    = z_teil + 2.5;  // Unterkante des Schraubensitzes im Deckel
 /* [Lichtschacht der RGB-LED] */
 ls_da = 6.0;  ls_di = 3.6;       // Aussen- und Innendurchmesser
 led_fenster = 0.6;               // Reststaerke der Deckelflaeche ueber dem Schacht (helles/transparentes Filament); 0 = offen
+
+/* [Beschriftung der Deckelflaeche] */
+schrift       = true;    // false = glatter Deckel (z. B. fuer ein Klebeetikett)
+schrift_font  = "DejaVu Sans:style=Bold";
+schrift_fett  = 0.1;     // Striche ringsum um dieses Mass verbreitern (Strichbreite der kleinen Schrift dann rund 0,8 mm)
+schrift_weit  = 1.3;     // Buchstabenabstand: zwischen den Zeichen bleiben mindestens 0,8 mm Wand stehen
+schrift_t     = 0.4;     // Tiefe mit senkrechten Flanken = 2 Schichten zu 0,2 mm; zugleich die Dicke der Einlage (teil = "schrift")
+schrift_r_zu  = true;    // kleine Innenform im R schliessen (druckt sauberer)
+schrift_steg  = 0.8;     // Stege in "0" und "O" (Schablonenschrift); 0 = ohne, z. B. fuer den zweifarbigen Druck
+schrift_h     = 4.0;     // Schrifthoehe der Klemmenbelegung (Raster der Pole 5,08 mm: zwischen den Zeilen bleiben 0,9 mm)
 
 /* [Oeffnungen der Sensorkammer] */
 ls_z0 = pd + 0.8;        // Unterkante der Schlitze: knapp ueber der Platine, damit die Luft ueber den Sensor streicht
@@ -162,12 +173,42 @@ module wanne() {
 // ------------------------------------------------------------------ Deckel
 module nh(x0, y0, x1, y1) { quader(x0, y0, pd + 0.15, x1, y1, zi1 + 0.1); }      // Niederhalter auf dem Platinenrand
 
-// Vertiefte Schrift in der Deckelflaeche als V-Nut: die Flanken laufen unter 45 Grad zusammen. Die Deckelflaeche liegt
-// beim Druck auf dem Bett - eine Nut mit senkrechten Flanken muesste der Drucker frei ueberbruecken (Slicer-Warnung).
-module gravur(tiefe = 0.6, stufe = 0.1) {
-    for (k = [0 : round(tiefe / stufe) - 1])
-        translate([0, 0, za1 - (k + 1) * stufe]) linear_extrude(stufe + (k == 0 ? 1 : 0.01)) offset(delta = -k * stufe) children();
+// Beschriftung der Deckelflaeche (Klemmenbelegung, Warnhinweis, Sensor), von vorn gelesen. Die Deckelflaeche liegt beim
+// Druck auf dem Bett. Damit die Schrift dort sauber wird: Grossbuchstaben, Striche mindestens 0,8 mm breit (zwei
+// Bahnbreiten einer 0,4-mm-Duese), weiter Buchstabenabstand, die ersten schrift_t mit senkrechten Flanken. Darueber laeuft die Vertiefung unter
+// 45 Grad zu, so dass der Drucker nichts frei ueberbruecken muss.
+module zeile(txt, hoehe, halign = "left", weit = schrift_weit) {     // Grundlinie so, dass die Grossbuchstaben um y = 0 zentriert sind
+    module roh() { translate([0, -hoehe / 2]) text(txt, size = hoehe, font = schrift_font, valign = "baseline", halign = halign, spacing = weit); }
+    // Buchstaben bis zur Versalhoehe: Striche verbreitern
+    offset(r = schrift_fett) intersection() { roh(); translate([-200, -hoehe]) square([400, 1.56 * hoehe]); }
+    // Umlautpunkte: nicht verbreitern und etwas anheben, damit zwischen Punkt und Buchstabe 0,8 mm Wand stehen bleiben
+    translate([0, 0.5]) intersection() { roh(); translate([-200, 0.56 * hoehe]) square([400, hoehe]); }
 }
+module schrift2d() {
+    difference() {
+        union() {
+            for (i = [0 : 3]) translate([xu1 - 0.8, ader_y[i]]) zeile(ader_txt[i], schrift_h, "right");
+            translate([6, 34]) { zeile("230 V", 6, weit = 1.2); translate([30.8, 0]) zeile("~", 6); }
+            translate([6, 49.5]) zeile("SENSOR", 4.5);
+            translate([44.6, 49.5]) polygon([[0, -2.4], [2.6, 0], [0, 2.4], [-1.2, 2.4], [1.4, 0], [-1.2, -2.4]]);   // Pfeil zur Sensorkammer
+            // Innenform der beiden R schliessen: als Insel von weniger als 1 mm2 wuerde sie auf dem Druckbett nicht haften
+            if (schrift_r_zu) { translate([xu1 - 0.8 - 3.4, ader_y[3] + 0.82]) circle(d = 1.5, $fn = 24); translate([6 + 32.5, 49.5 + 0.9]) circle(d = 1.7, $fn = 24); }
+        }
+        // Stege wie bei einer Schablonenschrift: sie binden die Innenform von "0" und "O" oben und unten an die Deckelflaeche
+        // an. Ohne Steg waere die Innenform eine lose Insel in der ersten Schicht (Slicer-Warnung "Low bed adhesion").
+        // Die Lagen der Zeichen sind aus der Schrift DejaVu Sans Bold gemessen; bei anderer Schrift oder Groesse anpassen.
+        if (schrift_steg > 0) {
+            translate([6 + 16.5 - schrift_steg / 2, 34 - 5]) square([schrift_steg, 10]);        // 0 in "230 V~"
+            translate([6 + 26.1 - schrift_steg / 2, 49.5 - 4]) square([schrift_steg, 8]);       // O in "SENSOR"
+        }
+    }
+}
+module gravur() {
+    translate([0, 0, za1 - schrift_t]) linear_extrude(schrift_t + 1) schrift2d();
+    for (k = [1 : 8]) translate([0, 0, za1 - schrift_t - k * 0.1]) linear_extrude(0.11) offset(delta = -k * 0.1) schrift2d();
+}
+// Einlage fuer zweifarbigen Druck: fuellt die Vertiefung der Schrift buendig aus (schrift_t dick)
+module schrift_einlage() { translate([0, 0, za1 - schrift_t]) linear_extrude(schrift_t) schrift2d(); }
 
 module deckel() {
     difference() {
@@ -211,11 +252,8 @@ module deckel() {
         // Oeffnungen der Sensorkammer: in den Waenden und in der Deckelflaeche
         wandschlitze();
         dachfenster();
-        // Beschriftung (vertieft): Klemmenbelegung, Warnhinweis, Sensor
-        for (i = [0 : 3]) translate([xu1 - 0.5, ader_y[i], 0]) gravur()
-            text(ader_txt[i], size = 3.4, font = "DejaVu Sans:style=Bold", valign = "center", halign = "right");
-        translate([6, 15, 0]) gravur() text("230 V~", size = 6, font = "DejaVu Sans:style=Bold", valign = "center");
-        translate([22, 49.5, 0]) gravur() text("Sensor >", size = 3.6, font = "DejaVu Sans:style=Bold", valign = "center");
+        // Beschriftung (vertieft)
+        if (schrift) gravur();
     }
 }
 
@@ -235,6 +273,8 @@ module platine() {
 c_w = [0.85, 0.85, 0.82];  c_d = [0.75, 0.78, 0.8];
 if (teil == "wanne") wanne();
 if (teil == "deckel") translate([0, 0, za1]) rotate([180, 0, 0]) deckel();     // Druckrichtung: Deckelflaeche auf dem Bett
+if (teil == "schrift") translate([0, 0, za1]) rotate([180, 0, 0]) schrift_einlage();   // Einlage, gleiche Lage wie der Deckel
+if (teil == "schrift2d") schrift2d();                                          // nur zur Kontrolle der Strichbreiten
 if (teil == "deckel_lage") deckel();                                           // Einbaulage (fuer Pruefungen)
 if (teil == "zusammen") { color(c_w) wanne(); color(c_d) deckel(); }
 if (teil == "offen") { color(c_w) wanne(); platine(); }

@@ -41,7 +41,7 @@ Entwickelt für einen **KN2-UP-Unterputzlüfter** (Einrohr-Lüftungssystem, ca. 
 
 | Lageplan der Bauteile | Gehäuse geschlossen und offen |
 |---|---|
-| ![Lageplan: was sitzt wo auf der Platine](doku/lageplan.png?v=1.0) | ![Gehäuse geschlossen und geöffnet](gehaeuse/bilder/gehaeuse_beide.png?v=1.0) |
+| ![Lageplan: was sitzt wo auf der Platine](doku/lageplan.png?v=1.0) | ![Gehäuse geschlossen und geöffnet](gehaeuse/bilder/gehaeuse_beide.png?v=1.0b) |
 
 Weitere Ansichten: [Platine von allen Seiten](doku/platine_3d_ansichten.png), [Einbaulage im Lüfterkasten](doku/einbaulage.svg), [3D-Modell zum Drehen](doku/platine_3d.glb) (glTF), [Schaltplan als PDF](doku/schaltplan.pdf).
 

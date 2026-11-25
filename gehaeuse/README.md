@@ -6,13 +6,13 @@
 
 Zweiteiliges Gehäuse aus Wanne und Deckel für den Einbau unten links im Lüfterkasten, vor dem Lüftergehäuse. Netzteil und Klemme liegen unten, die Leitungen kommen von rechts, der Feuchtesensor sitzt oben rechts hinter der abgeschrägten Ecke zum Lüfter-Einlass. Das Modell ist parametrisch in OpenSCAD aufgebaut und ohne Stützmaterial druckbar.
 
-![Gehäuse geschlossen und geöffnet](bilder/gehaeuse_beide.png?v=1.0)
+![Gehäuse geschlossen und geöffnet](bilder/gehaeuse_beide.png?v=1.0b)
 
 | Wanne mit Platine von vorn | Seite mit Leitungsöffnungen und Lüftungsschlitzen |
 |---|---|
-| ![Wanne mit Platine von vorn](bilder/gehaeuse_offen_von_vorn.png?v=1.0) | ![Seite mit Leitungsöffnungen und Lüftungsschlitzen](bilder/gehaeuse_leitungsseite.png?v=1.0) |
+| ![Wanne mit Platine von vorn](bilder/gehaeuse_offen_von_vorn.png?v=1.0) | ![Seite mit Leitungsöffnungen und Lüftungsschlitzen](bilder/gehaeuse_leitungsseite.png?v=1.0b) |
 
-![Wanne und Deckel von innen: Sensorkammer oben rechts, Anschlussraum mit Innenwand unten rechts](bilder/gehaeuse_kammern.png?v=1.0)
+![Wanne und Deckel von innen: Sensorkammer oben rechts, Anschlussraum mit Innenwand unten rechts](bilder/gehaeuse_kammern.png?v=1.0b)
 
 ## Maße
 
@@ -20,7 +20,7 @@ Zweiteiliges Gehäuse aus Wanne und Deckel für den Einbau unten links im Lüfte
 |---|---|
 | Außen | 72,6 breit x 77,1 hoch x 25,7 mm tief |
 | Wandstärke | 2 mm |
-| Druckvolumen | Wanne 19,3 cm³, Deckel 20,2 cm³ |
+| Druckvolumen | Wanne 19,3 cm³, Deckel 20,1 cm³ |
 | Werkstoff | flammhemmend nach UL 94 V-0, z. B. entsprechend ausgewiesenes PETG, ABS oder PC – **kein normales PLA** (Brandschutz und feuchtwarme Luft im Kasten) |
 | Schrauben | 2 Kunststoffschrauben 3 x 10 mm, am besten mit Senkkopf |
 | Druck | keine besonderen Einstellungen vorgegeben; ohne Stützmaterial drucken. Geprüft mit Düse 0,4 mm und Schichthöhen 0,15 bis 0,3 mm |
@@ -56,10 +56,28 @@ Von vorn gesehen wie in den Bildern: linke Seite an der Kastenwand, Unterseite a
 ### Weitere Details
 
 - **Trennung Netz / 3,3 V:** Im 2 mm breiten Isolationsschlitz der Platine steht ein Steg der Wanne. Eine Rippe des Deckels setzt ihn bis zur Decke fort – überall außer unter den beiden Optokopplern.
-- **Klemme:** Die Schrauben sind nur bei abgenommenem Deckel erreichbar. Belegung von oben nach unten: L, Licht, N, Lüfter. Sie steht auf der Platine direkt hinter der Klemme (sichtbar bei abgenommenem Deckel) und ist außen in den Deckel eingeprägt.
+- **Klemme:** Die Schrauben sind nur bei abgenommenem Deckel erreichbar. Belegung von oben nach unten: L, Licht, N, Lüfter. Sie steht auf der Platine direkt hinter der Klemme (sichtbar bei abgenommenem Deckel) und außen auf dem Deckel, jeweils auf Höhe der Ader (siehe [Beschriftung des Deckels](#beschriftung-des-deckels)).
 - **USB-C-Buchse:** Sie steht 7,5 mm hoch auf der Platine und liegt unter dem geschlossenen Deckel. Eine Öffnung dafür gibt es nicht; zum Programmieren den Deckel abnehmen (Netzspannung vorher abschalten).
 - **Lichtschacht der RGB-LED:** Ein Rohr im Deckel (innen 3,6 mm) reicht bis 2 mm über die LED. In der Deckelfläche bleibt ein 0,6 mm dünnes Fenster stehen; das Licht ist nur mit hellem oder transparentem Filament zu sehen. Mit `led_fenster = 0` wird daraus ein offenes Loch.
 - **Verschluss:** zwei Kunststoffschrauben 3 x 10 mm von vorn in die Dome (Kernloch 2,5 mm, 10 mm tief), dazu rundum ein Falz mit 1,5 mm Überlappung. Der Schraubensitz im Deckel ist ein 45°-Kegel (Senkung 90°, Durchmesser 5,8 mm): Er passt für Senkkopfschrauben; Linsenkopfschrauben liegen auf dem Rand auf. Öffnen nur mit Werkzeug. Beide Schrauben sitzen im 3,3-V-Bereich, mehr als 10 mm vom Netzkupfer entfernt.
+
+## Beschriftung des Deckels
+
+![Beschriftung der Deckelfläche, hier mit zweifarbiger Einlage](bilder/deckel_schrift.png)
+
+Die Deckelfläche liegt beim Druck auf dem Bett. Feine vertiefte Schrift wird dort leicht unsauber: schmale Striche laufen in der ersten Schicht zu, kleine Innenformen lösen sich vom Bett. Die Schrift ist deshalb darauf ausgelegt:
+
+- Großbuchstaben, 4 bis 6 mm hoch, Striche mindestens 0,8 mm breit, zwischen den Zeichen mindestens 0,8 mm Wand
+- 0,4 mm tief mit senkrechten Flanken, darüber läuft die Vertiefung unter 45° zu
+- „0“ und „O“ haben Stege wie eine Schablonenschrift, die kleine Innenform der beiden „R“ ist geschlossen
+
+Drei Möglichkeiten:
+
+| Variante | Vorgehen |
+|---|---|
+| **Zweifarbig mit Einlage** (am schönsten) | `deckel_schrift.stl` füllt die Vertiefung bündig aus: Die Schrift liegt dann glatt und in einer zweiten Farbe in der Deckelfläche. Beide Dateien zusammen als ein Objekt aus zwei Teilen in den Slicer laden (sie haben dieselben Koordinaten) und der Schrift die zweite Farbe geben. Die Einlage ist 0,4 mm dick, passend zu zwei Schichten von 0,2 mm. Mit einem Mehrfarbsystem läuft das von selbst, ohne über manuelle Filamentwechsel in den ersten beiden Schichten. Nicht erprobt. |
+| **Einfarbig vertieft** | Nur `deckel.stl` drucken. Die Vertiefung lässt sich danach mit Lackstift oder Acrylfarbe auslegen. |
+| **Glatter Deckel** | Mit `schrift = false` entfällt die Schrift, z. B. für ein Etikett aus dem Beschriftungsgerät. |
 
 ## Dateien
 
@@ -67,6 +85,7 @@ Von vorn gesehen wie in den Bildern: linke Seite an der Kastenwand, Unterseite a
 |---|---|
 | `gehaeuse.scad` | OpenSCAD-Modell mit allen Maßen als Parameter |
 | `wanne.stl`, `deckel.stl` | Druckdateien; der Deckel liegt schon mit der Deckelfläche nach unten. Beide ohne Stützmaterial drucken |
+| `deckel_schrift.stl` | Einlage für die zweifarbige Beschriftung (0,4 mm dick, gleiche Lage wie `deckel.stl`), nur bei Bedarf |
 | `platine_bestueckt.stl` | 3D-Modell der bestückten Platine aus KiCad (nur zur Kontrolle und für die Bilder) |
 | `pruefe_kollision.py` | prüft Wanne und Deckel gegen die Platine und gegeneinander |
 | `bilder/` | Ansichten für diese Doku |
@@ -79,6 +98,8 @@ Von vorn gesehen wie in den Bildern: linke Seite an der Kastenwand, Unterseite a
 | `z_teil` | Höhe der Trennebene = Höhe der Aderöffnungen |
 | `st0`, `st1` | Lage des Stegs im Isolationsschlitz |
 | `led_fenster` | Reststärke über dem LED-Schacht (0,6 mm; 0 = offen) |
+| `schrift` | Beschriftung der Deckelfläche (`false` = glatter Deckel) |
+| `schrift_steg` | Breite der Stege in „0“ und „O“ (0,8 mm; 0 = ohne) |
 
 ### STL-Dateien neu erzeugen
 
@@ -90,9 +111,15 @@ openscad -D 'teil="wanne"' -o wanne.stl gehaeuse.scad
 openscad -D 'teil="deckel"' -o deckel.stl gehaeuse.scad
 ```
 
+```bash
+openscad -D 'teil="schrift"' -o deckel_schrift.stl gehaeuse.scad
+```
+
+Die Schrift setzt die Schriftart DejaVu Sans Bold voraus. Mit einer anderen Schrift verschieben sich die Zeichen; die Stege und die geschlossenen Innenformen in `schrift2d()` sind dann anzupassen.
+
 ## Geprüft
 
-**Druckbarkeit:** Beide STL-Dateien sind geschlossene Körper und laufen in PrusaSlicer 2.7 (Düse 0,4 mm, Schichthöhen 0,15 bis 0,3 mm, ohne Stützen) ohne Warnung durch. Dafür ist die eingeprägte Schrift auf der Deckelfläche als V-Nut mit 45°-Flanken ausgeführt und der Schraubensitz als Kegel. Senkrechte Nuten und ein flacher Sitz müssten über dem Druckbett frei überbrückt werden; der Slicer meldet das als „Long bridging extrusions“.
+**Druckbarkeit:** Beide STL-Dateien sind geschlossene Körper und laufen in PrusaSlicer 2.7 (Düse 0,4 mm, Schichthöhen 0,15 bis 0,3 mm, ohne Stützen) ohne Warnung durch. Dafür läuft die vertiefte Schrift nach 0,4 mm unter 45° zu, und der Schraubensitz ist ein Kegel: Eine flache Decke über der Schrift und ein flacher Sitz müssten über dem Druckbett frei überbrückt werden („Long bridging extrusions“). Lose Innenformen in der ersten Schicht („Low bed adhesion“) gibt es durch die Stege in „0“ und „O“ nicht. Unter der Schrift bleiben mindestens 0,8 mm Deckelfläche stehen.
 
 **Passform:** Rechnerische Kontrolle gegen das 3D-Modell der Platine: **keine Durchdringung**, Wanne und Deckel überschneiden sich nicht.
 

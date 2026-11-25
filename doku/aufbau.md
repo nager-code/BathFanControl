@@ -70,7 +70,7 @@ Die vier Adern kommen von rechts durch die Öffnungen im Gehäuse in den Anschlu
 - Die Klemme nimmt Leiter von 0,14 bis 1,5 mm² auf. Feindrähtige Litzen mit **Aderendhülse** anschließen.
 - Im Lüfterkasten liegen flexible Litzen mit Steckverbindern. Mit starren Adern wird der Leitungsaustritt eng.
 - Die Steuerung schaltet **nur die Phase vor dem Ventilator**. Laut Anleitung des KN2 zerstört eine falsche Beschaltung die Elektronik im Lüfter.
-- Die Klemmenbelegung ist auch im Gehäusedeckel eingeprägt.
+- Die Klemmenbelegung steht auch außen auf dem Gehäusedeckel.
 
 ## Im Lüfterkasten befestigen
 
